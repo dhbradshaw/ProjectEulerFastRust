@@ -15,6 +15,11 @@ Find the sum of all the multiples of 3 or 5 below 1000.");
     agg
 }
 
+#[test]
+fn test_p1() {
+    assert!(p1(10) == 23)
+}
+
 fn main() {
     println!("{}",p1(10));
     println!("{}",p1(1000));
