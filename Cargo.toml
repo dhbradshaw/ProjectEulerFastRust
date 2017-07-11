@@ -1,0 +1,6 @@
+[package]
+name = "euler-rust"
+version = "0.1.0"
+authors = ["Douglas H. Bradshaw <dhbradshaw@gmail.com>"]
+
+[dependencies]
