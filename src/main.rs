@@ -49,10 +49,44 @@ fn p2() -> u64 {
     total
 }
 
+struct Fibonacci {
+	last: u64,
+	curr: u64,
+}
+
+impl Iterator for Fibonacci {
+    type Item = u64;
+    fn next(&mut self) -> Option<u64> {
+        self.curr = self.curr + self.last;
+        self.last = self.curr - self.last;
+        Some(self.curr)
+    }
+}
+
+fn p2_iterative() -> u64 {
+    let mut f = Fibonacci{last: 0, curr:1};
+    let mut agg: u64 = 0;
+    for n in f {
+        if n % 2 == 0 {
+            agg += n;
+        }
+        if n >= 4000000 {
+            break;
+        }
+    }
+    agg
+}
+
+fn p3() {
+    /// The prime factors of 13195 are 5, 7, 13 and 29.
+    /// What is the largest prime factor of the number 600851475143 ?
+    ()
+}
 fn main() {
     println!("{}", p1(10));
     println!("{}", p1_iterate(10));
     println!("{}", p1(1000));
     println!("{}", p1_iterate(1000));
     println!("{}", p2());
+    println!("{}", p2_iterative());
 }
