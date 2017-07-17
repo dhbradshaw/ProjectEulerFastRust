@@ -1,3 +1,5 @@
+use std::cmp::max;
+
 fn p1(bar: u64) -> u64 {
     /// If we list all the natural numbers below 10 that are multiples of 3 or 5,
     /// we get 3, 5, 6 and 9. The sum of these multiples is 23.
@@ -64,7 +66,7 @@ impl Iterator for Fibonacci {
 }
 
 fn p2_iterative() -> u64 {
-    let mut f = Fibonacci{last: 0, curr:1};
+    let f = Fibonacci{last: 0, curr:1};
     let mut agg: u64 = 0;
     for n in f {
         if n % 2 == 0 {
@@ -77,11 +79,22 @@ fn p2_iterative() -> u64 {
     agg
 }
 
-fn p3() {
+fn p3(n: u64) -> u64 {
     /// The prime factors of 13195 are 5, 7, 13 and 29.
     /// What is the largest prime factor of the number 600851475143 ?
-    ()
+    let mut upper_limit = (n as f64).sqrt() as u64 + 1;
+    let mut target = n;
+    let mut factor = 2;
+    while factor <= upper_limit {
+        while target % factor == 0 {
+            target = target / factor;
+        }
+        factor += 1;
+        upper_limit = (target as f64).sqrt() as u64 + 1;
+    }
+    max(target, factor)
 }
+
 fn main() {
     println!("{}", p1(10));
     println!("{}", p1_iterate(10));
@@ -89,4 +102,5 @@ fn main() {
     println!("{}", p1_iterate(1000));
     println!("{}", p2());
     println!("{}", p2_iterative());
+    println!("{}", p3(600851475143));
 }
