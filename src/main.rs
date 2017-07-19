@@ -95,6 +95,56 @@ fn p3(n: u64) -> u64 {
     max(target, factor)
 }
 
+fn reverse_decimal_digits(n: u32) -> Vec<u32> {
+    let mut cp = n;
+    let mut digits = Vec::new();
+    while cp > 0 {
+        digits.push(cp % 10);
+        cp = cp / 10;
+    }
+    digits
+}
+
+fn is_palindrome(s: &[u32]) -> bool {
+    let l = s.len();
+    for i in 0..l/2 {
+        if s[i] != s[l - 1 - i] {
+            return false
+        }
+    }
+    true
+
+}
+
+fn p4() -> u32 {
+    /// A palindromic number reads the same both ways.
+    /// The largest palindrome made from the product of two 2-digit numbers is
+    /// 9009 = 91 × 99.
+    /// Find the largest palindrome made from the product of two 3-digit numbers.
+    let mut largest_palindrome = 0;
+    let mut i = 999;
+    while i > 99 {
+        let mut j = i;
+        if i * i < largest_palindrome {
+            break;
+        }
+        while j > 99 {
+            let multiple = i * j;
+            let digits = reverse_decimal_digits(multiple);
+            if is_palindrome(&digits) {
+                if multiple > largest_palindrome {
+                    largest_palindrome = multiple
+                } else {
+                    break;
+                }
+            }
+            j -= 1;
+        }
+        i -= 1;
+    }
+    largest_palindrome
+}
+
 fn main() {
     println!("{}", p1(10));
     println!("{}", p1_iterate(10));
@@ -103,4 +153,5 @@ fn main() {
     println!("{}", p2());
     println!("{}", p2_iterative());
     println!("{}", p3(600851475143));
+    println!("{:?}", p4());
 }
