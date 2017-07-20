@@ -1,4 +1,6 @@
+extern crate time;
 use std::cmp::max;
+use time::PreciseTime;
 
 fn p1(bar: u64) -> u64 {
     /// If we list all the natural numbers below 10 that are multiples of 3 or 5,
@@ -113,7 +115,6 @@ fn is_palindrome(s: &[u32]) -> bool {
         }
     }
     true
-
 }
 
 fn p4() -> u32 {
@@ -125,18 +126,15 @@ fn p4() -> u32 {
     let mut i = 999;
     while i > 99 {
         let mut j = i;
-        if i * i < largest_palindrome {
-            break;
-        }
         while j > 99 {
             let multiple = i * j;
-            let digits = reverse_decimal_digits(multiple);
-            if is_palindrome(&digits) {
-                if multiple > largest_palindrome {
+            if multiple > largest_palindrome {
+                let digits = reverse_decimal_digits(multiple);
+                if is_palindrome(&digits) {
                     largest_palindrome = multiple
-                } else {
-                    break;
                 }
+            } else {
+                break;
             }
             j -= 1;
         }
@@ -145,13 +143,68 @@ fn p4() -> u32 {
     largest_palindrome
 }
 
+fn p5() -> u64 {
+    // What is the smallest positive number that is evenly divisible
+    // by all of the numbers from 1 to 20?
+    1 * 2 * 3 * 2 * 5 * 7 * 2 * 3 * 11 * 13 * 2 * 17 * 19
+}
+
+fn p6() -> u64 {
+    let mut sum_of_squares = 0;
+    let mut sum = 0;
+    for i in 1..101 {
+        sum += i;
+        sum_of_squares += i * i;
+    }
+    sum * sum - sum_of_squares
+}
+
+fn is_prime(n: u64, primes: &[u64]) -> bool {
+    for p in primes {
+        if *p > ((n as f64).sqrt() as u64) {
+            break;
+        }
+        if n % p == 0 {
+            return false
+        }
+    }
+    true
+}
+
+fn nth_prime(n: usize) -> u64 {
+    let mut primes = Vec::new();
+    primes.push(2);
+    let mut test = 1;
+    while primes.len() < n {
+        test += 2;
+        if is_prime(test, &primes) {
+            primes.push(test);
+        }
+    }
+    primes[primes.len()-1]
+}
+
+fn p7() -> u64 {
+    let start = PreciseTime::now();
+    let out = nth_prime(10001);
+    let end = PreciseTime::now();
+    println!("p7 time: {} seconds", start.to(end));
+    out
+}
+
 fn main() {
-    println!("{}", p1(10));
-    println!("{}", p1_iterate(10));
-    println!("{}", p1(1000));
-    println!("{}", p1_iterate(1000));
-    println!("{}", p2());
-    println!("{}", p2_iterative());
-    println!("{}", p3(600851475143));
-    println!("{:?}", p4());
+    // println!("{}", p1(10));
+    // println!("{}", p1_iterate(10));
+    // println!("{}", p1(1000));
+    // println!("{}", p1_iterate(1000));
+    // println!("{}", p2());
+    // println!("{}", p2_iterative());
+    // println!("{}", p3(600851475143));
+    // let start = PreciseTime::now();
+    // println!("{:?}", p4());
+    // let end = PreciseTime::now();
+    // println!("{} seconds", start.to(end));
+    // println!("{}", p5());
+    // println!("{}", p6());
+    println!("{}", p7());
 }
