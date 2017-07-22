@@ -226,6 +226,39 @@ fn p8(n: usize) -> u64 {
     largest
 }
 
+fn p9() {
+    for a in 1..300 {
+        let b_numerator = 500000 - 1000 * a;
+        let b_denominator = 1000 - a;
+        if b_numerator % b_denominator == 0 {
+            let b = b_numerator / b_denominator;
+            let c = 1000 - a - b;
+            println!("{}", a * b * c);
+            break;
+        }
+    }
+}
+
+fn primes_below(n: u64) -> Vec<u64> {
+    let mut primes = Vec::new();
+    primes.push(2);
+    let mut candidate = 1;
+    loop {
+        candidate += 2;
+        if candidate >= n {
+            break;
+        }
+        if is_prime(candidate, &primes) {
+            primes.push(candidate);
+        }
+    }
+    primes
+}
+
+fn p10() -> u64 {
+    // Find the sum of all the primes below two million.
+    primes_below(2000000).iter().sum()
+}
 
 fn main() {
     // println!("{}", p1(10));
@@ -242,5 +275,10 @@ fn main() {
     // println!("{}", p5());
     // println!("{}", p6());
     // println!("{}", p7());
-    println!("{:?}", p8(13)); // prints [1, 2, 3, 4, 5, 6]
+    // println!("{:?}", p8(13)); // prints [1, 2, 3, 4, 5, 6]
+    // p9();
+    let start = PreciseTime::now();
+    println!("{}", p10());
+    let end = PreciseTime::now();
+    println!("{} seconds", start.to(end));
 }
