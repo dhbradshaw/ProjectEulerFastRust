@@ -1,8 +1,6 @@
 use std::cmp::max;
 use std::cmp::min;
 
-
-
 fn climb(order: usize, sum: usize) -> Vec<(usize, usize)> {
     let largest = order - 1;
     let smallest = 0;
