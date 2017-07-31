@@ -262,6 +262,19 @@ fn p10() -> u64 {
     primes_below(2000000).iter().sum()
 }
 
+fn greatest_multiple(v: Vec<u64>, n: usize) -> u64 {
+    let l = v.len();
+    let mut start = 0;
+    let mut largest = 0;
+    while (start + n) <= l {
+        let multiple = &v[start..start + n].iter()
+            .fold(1, |multiple, e| {multiple * (*e) as u64});
+        largest = max(largest, *multiple);
+        start += 1;
+    }
+    largest
+}
+
 fn p11 () {
     // What is the greatest product of four adjacent numbers in the same direction
     // (up, down, left, right, or diagonally) in the 20×20 grid?
@@ -285,40 +298,38 @@ fn p11 () {
         20 69 36 41 72 30 23 88 34 62 99 69 82 67 59 85 74 04 36 16
         20 73 35 29 78 31 90 01 74 31 49 71 48 86 81 16 23 57 05 54
         01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48";
-    let matrix: Vec<Vec<u64>> = s.lines()
-        .map(
-            |line| {line
-                .split_whitespace()
-                .map(|digits| {digits.parse::<u64>().unwrap()})
-                .collect()
-            }
-        )
-        .collect();
-    let mut max_multiple = 0;
-    for i in 0..(20 - 3) {
-        for j in 0..(20) {
-            let product = matrix[i][j] * matrix[i + 1][j] * matrix[i + 2][j] * matrix[i + 3][j];
-            max_multiple = max(max_multiple, product)
-        }
+    let matrix: Vec<Vec<u64>> = s.lines().map(
+        |line| {line.split_whitespace().map(
+            |digits| {digits.parse::<u64>().unwrap()}
+        ).collect()}
+    ).collect();
+
+    let order = matrix.len();
+    let am = eulerrust::AbstractMatrix::new(order);
+
+    let mut winner = 0;
+    let mut vecs = am.rows();
+    vecs.extend(am.columns());
+    vecs.extend(am.climbs());
+    vecs.extend(am.descends());
+    for row in vecs {
+        let nums: Vec<u64> = row.iter().map(|p| {
+            let &(i, j) = p;
+            matrix[i][j]
+        }).collect();
+        winner = max(greatest_multiple(nums, 4), winner);
     }
-    let n = 3;
-    for sum in 0..(2 * n - 1) {
-        let mut diff = - sum;
-        while diff <= sum {
-            let i = (sum + diff) / 2;
-            let j = (sum - diff) / 2;
-            if i <0 || j <0 || i >= n {
-                break;
-            }
-            if i >= n {
-                break;
-            }
-            if j >= n {
-                diff += 2;
-                continue
-            }
-            println!("i {} j {} sum {} diff {}", i, j, sum, diff);
-            diff += 2;
+    println!("{}", winner);
+}
+
+fn p12() {
+    // What is the value of the first triangle number to have over five hundred divisors?
+    let mut t = eulerrust::trianglenumbers::Triangular::new();
+    loop {
+        let n = t.next().unwrap();
+        if eulerrust::divisors::divisors(n).len() > 500 {
+            println!("{}", n);
+            break;
         }
     }
 }
@@ -341,8 +352,9 @@ fn main() {
     // println!("{:?}", p8(13)); // prints [1, 2, 3, 4, 5, 6]
     // p9();
     // println!("{}", p10());
-    // let start = PreciseTime::now();
-    p11();
-    // let end = PreciseTime::now();
-    // println!("{} seconds", start.to(end));
+    // p11();
+    let start = PreciseTime::now();
+    p12();
+    let end = PreciseTime::now();
+    println!("{} seconds", start.to(end));
 }
