@@ -3,6 +3,7 @@ use std::cmp::min;
 
 pub mod divisors;
 pub mod trianglenumbers;
+pub mod collatz;
 
 pub struct AbstractMatrix {
     pub order: usize,
