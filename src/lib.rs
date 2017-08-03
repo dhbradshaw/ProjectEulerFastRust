@@ -1,9 +1,10 @@
 use std::cmp::max;
 use std::cmp::min;
 
-pub mod divisors;
-pub mod trianglenumbers;
 pub mod collatz;
+pub mod divisors;
+pub mod lattice;
+pub mod trianglenumbers;
 
 pub struct AbstractMatrix {
     pub order: usize,
