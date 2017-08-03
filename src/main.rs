@@ -445,6 +445,10 @@ fn p13() -> String {
     first10
 }
 
+fn p14() -> usize {
+    eulerrust::collatz::longest_collatz(999_999)
+}
+
 fn main() {
     // println!("{}", p1(10));
     // println!("{}", p1_iterate(10));
@@ -465,8 +469,9 @@ fn main() {
     // println!("{}", p10());
     // p11();
     // p12();
+    // let n = p13();
     let start = PreciseTime::now();
-    let n = p13();
+    let n = p14();
     let end = PreciseTime::now();
     println!("seconds: {} answer: {}", start.to(end), n);
 }
