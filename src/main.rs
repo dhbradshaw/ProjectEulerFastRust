@@ -464,6 +464,17 @@ fn p14() -> usize {
     eulerrust::collatz::longest_collatz(999_999)
 }
 
+#[allow(dead_code)]
+fn p15() -> u64 {
+    eulerrust::lattice::corner_to_corner(20)
+}
+
+#[allow(dead_code)]
+fn p15_factorial() -> u64 {
+    let f_20 = eulerrust::lattice::factorial(20);
+    eulerrust::lattice::factorial(40)/(f_20 * f_20)
+}
+
 fn main() {
     // println!("{}", p1(10));
     // println!("{}", p1_iterate(10));
@@ -485,8 +496,13 @@ fn main() {
     // p11();
     // p12();
     // let n = p13();
-    let start = PreciseTime::now();
-    let n = p14();
-    let end = PreciseTime::now();
+    // let n = p14();
+    let mut start = PreciseTime::now();
+    let mut n = p15();
+    let mut end = PreciseTime::now();
+    println!("seconds: {} answer: {}", start.to(end), n);
+    start = PreciseTime::now();
+    n = p15_factorial();
+    end = PreciseTime::now();
     println!("seconds: {} answer: {}", start.to(end), n);
 }
