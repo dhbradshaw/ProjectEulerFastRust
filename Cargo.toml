@@ -5,3 +5,4 @@ authors = ["Douglas H. Bradshaw <dhbradshaw@gmail.com>"]
 
 [dependencies]
 time = "*"
+num = "0.1"
