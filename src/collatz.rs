@@ -1,5 +1,4 @@
 use std::collections::HashMap;
-use std::cmp::max;
 
 pub struct Collatz {
     n: u64
