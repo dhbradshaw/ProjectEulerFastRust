@@ -29,10 +29,10 @@ pub fn next_level(a: Vec<u64>, size_increment: i32) -> Vec<u64> {
 
 pub fn corner_to_corner(n: u64) -> u64 {
     let mut v = vec![1];
-    for i in 0..n {
+    for _ in 0..n {
         v = next_level(v, 1);
     }
-    for i in 0..n {
+    for _ in 0..n {
         v = next_level(v, -1);
     }
     v[0]
