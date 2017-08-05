@@ -1,3 +1,4 @@
+extern crate num;
 extern crate time;
 extern crate eulerrust;
 use std::cmp::max;
@@ -475,10 +476,15 @@ fn p15_factorial() -> u64 {
     eulerrust::lattice::factorial(40)/(f_20 * f_20)
 }
 
+#[allow(dead_code)]
+fn p16() -> u64 {
+    1
+}
+
 fn main() {
     // println!("{}", p1(10));
     // println!("{}", p1_iterate(10));
-    // println!("{}", p1(1000));
+    // println!("{}", p1(1000));``
     // println!("{}", p1_iterate(1000));
     // println!("{}", p2());
     // println!("{}", p2_iterative());
@@ -497,12 +503,10 @@ fn main() {
     // p12();
     // let n = p13();
     // let n = p14();
-    let mut start = PreciseTime::now();
-    let mut n = p15();
-    let mut end = PreciseTime::now();
-    println!("seconds: {} answer: {}", start.to(end), n);
-    start = PreciseTime::now();
-    n = p15_factorial();
-    end = PreciseTime::now();
+    // let mut n = p15();
+    // n = p15_factorial();
+    let start = PreciseTime::now();
+    let n = p16();
+    let end = PreciseTime::now();
     println!("seconds: {} answer: {}", start.to(end), n);
 }
