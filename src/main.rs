@@ -477,8 +477,12 @@ fn p15_factorial() -> u64 {
 }
 
 #[allow(dead_code)]
-fn p16() -> u64 {
-    1
+fn p16() -> u32 {
+    num::pow(num::BigUint::new(vec![2]), 1000)
+        .to_str_radix(10)
+        .chars()
+        .map(|c| {c.to_digit(10).unwrap()})
+        .sum()
 }
 
 fn main() {
