@@ -485,6 +485,14 @@ fn p16() -> u32 {
         .sum()
 }
 
+fn p17() -> u32 {
+    let mut total = 0;
+    for i in 1..1001 {
+        total += eulerrust::numberletters::letter_count_under_1001(i);
+    }
+    total
+}
+
 fn main() {
     // println!("{}", p1(10));
     // println!("{}", p1_iterate(10));
@@ -509,8 +517,9 @@ fn main() {
     // let n = p14();
     // let mut n = p15();
     // n = p15_factorial();
+    // let n = p16();
     let start = PreciseTime::now();
-    let n = p16();
+    let n = p17();
     let end = PreciseTime::now();
     println!("seconds: {} answer: {}", start.to(end), n);
 }
