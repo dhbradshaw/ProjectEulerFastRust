@@ -99,7 +99,7 @@ mod test {
     fn test_longest_collatz() {
         assert_eq!(longest_collatz(1), 1);
         assert_eq!(longest_collatz(2), 2);
-        assert_eq!(longest_collatz(3), 8)
+        assert_eq!(longest_collatz(3), 3)
 
     }
 }
