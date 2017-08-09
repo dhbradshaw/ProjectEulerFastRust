@@ -4,6 +4,7 @@ use std::cmp::min;
 pub mod collatz;
 pub mod divisors;
 pub mod lattice;
+pub mod maxpathsum;
 pub mod numberletters;
 pub mod trianglenumbers;
 
