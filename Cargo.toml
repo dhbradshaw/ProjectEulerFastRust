@@ -4,5 +4,6 @@ version = "0.1.0"
 authors = ["Douglas H. Bradshaw <dhbradshaw@gmail.com>"]
 
 [dependencies]
-time = "*"
+chrono = "0.4"
 num = "0.1"
+time = "*"

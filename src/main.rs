@@ -1,8 +1,10 @@
+extern crate chrono;
 extern crate num;
 extern crate time;
 extern crate eulerrust;
 use std::cmp::max;
 use time::PreciseTime;
+use chrono::{Datelike, NaiveDate, Weekday};
 
 #[allow(dead_code)]
 fn p1(bar: u64) -> u64 {
@@ -518,6 +520,29 @@ fn p18() -> u32 {
     agg[0]
 }
 
+fn p19() -> u32 {
+    let mut count = 0;
+    for year in 1901..2001 {
+        for month in 1..13 {
+            if NaiveDate::from_ymd(year, month, 1).weekday() == Weekday::Sun {
+                count += 1;
+            }
+        }
+    }
+    count
+}
+
+fn p20() -> u32 {
+    let mut agg = num::BigUint::from(1 as u32);
+    for i in 1..101 {
+        agg = agg * num::BigUint::from(i as u32)
+    }
+    agg.to_str_radix(10)
+        .chars()
+        .map(|a| a.to_digit(10).unwrap())
+        .sum()
+}
+
 fn main() {
     // println!("{}", p1(10));
     // println!("{}", p1_iterate(10));
@@ -544,8 +569,10 @@ fn main() {
     // n = p15_factorial();
     // let n = p16();
     // let n = p17();
+    // let n = p18();
+    // let n = p19();
     let start = PreciseTime::now();
-    let n = p18();
+    let n = p20();
     let end = PreciseTime::now();
     println!("seconds: {} answer: {}", start.to(end), n);
 }
