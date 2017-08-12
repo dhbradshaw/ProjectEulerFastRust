@@ -1,5 +1,5 @@
 fn u64_2_BigUint(n: u64) -> BigUint {
-    
+
 }
 
 
@@ -7,7 +7,7 @@ fn u64_2_BigUint(n: u64) -> BigUint {
 mod test {
     use super::*;
     #[test]
-    fn dummy_test() {
+    fn test_u64() {
         assert_eq!(one(), 1);
 
     }
