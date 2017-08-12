@@ -5,6 +5,8 @@ extern crate eulerrust;
 use std::cmp::max;
 use time::PreciseTime;
 use chrono::{Datelike, NaiveDate, Weekday};
+use eulerrust::divisors::is_amicable;
+
 
 #[allow(dead_code)]
 fn p1(bar: u64) -> u64 {
@@ -487,6 +489,7 @@ fn p16() -> u32 {
         .sum()
 }
 
+#[allow(dead_code)]
 fn p17() -> u32 {
     let mut total = 0;
     for i in 1..1001 {
@@ -495,6 +498,7 @@ fn p17() -> u32 {
     total
 }
 
+#[allow(dead_code)]
 fn p18() -> u32 {
     let triangle: Vec<Vec<u32>> = vec![
         vec![04, 62, 98, 27, 23, 09, 70, 98, 73, 93, 38, 53, 60, 04, 23],
@@ -520,6 +524,7 @@ fn p18() -> u32 {
     agg[0]
 }
 
+#[allow(dead_code)]
 fn p19() -> u32 {
     let mut count = 0;
     for year in 1901..2001 {
@@ -532,6 +537,7 @@ fn p19() -> u32 {
     count
 }
 
+#[allow(dead_code)]
 fn p20() -> u32 {
     let mut agg = num::BigUint::from(1 as u32);
     for i in 1..101 {
@@ -541,6 +547,11 @@ fn p20() -> u32 {
         .chars()
         .map(|a| a.to_digit(10).unwrap())
         .sum()
+}
+
+#[allow(dead_code)]
+fn p21() -> u32 {
+    (1..10000).filter(|n| is_amicable(*n as u64)).sum()
 }
 
 fn main() {
@@ -571,8 +582,9 @@ fn main() {
     // let n = p17();
     // let n = p18();
     // let n = p19();
+    // let n = p20();
     let start = PreciseTime::now();
-    let n = p20();
+    let n = p21();
     let end = PreciseTime::now();
     println!("seconds: {} answer: {}", start.to(end), n);
 }
