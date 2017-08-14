@@ -3,6 +3,8 @@ extern crate num;
 extern crate time;
 extern crate eulerrust;
 use std::cmp::max;
+use std::fs::File;
+use std::io::Read;
 use time::PreciseTime;
 use chrono::{Datelike, NaiveDate, Weekday};
 use eulerrust::divisors::is_amicable;
@@ -554,6 +556,39 @@ fn p21() -> u32 {
     (1..10000).filter(|n| is_amicable(*n as u64)).sum()
 }
 
+#[allow(dead_code)]
+fn p22() -> u32 {
+    // Read in the file
+    let mut file = File::open("p022_names.txt").unwrap();
+    let mut names = String::new();
+    file.read_to_string(&mut names).unwrap();
+
+    // Convert names to vectors of integers and sort
+    let zero = 'A' as u32 - 1;
+    let mut names: Vec<Vec<_>> = names.split(",").map(
+        |s| {
+            s.chars()
+            .filter(|c| {c.is_alphabetic()})
+            .map(|c| {c as u32 - zero})
+            .collect()
+        }
+    ).collect();
+    names.sort();
+
+    // Total scores
+    let mut sum = 0;
+    for (i, name) in names.iter().enumerate() {
+        let place: u32 = i as u32 + 1;
+        let score: u32 = name.iter().sum();
+        sum += place * score;
+    }
+    sum
+}
+
+fn p23() -> u32 {
+    1
+}
+
 fn main() {
     // println!("{}", p1(10));
     // println!("{}", p1_iterate(10));
@@ -583,8 +618,10 @@ fn main() {
     // let n = p18();
     // let n = p19();
     // let n = p20();
+    // let n = p21();
+    // let n = p22();
     let start = PreciseTime::now();
-    let n = p21();
+    let n = p23();
     let end = PreciseTime::now();
     println!("seconds: {} answer: {}", start.to(end), n);
 }
