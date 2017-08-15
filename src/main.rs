@@ -3,8 +3,10 @@ extern crate num;
 extern crate time;
 extern crate eulerrust;
 use std::cmp::max;
+use std::collections::HashSet;
 use std::fs::File;
 use std::io::Read;
+use std::iter::FromIterator;
 use time::PreciseTime;
 use chrono::{Datelike, NaiveDate, Weekday};
 use eulerrust::divisors::is_amicable;
@@ -586,7 +588,28 @@ fn p22() -> u32 {
 }
 
 fn p23() -> u32 {
-    1
+    // Find the sum of all the positive integers which cannot be written as the sum of two abundant numbers.
+    let abundants = eulerrust::divisors::abundants_below(28124);
+    let abundant_set: HashSet<u32> = HashSet::from_iter(abundants.iter().cloned());
+    let mut total = 0;
+    for n in 1..28124 {
+        let too_high = n / 2 + 1;
+        let mut is_abundant_sum = false;
+        for abundant in &abundants {
+            if *abundant >=  too_high {
+                break;
+            }
+            let partner = n - *abundant;
+            if abundant_set.contains(&partner) {
+                is_abundant_sum = true;
+                break;
+            }
+        }
+        if !is_abundant_sum {
+            total += n;
+        }
+    }
+    total
 }
 
 fn main() {

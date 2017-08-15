@@ -35,6 +35,20 @@ pub fn is_amicable(n: u64) -> bool {
     n != m && n == proper_divisor_sum(m)
 }
 
+pub fn is_abundant(n: u64) -> bool {
+    proper_divisor_sum(n) > n
+}
+
+pub fn abundants_below(n: u32) -> Vec<u32> {
+    let mut abundants = Vec::new();
+    for i in 1..n {
+        if is_abundant(i as u64) {
+            abundants.push(i as u32);
+        }
+    }
+    abundants
+}
+
 #[cfg(test)]
 mod test {
     use super::*;
@@ -61,5 +75,19 @@ mod test {
         assert_eq!(is_amicable(220), true);
         assert_eq!(is_amicable(284), true);
         assert_eq!(is_amicable(9), false);
+    }
+    #[test]
+    fn test_is_abundant() {
+        let v: Vec<u64> = (1..13)
+            .map(|n| {n as u64})
+            .filter(|n| {is_abundant(*n)})
+            .collect();
+        assert_eq!(v, vec![12 as u64]);
+    }
+    #[test]
+    fn test_abundants_below() {
+        let mut v = Vec::new();
+        v.push(12 as u32);
+        assert_eq!(abundants_below(13), v)
     }
 }
