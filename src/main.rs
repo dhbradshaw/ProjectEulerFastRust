@@ -587,6 +587,7 @@ fn p22() -> u32 {
     sum
 }
 
+#[allow(dead_code)]
 fn p23() -> u32 {
     // Find the sum of all the positive integers which cannot be written as the sum of two abundant numbers.
     let abundants = eulerrust::divisors::abundants_below(28124);
@@ -610,6 +611,19 @@ fn p23() -> u32 {
         }
     }
     total
+}
+
+#[allow(dead_code)]
+fn p24() -> Vec<u8> {
+    let mut count = 1;
+    let mut v = vec![0,1,2,3,4,5,6,7,8,9];
+    loop {
+        v = eulerrust::lexicographic::next(&v).unwrap();
+        count += 1;
+        if count == 1000000 {
+            break v
+        }
+    }
 }
 
 fn main() {
@@ -643,8 +657,9 @@ fn main() {
     // let n = p20();
     // let n = p21();
     // let n = p22();
+    // let n = p23();
     let start = PreciseTime::now();
-    let n = p23();
+    let n = p24();
     let end = PreciseTime::now();
-    println!("seconds: {} answer: {}", start.to(end), n);
+    println!("seconds: {} answer: {:?}", start.to(end), n);
 }
