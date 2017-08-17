@@ -2,6 +2,7 @@ extern crate chrono;
 extern crate num;
 extern crate time;
 extern crate eulerrust;
+use num::FromPrimitive;
 use std::cmp::max;
 use std::collections::HashSet;
 use std::fs::File;
@@ -626,6 +627,24 @@ fn p24() -> Vec<u8> {
     }
 }
 
+#[allow(dead_code)]
+fn p25() -> u32 {
+    let mut n = 2;
+
+    let ten = num::BigUint::from_u32(10).unwrap();
+    let bound = num::pow(ten, 999);
+    let mut current = num::BigUint::new(vec![1]);
+    let mut last = num::BigUint::new(vec![1]);
+
+    while current < bound {
+        let sum = &current + last;
+        last = current;
+        current = sum;
+        n += 1;
+    }
+    n
+}
+
 fn main() {
     // println!("{}", p1(10));
     // println!("{}", p1_iterate(10));
@@ -658,8 +677,9 @@ fn main() {
     // let n = p21();
     // let n = p22();
     // let n = p23();
+    // let n = p24();
     let start = PreciseTime::now();
-    let n = p24();
+    let n = p25();
     let end = PreciseTime::now();
     println!("seconds: {} answer: {:?}", start.to(end), n);
 }
