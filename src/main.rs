@@ -13,7 +13,6 @@ use std::iter::FromIterator;
 use time::PreciseTime;
 use chrono::{Datelike, NaiveDate, Weekday};
 use eulerrust::divisors::is_amicable;
-use arrayvec::ArrayVec;
 
 
 #[allow(dead_code)]
@@ -665,12 +664,30 @@ fn cycle_size(den: usize) -> usize {
 }
 
 #[allow(dead_code)]
+fn cycle_size_array(den: usize) -> usize {
+    let mut num: usize = 1;
+    let mut a = [0; 1000];
+    let mut index: usize = 0;
+    let mut last_index: usize;
+    loop {
+        num = num % den;
+        last_index = a[num];
+        if last_index != 0 {
+            break index - last_index
+        }
+        a[num] = index;
+        num *= 10;
+        index += 1;
+    }
+}
+
+#[allow(dead_code)]
 fn p26() -> usize {
     // Of all the denominators below 1000, which has the longest repeating cycle?
     let mut max_length: usize = 0;
     let mut den_max: usize = 0;
     for den in 1..1000 {
-        let size = cycle_size(den);
+        let size = cycle_size_array(den);
         if size > max_length {
             max_length = size;
             den_max = den;
