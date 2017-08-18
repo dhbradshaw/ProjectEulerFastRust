@@ -1,9 +1,11 @@
+extern crate arrayvec;
 extern crate chrono;
 extern crate num;
 extern crate time;
 extern crate eulerrust;
 use num::FromPrimitive;
 use std::cmp::max;
+use std::collections::HashMap;
 use std::collections::HashSet;
 use std::fs::File;
 use std::io::Read;
@@ -11,6 +13,7 @@ use std::iter::FromIterator;
 use time::PreciseTime;
 use chrono::{Datelike, NaiveDate, Weekday};
 use eulerrust::divisors::is_amicable;
+use arrayvec::ArrayVec;
 
 
 #[allow(dead_code)]
@@ -645,6 +648,37 @@ fn p25() -> u32 {
     n
 }
 
+#[allow(dead_code)]
+fn cycle_size(den: usize) -> usize {
+    let mut num: usize = 1;
+    let mut map = HashMap::new();
+    let mut index: usize = 0;
+    let mut last_index: usize;
+    loop {
+        num = (num % den) * 10;
+        last_index = *map.entry(num).or_insert(index);
+        if index != last_index {
+            break index - last_index
+        }
+        index += 1;
+    }
+}
+
+#[allow(dead_code)]
+fn p26() -> usize {
+    // Of all the denominators below 1000, which has the longest repeating cycle?
+    let mut max_length: usize = 0;
+    let mut den_max: usize = 0;
+    for den in 1..1000 {
+        let size = cycle_size(den);
+        if size > max_length {
+            max_length = size;
+            den_max = den;
+        }
+    }
+    den_max
+}
+
 fn main() {
     // println!("{}", p1(10));
     // println!("{}", p1_iterate(10));
@@ -678,8 +712,9 @@ fn main() {
     // let n = p22();
     // let n = p23();
     // let n = p24();
+    // let n = p25();
     let start = PreciseTime::now();
-    let n = p25();
+    let n = p26();
     let end = PreciseTime::now();
     println!("seconds: {} answer: {:?}", start.to(end), n);
 }
