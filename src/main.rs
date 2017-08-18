@@ -670,7 +670,7 @@ fn cycle_size_array(den: usize) -> usize {
     let mut index: usize = 0;
     let mut last_index: usize;
     loop {
-        num = num % den;
+        num %= den;
         last_index = a[num];
         if last_index != 0 {
             break index - last_index
