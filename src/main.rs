@@ -1,8 +1,10 @@
 extern crate arrayvec;
 extern crate chrono;
+extern crate fnv;
 extern crate num;
 extern crate time;
 extern crate eulerrust;
+use fnv::FnvHashMap;
 use num::FromPrimitive;
 use std::cmp::max;
 use std::collections::HashMap;
@@ -664,6 +666,22 @@ fn cycle_size(den: usize) -> usize {
 }
 
 #[allow(dead_code)]
+fn cycle_size_fnv(den: usize) -> usize {
+    let mut num: usize = 1;
+    let mut map = FnvHashMap::default();
+    let mut index: usize = 0;
+    let mut last_index: usize;
+    loop {
+        num = (num % den) * 10;
+        last_index = *map.entry(num).or_insert(index);
+        if index != last_index {
+            break index - last_index
+        }
+        index += 1;
+    }
+}
+
+#[allow(dead_code)]
 fn cycle_size_array(den: usize) -> usize {
     let mut num: usize = 1;
     let mut a = [0; 1000];
@@ -694,6 +712,10 @@ fn p26() -> usize {
         }
     }
     den_max
+}
+
+fn p27() -> u32 {
+    1
 }
 
 fn main() {
