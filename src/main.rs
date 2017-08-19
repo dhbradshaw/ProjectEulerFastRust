@@ -16,6 +16,7 @@ use time::PreciseTime;
 use chrono::{Datelike, NaiveDate, Weekday};
 use eulerrust::divisors::is_amicable;
 use eulerrust::fibonacci::Fibonacci;
+use eulerrust::palindrome::{is_palindrome, reverse_decimal_digits};
 use eulerrust::primes::{primes_below, is_prime, nth_prime};
 
 #[allow(dead_code)]
@@ -102,26 +103,6 @@ fn p3(n: u64) -> u64 {
         upper_limit = (target as f64).sqrt() as u64 + 1;
     }
     max(target, factor)
-}
-
-fn reverse_decimal_digits(n: u32) -> Vec<u32> {
-    let mut cp = n;
-    let mut digits = Vec::new();
-    while cp > 0 {
-        digits.push(cp % 10);
-        cp = cp / 10;
-    }
-    digits
-}
-
-fn is_palindrome(s: &[u32]) -> bool {
-    let l = s.len();
-    for i in 0..l/2 {
-        if s[i] != s[l - 1 - i] {
-            return false
-        }
-    }
-    true
 }
 
 #[allow(dead_code)]
