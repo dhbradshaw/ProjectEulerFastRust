@@ -15,7 +15,8 @@ use std::iter::FromIterator;
 use time::PreciseTime;
 use chrono::{Datelike, NaiveDate, Weekday};
 use eulerrust::divisors::is_amicable;
-
+use eulerrust::fibonacci::Fibonacci;
+use eulerrust::primes::{primes_below, is_prime, nth_prime};
 
 #[allow(dead_code)]
 fn p1(bar: u64) -> u64 {
@@ -69,20 +70,6 @@ fn p2() -> u64 {
         t1 = t2 - t1;
     }
     total
-}
-
-struct Fibonacci {
-	last: u64,
-	curr: u64,
-}
-
-impl Iterator for Fibonacci {
-    type Item = u64;
-    fn next(&mut self) -> Option<u64> {
-        self.curr = self.curr + self.last;
-        self.last = self.curr - self.last;
-        Some(self.curr)
-    }
 }
 
 #[allow(dead_code)]
@@ -182,31 +169,6 @@ fn p6() -> u64 {
     sum * sum - sum_of_squares
 }
 
-fn is_prime(n: u64, primes: &[u64]) -> bool {
-    for p in primes {
-        if *p > ((n as f64).sqrt() as u64) {
-            break;
-        }
-        if n % p == 0 {
-            return false
-        }
-    }
-    true
-}
-
-fn nth_prime(n: usize) -> u64 {
-    let mut primes = Vec::new();
-    primes.push(2);
-    let mut test = 1;
-    while primes.len() < n {
-        test += 2;
-        if is_prime(test, &primes) {
-            primes.push(test);
-        }
-    }
-    primes[primes.len()-1]
-}
-
 #[allow(dead_code)]
 fn p7() -> u64 {
     let start = PreciseTime::now();
@@ -265,22 +227,6 @@ fn p9() {
     }
 }
 
-fn primes_below(n: u64) -> Vec<u64> {
-    let mut primes = Vec::new();
-    primes.push(2);
-    let mut candidate = 1;
-    loop {
-        candidate += 2;
-        if candidate >= n {
-            break;
-        }
-        if is_prime(candidate, &primes) {
-            primes.push(candidate);
-        }
-    }
-    primes
-}
-
 #[allow(dead_code)]
 fn p10() -> u64 {
     // Find the sum of all the primes below two million.
@@ -331,7 +277,7 @@ fn p11 () {
     ).collect();
 
     let order = matrix.len();
-    let am = eulerrust::AbstractMatrix::new(order);
+    let am = eulerrust::matrix::AbstractMatrix::new(order);
 
     let mut winner = 0;
     let mut vecs = am.rows();
@@ -483,11 +429,11 @@ fn p15() -> u64 {
     eulerrust::lattice::corner_to_corner(20)
 }
 
-#[allow(dead_code)]
-fn p15_factorial() -> u64 {
-    let f_20 = eulerrust::lattice::factorial(20);
-    eulerrust::lattice::factorial(40)/(f_20 * f_20)
-}
+// #[allow(dead_code)]
+// fn p15_factorial() -> u64 {
+//     let f_20 = eulerrust::lattice::factorial(20);
+//     eulerrust::lattice::factorial(40)/(f_20 * f_20)
+// }
 
 #[allow(dead_code)]
 fn p16() -> u32 {
@@ -714,46 +660,75 @@ fn p26() -> usize {
     den_max
 }
 
-fn p27() -> u32 {
-    1
-}
+
+// #[allow(dead_code)]
+// fn p27() -> i32 {
+//     let mut i = 0;
+//     let mut b = 2;
+//     let mut max_count = 0;
+//     let mut n_max = 0;
+//     while b < 1001 { // loop through b
+//         if primes[b] {
+//             let mut a = -999;
+//             while a < 1000 { // loop through a
+//                 let mut n = 0;
+//                 loop { // loop through n
+//                     let quad = n * n + a * n + b;
+//                     if primes[quad] {
+//                         n += 1;
+//                     } else {
+//                         break
+//                     }
+//                 }
+//                 if n > max_count {
+//                     n_max = n;
+//                     max_count = n;
+//                 }
+//                 a += 2
+//             }
+//         }
+//         b += 1;
+//     }
+//     n_max
+// }
 
 fn main() {
-    // println!("{}", p1(10));
-    // println!("{}", p1_iterate(10));
-    // println!("{}", p1(1000));``
-    // println!("{}", p1_iterate(1000));
-    // println!("{}", p2());
-    // println!("{}", p2_iterative());
-    // println!("{}", p3(600851475143));
-    // let start = PreciseTime::now();
-    // println!("{:?}", p4());
-    // let end = PreciseTime::now();
-    // println!("{} seconds", start.to(end));
-    // println!("{}", p5());
-    // println!("{}", p6());
-    // println!("{}", p7());
-    // println!("{:?}", p8(13)); // prints [1, 2, 3, 4, 5, 6]
-    // p9();
-    // println!("{}", p10());
-    // p11();
-    // p12();
-    // let n = p13();
-    // let n = p14();
-    // let mut n = p15();
-    // n = p15_factorial();
-    // let n = p16();
-    // let n = p17();
-    // let n = p18();
-    // let n = p19();
-    // let n = p20();
-    // let n = p21();
-    // let n = p22();
-    // let n = p23();
-    // let n = p24();
-    // let n = p25();
+    println!("{}", p1(10));
+    println!("{}", p1_iterate(10));
+    println!("{}", p1(1000));
+    println!("{}", p1_iterate(1000));
+    println!("{}", p2());
+    println!("{}", p2_iterative());
+    println!("{}", p3(600851475143));
     let start = PreciseTime::now();
-    let n = p26();
+    println!("{:?}", p4());
+    let end = PreciseTime::now();
+    println!("{} seconds", start.to(end));
+    println!("{}", p5());
+    println!("{}", p6());
+    println!("{}", p7());
+    println!("{:?}", p8(13)); // prints [1, 2, 3, 4, 5, 6]
+    p9();
+    println!("{}", p10());
+    p11();
+    p12();
+    let mut n = p13();
+    let n14 = p14();
+    let n15 = p15();
+    // let n15_factorial = p15_factorial();
+    let n16 = p16();
+    let n17 = p17();
+    let n18 = p18();
+    let n19 = p19();
+    let n20 = p20();
+    let n21 = p21();
+    let n22 = p22();
+    let n23 = p23();
+    let n24 = p24();
+    let n25 = p25();
+    let n26 = p26();
+    let start = PreciseTime::now();
+    // let n = p27();
     let end = PreciseTime::now();
     println!("seconds: {} answer: {:?}", start.to(end), n);
 }
