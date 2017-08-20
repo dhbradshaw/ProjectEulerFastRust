@@ -38,3 +38,44 @@ pub fn nth_prime(n: usize) -> u64 {
     }
     primes[primes.len()-1]
 }
+
+pub fn sieve() -> [bool; 16000] {
+    let mut is_prime = [true; 16000];
+    let l = is_prime.len();
+    let sqrt = (l as f64).sqrt() as usize;
+
+    let mut i = 2;
+    while i < sqrt + 1 {
+        if is_prime[i] {
+            let mut unprime = i * i;
+            while unprime < l {
+                is_prime[unprime] = false;
+                unprime += i;
+            }
+        }
+        i += 1
+    }
+    is_prime
+}
+
+
+#[cfg(test)]
+mod test {
+    use super::*;
+    #[test]
+    fn test_sieve() {
+        assert_eq!(sieve(), [
+            true,
+            true,
+            true,
+            true,
+            false,
+
+            true,
+            false,
+            true,
+            false,
+            false,
+        ]);
+    }
+}

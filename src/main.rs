@@ -17,7 +17,7 @@ use chrono::{Datelike, NaiveDate, Weekday};
 use eulerrust::divisors::is_amicable;
 use eulerrust::fibonacci::Fibonacci;
 use eulerrust::palindrome::{is_palindrome, reverse_decimal_digits};
-use eulerrust::primes::{primes_below, is_prime, nth_prime};
+use eulerrust::primes::{primes_below, nth_prime, sieve};
 
 #[allow(dead_code)]
 fn p1(bar: u64) -> u64 {
@@ -642,74 +642,93 @@ fn p26() -> usize {
 }
 
 
-// #[allow(dead_code)]
-// fn p27() -> i32 {
-//     let mut i = 0;
-//     let mut b = 2;
-//     let mut max_count = 0;
-//     let mut n_max = 0;
-//     while b < 1001 { // loop through b
-//         if primes[b] {
-//             let mut a = -999;
-//             while a < 1000 { // loop through a
-//                 let mut n = 0;
-//                 loop { // loop through n
-//                     let quad = n * n + a * n + b;
-//                     if primes[quad] {
-//                         n += 1;
-//                     } else {
-//                         break
-//                     }
-//                 }
-//                 if n > max_count {
-//                     n_max = n;
-//                     max_count = n;
-//                 }
-//                 a += 2
-//             }
-//         }
-//         b += 1;
-//     }
-//     n_max
-// }
+#[allow(dead_code)]
+fn p27() -> i32 {
+    let mut b: i32 = 2;
+    let mut max_count = 0;
+    let mut ab_max = 0;
+    let primes = sieve();
+    while b < 1001 { // loop through b
+        if primes[b as usize] {
+            let mut a: i32 = -999;
+            while a < 1000 { // loop through a
+                let mut n = 0;
+                loop { // loop through n
+                    let quad = n * n + a * n + b;
+                    if quad > 1 && primes[quad as usize] {
+                        n += 1;
+                    } else {
+                        break
+                    }
+                }
+                if n > max_count {
+                    ab_max = a * b;
+                    max_count = n;
+                }
+                a += 2
+            }
+        }
+        b += 1;
+    }
+    ab_max
+}
+
+#[allow(dead_code)]
+fn p28() -> u64 {
+    let bound = 1001;
+    let mut agg = 1;
+    let mut top_right = 1;
+    let mut order = 3;
+    loop {
+        let last_top_right = top_right;
+        top_right = order * order;
+        let bottom_left = (top_right + last_top_right) / 2;
+        agg += top_right + 3 * bottom_left;
+        order += 2;
+        if order > bound {
+            break agg
+        }
+    }
+}
 
 fn main() {
-    println!("{}", p1(10));
-    println!("{}", p1_iterate(10));
-    println!("{}", p1(1000));
-    println!("{}", p1_iterate(1000));
-    println!("{}", p2());
-    println!("{}", p2_iterative());
-    println!("{}", p3(600851475143));
+    // println!("{}", p1(10));
+    // println!("{}", p1_iterate(10));
+    // println!("{}", p1(1000));
+    // println!("{}", p1_iterate(1000));
+    // println!("{}", p2());
+    // println!("{}", p2_iterative());
+    // println!("{}", p3(600851475143));
+    // let start = PreciseTime::now();
+    // println!("{:?}", p4());
+    // let end = PreciseTime::now();
+    // println!("{} seconds", start.to(end));
+    // println!("{}", p5());
+    // println!("{}", p6());
+    // println!("{}", p7());
+    // println!("{:?}", p8(13)); // prints [1, 2, 3, 4, 5, 6]
+    // p9();
+    // println!("{}", p10());
+    // p11();
+    // p12();
+    // let mut n = p13();
+    // let n14 = p14();
+    // let n15 = p15();
+    // // let n15_factorial = p15_factorial();
+    // let n16 = p16();
+    // let n17 = p17();
+    // let n18 = p18();
+    // let n19 = p19();
+    // let n20 = p20();
+    // let n21 = p21();
+    // let n22 = p22();
+    // let n23 = p23();
+    // let n24 = p24();
+    // let n25 = p25();
+    // let n26 = p26();
+    // let n27 = p27();
     let start = PreciseTime::now();
-    println!("{:?}", p4());
-    let end = PreciseTime::now();
-    println!("{} seconds", start.to(end));
-    println!("{}", p5());
-    println!("{}", p6());
-    println!("{}", p7());
-    println!("{:?}", p8(13)); // prints [1, 2, 3, 4, 5, 6]
-    p9();
-    println!("{}", p10());
-    p11();
-    p12();
-    let mut n = p13();
-    let n14 = p14();
-    let n15 = p15();
-    // let n15_factorial = p15_factorial();
-    let n16 = p16();
-    let n17 = p17();
-    let n18 = p18();
-    let n19 = p19();
-    let n20 = p20();
-    let n21 = p21();
-    let n22 = p22();
-    let n23 = p23();
-    let n24 = p24();
-    let n25 = p25();
-    let n26 = p26();
-    let start = PreciseTime::now();
-    // let n = p27();
+    let n = p28();
     let end = PreciseTime::now();
     println!("seconds: {} answer: {:?}", start.to(end), n);
 }
