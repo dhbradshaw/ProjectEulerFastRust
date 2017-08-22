@@ -691,6 +691,74 @@ fn p28() -> u64 {
     }
 }
 
+#[allow(dead_code)]
+fn p29() -> usize {
+    let mut set = HashSet::new();
+    for a in 2..101 {
+        for b in 2..101 {
+            let a_big = num::BigUint::from_u32(a).unwrap();
+            let p = num::pow(a_big, b);
+            set.insert(p);
+        }
+    }
+    set.len()
+}
+
+#[allow(dead_code)]
+fn digit_5th_power_sum(n: u32) -> u32 {
+    let mut agg = 0;
+    let mut n = n;
+    while n > 0 {
+        let last_digit = n % 10;
+        agg += match last_digit {
+            0 => 0,
+            1 => 1,
+            2 => 32,
+            3 => 243,
+            4 => 1024,
+            5 => 3125,
+            6 => 7776,
+            7 => 16807,
+            8 => 32768,
+            9 => 59049,
+            _ => 0,
+        };
+        n /= 10;
+    }
+    agg
+}
+
+#[allow(dead_code)]
+fn p30() -> u32 {
+    // Find the sum of all the numbers that can be written as the sum of fifth powers of their
+    // digits.
+
+    let bound = 9u32.pow(5) * 6;
+    let mut agg = 0;
+    for n in 2..bound {
+        if n == digit_5th_power_sum(n){
+            agg += n
+        }
+    }
+    agg
+}
+
+#[allow(dead_code)]
+fn coin_choices(amount: u32, type_count: usize) {
+    let coins = [1, 2, 5, 10, 20, 50, 100, 200];
+    match type_count {
+        1 => 1,
+        // 2 through 8: sum all posibilities for largest type.  For each one, reduce amount appropriately and type_count by one.
+        _ => 0,
+        }
+    }
+}
+
+#[allow(dead_code)]
+fn p31() -> u32 {
+    1
+}
+
 fn main() {
     // println!("{}", p1(10));
     // println!("{}", p1_iterate(10));
@@ -727,8 +795,11 @@ fn main() {
     // let n25 = p25();
     // let n26 = p26();
     // let n27 = p27();
+    // let n28 = p28();
+    // let n29 = p29();
+    // let n = p30();
     let start = PreciseTime::now();
-    let n = p28();
+    let n = p31();
     let end = PreciseTime::now();
     println!("seconds: {} answer: {:?}", start.to(end), n);
 }
