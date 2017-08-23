@@ -763,9 +763,20 @@ fn p31() -> u32 {
     coin_choices(200, 8)
 }
 
+
+fn p32() -> u32 {
+    let mut digits: HashSet<u32> = [1,2,3,4,5,6,7,8,9].iter().cloned().collect();
+    for d in (&digits).iter() {
+        println!("{}", d);
+        // let digits_less_one = digits[]
+        // for d2 in
+    }
+    1
+}
+
 fn main() {
     let start = PreciseTime::now();
-    let n = p31_memo();
+    let n = p32();
     let end = PreciseTime::now();
     println!("seconds: {} answer: {:?}", start.to(end), n);
     // println!("{}", p1(10));
@@ -805,5 +816,6 @@ fn main() {
     // let n27 = p27();
     // let n28 = p28();
     // let n29 = p29();
-    // let n = p30();
+    // let n30 = p30();
+    // let n31 = p31();
 }
