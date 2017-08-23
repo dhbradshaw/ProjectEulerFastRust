@@ -744,22 +744,30 @@ fn p30() -> u32 {
 }
 
 #[allow(dead_code)]
-fn coin_choices(amount: u32, type_count: usize) {
+fn coin_choices(amount: u32, type_count: usize) -> u32 {
     let coins = [1, 2, 5, 10, 20, 50, 100, 200];
     match type_count {
         1 => 1,
-        // 2 through 8: sum all posibilities for largest type.  For each one, reduce amount appropriately and type_count by one.
-        _ => 0,
+        2 ... 8 => {
+            let largest_coin = coins[type_count - 1];
+            let max_n = amount / largest_coin;
+            let choices = 0..(max_n + 1);
+            choices.map(|n| {coin_choices(amount - n * largest_coin, type_count - 1)}).sum()
         }
+        _ => 0,
     }
 }
 
 #[allow(dead_code)]
 fn p31() -> u32 {
-    1
+    coin_choices(200, 8)
 }
 
 fn main() {
+    let start = PreciseTime::now();
+    let n = p31_memo();
+    let end = PreciseTime::now();
+    println!("seconds: {} answer: {:?}", start.to(end), n);
     // println!("{}", p1(10));
     // println!("{}", p1_iterate(10));
     // println!("{}", p1(1000));
@@ -798,8 +806,4 @@ fn main() {
     // let n28 = p28();
     // let n29 = p29();
     // let n = p30();
-    let start = PreciseTime::now();
-    let n = p31();
-    let end = PreciseTime::now();
-    println!("seconds: {} answer: {:?}", start.to(end), n);
 }
