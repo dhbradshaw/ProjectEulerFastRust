@@ -6,6 +6,7 @@ pub mod lexicographic;
 pub mod maxpathsum;
 pub mod matrix;
 pub mod numberletters;
+pub mod odddigits;
 pub mod palindrome;
 pub mod primes;
 pub mod trianglenumbers;

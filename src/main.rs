@@ -16,8 +16,9 @@ use time::PreciseTime;
 use chrono::{Datelike, NaiveDate, Weekday};
 use eulerrust::divisors::is_amicable;
 use eulerrust::fibonacci::Fibonacci;
+use eulerrust::odddigits::next_odd_digit_number;
 use eulerrust::palindrome::{is_palindrome, reverse_decimal_digits};
-use eulerrust::primes::{primes_below, nth_prime, sieve};
+use eulerrust::primes::{primes_below, nth_prime, sieve_16000, sieve_1_000_000};
 
 #[allow(dead_code)]
 fn p1(bar: u64) -> u64 {
@@ -647,7 +648,7 @@ fn p27() -> i32 {
     let mut b: i32 = 2;
     let mut max_count = 0;
     let mut ab_max = 0;
-    let primes = sieve();
+    let primes = sieve_16000();
     while b < 1001 { // loop through b
         if primes[b as usize] {
             let mut a: i32 = -999;
@@ -888,9 +889,46 @@ fn p34() -> usize {
     sum
 }
 
+#[allow(dead_code)]
+fn rotate(n: usize) -> usize {
+    let zeroes = (n as f64).log(10.0) as u32;
+    let last = n % 10;
+    let rest = n / 10;
+    rest + last * 10usize.pow(zeroes)
+}
+
+#[allow(dead_code)]
+fn p35() -> usize {
+    let mut circular_prime_count = 0;
+    let is_prime = sieve_1_000_000();
+    let mut n = 2;
+    loop {
+        if n >= 1_000_000 {
+            break
+        }
+        if is_prime[n] {
+            let mut circular_prime = true;
+            let mut r = rotate(n);
+            while r != n {
+                if !is_prime[r] {
+                    circular_prime = false;
+                    break;
+                }
+                r = rotate(r);
+            }
+            if circular_prime {
+                circular_prime_count += 1;
+                println!("{} {}", n, circular_prime_count);
+            }
+        }
+        n = next_odd_digit_number(n);
+    }
+    circular_prime_count
+}
+
 fn main() {
     let start = PreciseTime::now();
-    let n = p34();
+    let n = p35();
     let end = PreciseTime::now();
     println!("seconds: {} answer: {:?}", start.to(end), n);
     // println!("{}", p1(10));
@@ -934,4 +972,5 @@ fn main() {
     // let n31 = p31();
     // let n32 = p32();
     // let n33 = p33();
+    // let n34 = p34();
 }
