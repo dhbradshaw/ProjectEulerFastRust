@@ -763,20 +763,77 @@ fn p31() -> u32 {
     coin_choices(200, 8)
 }
 
-
-fn p32() -> u32 {
-    let mut digits: HashSet<u32> = [1,2,3,4,5,6,7,8,9].iter().cloned().collect();
-    for d in (&digits).iter() {
-        println!("{}", d);
-        // let digits_less_one = digits[]
-        // for d2 in
+#[allow(dead_code)]
+fn no_repeats(n: usize, digits: &mut [bool]) -> bool {
+    let mut pan = true;
+    let mut nc = n;
+    while nc > 0 {
+        let d = nc % 10;
+        if digits[d] {
+            pan = false;
+            break;
+        } else {
+            digits[d] = true;
+        }
+        nc = nc / 10;
     }
+    pan
+}
+
+
+#[allow(dead_code)]
+fn p32() -> u32 {
+    let mut pandigital_products = HashSet::new();
+    let mut sum = 0;
+
+    // One of the multipliers has to be less than 100.
+    for i in 1..100 {
+
+        // Avoid repeats by enforcing that j > i.
+        // Upper bound on j can be big because we'll break when p is large.
+        for j in i..10000 {
+            let mut digits = [false; 10];
+            let mut pan = no_repeats(i as usize, &mut digits);
+            if !pan {
+                break;
+            }
+            pan = no_repeats(j as usize, &mut digits);
+            let p = i * j;
+            if pan {
+                if no_repeats(p as usize, &mut digits) {
+
+                    // Check that all nine digits are used
+                    for i in 1..10 {
+                        if !digits[i] {
+                            pan = false;
+                            break;
+                        }
+                    }
+
+                    // Add any new products to the set and sum.
+                    if pan {
+                        if !pandigital_products.contains(&p) {
+                            pandigital_products.insert(p);
+                            sum += p;
+                        }
+                    }
+                }
+            }
+            if p > 9876 {
+                break;
+            }
+        }
+    }
+    sum
+}
+
+fn p33() -> usize {
     1
 }
 
 fn main() {
     let start = PreciseTime::now();
-    let n = p32();
+    let n = p33();
     let end = PreciseTime::now();
     println!("seconds: {} answer: {:?}", start.to(end), n);
     // println!("{}", p1(10));
@@ -818,4 +875,5 @@ fn main() {
     // let n29 = p29();
     // let n30 = p30();
     // let n31 = p31();
+    // let n31 = p32();
 }
