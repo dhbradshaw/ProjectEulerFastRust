@@ -827,13 +827,70 @@ fn p32() -> u32 {
     sum
 }
 
+#[allow(dead_code)]
 fn p33() -> usize {
+    for n in 10..100 {
+        let n1 = n / 10;
+        let n2 = n % 10;
+        for d in (n + 1)..100 {
+            let d1 = d / 10;
+            let d2 = d % 10;
+            let f = n as f64 / d as f64;
+            if d1 == n2 {
+                let ff = n1 as f64 / d2 as f64;
+                if ff == f {
+                    println!("{}/{}", n1, d2);
+                }
+            }
+            if d2 == n1 {
+                let ff = n2 as f64 / d1 as f64;
+                if ff == f {
+                    println!("{}/{}", n2, d1);
+                }
+            }
+        }
+    }
     1
+}
+
+#[allow(dead_code)]
+fn sum_digit_factorial(n: usize) -> usize {
+    let mut nc = n;
+    let mut sum = 0;
+    while nc > 0 {
+        let last = nc % 10;
+        sum += match last {
+            0 => 1,
+            1 => 1,
+            2 => 2,
+            3 => 6,
+            4 => 24,
+            5 => 120,
+            6 => 720,
+            7 => 5040,
+            8 => 40320,
+            9 => 362880,
+            _ => 0,
+        };
+        nc = nc / 10;
+    }
+    sum
+}
+
+#[allow(dead_code)]
+fn p34() -> usize {
+    let mut sum = 0;
+    for n in 10..2_550_000 {
+        if n == sum_digit_factorial(n) {
+            sum += n
+        }
+    }
+    sum
 }
 
 fn main() {
     let start = PreciseTime::now();
-    let n = p33();
+    let n = p34();
     let end = PreciseTime::now();
     println!("seconds: {} answer: {:?}", start.to(end), n);
     // println!("{}", p1(10));
@@ -875,5 +932,6 @@ fn main() {
     // let n29 = p29();
     // let n30 = p30();
     // let n31 = p31();
-    // let n31 = p32();
+    // let n32 = p32();
+    // let n33 = p33();
 }
