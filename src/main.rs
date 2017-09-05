@@ -997,9 +997,73 @@ fn p37() -> u64 {
     sum
 }
 
+fn places(n: u64) -> u32 {
+    (n as f64).log(10f64) as u32 + 1
+}
+
+fn pan_ok(n: u64) -> bool {
+    let mut digits = [false; 10];
+    digits[0]=true;
+    no_repeats(n as usize, &mut digits)
+}
+
+fn pandigital_multiple(n: u64) -> u64 {
+    let mut n = n;
+    let mut m = 2;
+    while places(n) < 9 {
+        let next_multiple = m * n;
+        n *= 10u64.pow(places(next_multiple));
+        n += next_multiple;
+        m += 1;
+    }
+    if places(n) > 10 {
+        return 0;
+    }
+
+    match  pan_ok(n) {
+        true => n,
+        _ => 0
+    }
+}
+
+#[allow(dead_code)]
+fn p38() -> u64 {
+    let digits: [u64; 9] = [1,2,3,4,5,6,7,8,9];
+    let c1 = 9;
+    println!("{:?}", places(c1));
+    let mut highest = 0;
+    for d in &digits {
+        let c2 =10 * c1 + d;
+        let m = pandigital_multiple(c2);
+        if m > highest {
+            highest = m;
+        }
+        if pan_ok(c2) {
+            for d in &digits {
+                let c3 = 10 * c2 + d;
+                let m = pandigital_multiple(c3);
+                if m > highest {
+                    highest = m;
+                }
+                if pan_ok(c3) {
+                    for d in &digits {
+                        let c4 = 10 * c3 + d;
+                        let m = pandigital_multiple(c4);
+                        if m > highest {
+                            highest = m;
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+    highest
+}
+
 fn main() {
     let start = PreciseTime::now();
-    let n = p37();
+    let n = p38();
     let end = PreciseTime::now();
     println!("seconds: {} answer: {:?}", start.to(end), n);
     // println!("{}", p1(10));
@@ -1046,4 +1110,5 @@ fn main() {
     // let n34 = p34();
     // let n35 = p35();
     // let n36 = p36();
+    // let n37 = p37();
 }
