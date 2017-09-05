@@ -1,0 +1,246 @@
+p35
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch is ahead of 'origin/master' by 1 commit.
+#   (use "git push" to publish your local commits)
+#
+# Changes to be committed:
+#	modified:   src/lib.rs
+#	modified:   src/main.rs
+#	new file:   src/odddigits.rs
+#	modified:   src/primes.rs
+#
+# ------------------------ >8 ------------------------
+# Do not touch the line above.
+# Everything below will be removed.
+diff --git a/src/lib.rs b/src/lib.rs
+index 0ff21bf..26343a6 100644
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -6,6 +6,7 @@ pub mod lexicographic;
+ pub mod maxpathsum;
+ pub mod matrix;
+ pub mod numberletters;
++pub mod odddigits;
+ pub mod palindrome;
+ pub mod primes;
+ pub mod trianglenumbers;
+diff --git a/src/main.rs b/src/main.rs
+index 4a20b18..0be9785 100644
+--- a/src/main.rs
++++ b/src/main.rs
+@@ -16,8 +16,9 @@ use time::PreciseTime;
+ use chrono::{Datelike, NaiveDate, Weekday};
+ use eulerrust::divisors::is_amicable;
+ use eulerrust::fibonacci::Fibonacci;
++use eulerrust::odddigits::next_odd_digit_number;
+ use eulerrust::palindrome::{is_palindrome, reverse_decimal_digits};
+-use eulerrust::primes::{primes_below, nth_prime, sieve};
++use eulerrust::primes::{primes_below, nth_prime, sieve_16000, sieve_1_000_000};
+ 
+ #[allow(dead_code)]
+ fn p1(bar: u64) -> u64 {
+@@ -647,7 +648,7 @@ fn p27() -> i32 {
+     let mut b: i32 = 2;
+     let mut max_count = 0;
+     let mut ab_max = 0;
+-    let primes = sieve();
++    let primes = sieve_16000();
+     while b < 1001 { // loop through b
+         if primes[b as usize] {
+             let mut a: i32 = -999;
+@@ -888,9 +889,46 @@ fn p34() -> usize {
+     sum
+ }
+ 
++#[allow(dead_code)]
++fn rotate(n: usize) -> usize {
++    let zeroes = (n as f64).log(10.0) as u32;
++    let last = n % 10;
++    let rest = n / 10;
++    rest + last * 10usize.pow(zeroes)
++}
++
++#[allow(dead_code)]
++fn p35() -> usize {
++    let mut circular_prime_count = 0;
++    let is_prime = sieve_1_000_000();
++    let mut n = 2;
++    loop {
++        if n >= 1_000_000 {
++            break
++        }
++        if is_prime[n] {
++            let mut circular_prime = true;
++            let mut r = rotate(n);
++            while r != n {
++                if !is_prime[r] {
++                    circular_prime = false;
++                    break;
++                }
++                r = rotate(r);
++            }
++            if circular_prime {
++                circular_prime_count += 1;
++                println!("{} {}", n, circular_prime_count);
++            }
++        }
++        n = next_odd_digit_number(n);
++    }
++    circular_prime_count
++}
++
+ fn main() {
+     let start = PreciseTime::now();
+-    let n = p34();
++    let n = p35();
+     let end = PreciseTime::now();
+     println!("seconds: {} answer: {:?}", start.to(end), n);
+     // println!("{}", p1(10));
+@@ -934,4 +972,5 @@ fn main() {
+     // let n31 = p31();
+     // let n32 = p32();
+     // let n33 = p33();
++    // let n34 = p34();
+ }
+diff --git a/src/odddigits.rs b/src/odddigits.rs
+new file mode 100644
+index 0000000..c661fdd
+--- /dev/null
++++ b/src/odddigits.rs
+@@ -0,0 +1,68 @@
++pub fn highest_even_digit(n: usize) -> Option<(usize, usize)> {
++    let mut nc = n;
++    if n == 0 {
++        return Some((0, 1))
++    }
++    let mut place = 1;
++    let mut highest_place = 0;
++    let mut highest_even_digit = 1;
++    while nc > 0 {
++        let last = nc % 10;
++        if last % 2 == 0 {
++            highest_place = place;
++            highest_even_digit = last;
++        }
++        nc = nc / 10;
++        place += 1;
++    }
++    if highest_place == 0 {
++        return None
++    }
++    Some((highest_even_digit, highest_place))
++}
++
++pub fn next_odd_digit_number(n: usize) -> usize {
++    match highest_even_digit(n) {
++        Some((digit, place)) => {
++            // Increment the even digit, fill rest with ones.
++            let mut nc = n / 10usize.pow(place as u32);
++            nc *= 10;
++            nc += digit + 1;
++            for _ in 0..(place - 1) {
++                nc *= 10;
++                nc += 1;
++            }
++            nc
++        },
++        None => {
++            // Try adding two.  If no even digit, return.  Else, increment the even digit, fill rest with ones
++            let nc = n + 2;
++            match highest_even_digit(nc) {
++                Some(_) => next_odd_digit_number(nc),
++                None => nc,
++            }
++        },
++    }
++}
++
++#[cfg(test)]
++mod test {
++    use super::*;
++    #[test]
++    fn test_next_odd_digit_number() {
++        assert_eq!(next_odd_digit_number(0), 1);
++        assert_eq!(next_odd_digit_number(1), 3);
++        assert_eq!(next_odd_digit_number(19), 31);
++        assert_eq!(next_odd_digit_number(3_199_999), 3_311_111);
++
++    }
++    #[test]
++    fn test_highest_even_digit() {
++        assert_eq!(highest_even_digit(0), Some((0, 1)));
++        assert_eq!(highest_even_digit(1), None);
++        assert_eq!(highest_even_digit(2), Some((2, 1)));
++        assert_eq!(highest_even_digit(12), Some((2, 1)));
++        assert_eq!(highest_even_digit(121), Some((2, 2)));
++        assert_eq!(highest_even_digit(1420), Some((4, 3)));
++    }
++}
+diff --git a/src/primes.rs b/src/primes.rs
+index ced5dec..ede55c8 100644
+--- a/src/primes.rs
++++ b/src/primes.rs
+@@ -39,7 +39,26 @@ pub fn nth_prime(n: usize) -> u64 {
+     primes[primes.len()-1]
+ }
+ 
+-pub fn sieve() -> [bool; 16000] {
++pub fn sieve_10() -> [bool; 10] {
++    let mut is_prime = [true; 10];
++    let l = is_prime.len();
++    let sqrt = (l as f64).sqrt() as usize;
++
++    let mut i = 2;
++    while i < sqrt + 1 {
++        if is_prime[i] {
++            let mut unprime = i * i;
++            while unprime < l {
++                is_prime[unprime] = false;
++                unprime += i;
++            }
++        }
++        i += 1
++    }
++    is_prime
++}
++
++pub fn sieve_16000() -> [bool; 16000] {
+     let mut is_prime = [true; 16000];
+     let l = is_prime.len();
+     let sqrt = (l as f64).sqrt() as usize;
+@@ -58,13 +77,32 @@ pub fn sieve() -> [bool; 16000] {
+     is_prime
+ }
+ 
++pub fn sieve_1_000_000() -> [bool; 1000000] {
++    let mut is_prime = [true; 1000000];
++    let l = is_prime.len();
++    let sqrt = (l as f64).sqrt() as usize;
++
++    let mut i = 2;
++    while i < sqrt + 1 {
++        if is_prime[i] {
++            let mut unprime = i * i;
++            while unprime < l {
++                is_prime[unprime] = false;
++                unprime += i;
++            }
++        }
++        i += 1
++    }
++    is_prime
++}
++
+ 
+ #[cfg(test)]
+ mod test {
+     use super::*;
+     #[test]
+     fn test_sieve() {
+-        assert_eq!(sieve(), [
++        assert_eq!(sieve_10(), [
+             true,
+             true,
+             true,

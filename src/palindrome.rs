@@ -17,3 +17,7 @@ pub fn is_palindrome(s: &[u32]) -> bool {
     }
     true
 }
+
+// pub fn is_palindrome_s(s: &str) -> bool {
+//
+// }

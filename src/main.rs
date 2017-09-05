@@ -18,7 +18,7 @@ use eulerrust::divisors::is_amicable;
 use eulerrust::fibonacci::Fibonacci;
 use eulerrust::odddigits::next_odd_digit_number;
 use eulerrust::palindrome::{is_palindrome, reverse_decimal_digits};
-use eulerrust::primes::{primes_below, nth_prime, sieve_16000, sieve_1_000_000};
+use eulerrust::primes::{primes_below, nth_prime, sieve_16000, sieve_1_000_000, is_prime_no_memo};
 
 #[allow(dead_code)]
 fn p1(bar: u64) -> u64 {
@@ -926,9 +926,80 @@ fn p35() -> usize {
     circular_prime_count
 }
 
+fn reverse(s: &str) -> String {
+    s.chars().rev().collect::<String>()
+}
+
+#[allow(dead_code)]
+fn p36() -> usize {
+    let mut sum = 0;
+    for n in 1..1_000_000 {
+        let s10 = format!("{}", n);
+        if s10 == reverse(&s10) {
+            let s2 = format!("{:b}", n);
+            if s2 == reverse(&s2) {
+                sum += n;
+            }
+        }
+
+    }
+    sum
+}
+
+fn add_right(v: &Vec<u64>) -> Vec<u64> {
+    let digits: [u64; 9] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    let mut w = Vec::new();
+    for branch in v {
+        for d in digits.iter() {
+            let candidate = branch * 10 + d;
+            if is_prime_no_memo(candidate) {
+                w.push(candidate)
+            }
+        }
+    }
+    w
+}
+
+fn left_truncate(n: u64) -> u64 {
+    let zeroes = (n as f32).log(10f32) as u32;
+    n % 10u64.pow(zeroes)
+}
+
+fn left_truncatable(n: u64) -> bool {
+    // Assumes that the number has already been tested to be prime itself.
+    let mut nc = left_truncate(n);
+    while nc > 0 {
+        if !is_prime_no_memo(nc) {
+            return false;
+        }
+        nc = left_truncate(nc)
+    }
+    true
+}
+
+#[allow(dead_code)]
+fn p37() -> u64 {
+    // Strategy: generate right-truncatable primes by adding digits to the right side of primes and
+    // seeing if the result is a prime.
+    // Test each right-truncatable prime to see if it is also left-truncatable.
+    // If it is, add it to the sum.
+    let mut sum = 0;
+    let mut branches: Vec<u64> = vec![2, 3, 5, 7];
+    branches = add_right(&branches);
+    while branches.len() > 0 {
+        for b in &branches {
+            if left_truncatable(*b) {
+                sum += *b;
+            }
+        }
+        branches = add_right(&branches);
+    }
+    sum
+}
+
 fn main() {
     let start = PreciseTime::now();
-    let n = p35();
+    let n = p37();
     let end = PreciseTime::now();
     println!("seconds: {} answer: {:?}", start.to(end), n);
     // println!("{}", p1(10));
@@ -973,4 +1044,6 @@ fn main() {
     // let n32 = p32();
     // let n33 = p33();
     // let n34 = p34();
+    // let n35 = p35();
+    // let n36 = p36();
 }

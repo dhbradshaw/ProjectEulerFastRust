@@ -26,6 +26,25 @@ pub fn is_prime(n: u64, primes: &[u64]) -> bool {
     true
 }
 
+pub fn is_prime_no_memo(n: u64) -> bool {
+    match n {
+        1 => false,
+        2 => true,
+        n if n % 2 == 0 => false,
+        _ => {
+            let sqrt = (n as f32).sqrt() as u64;
+            let mut test = 3;
+            while test <= sqrt {
+                if n % test == 0 {
+                    return false;
+                }
+                test += 2;
+            }
+            true
+        }
+    }
+}
+
 pub fn nth_prime(n: usize) -> u64 {
     let mut primes = Vec::new();
     primes.push(2);
@@ -116,4 +135,5 @@ mod test {
             false,
         ]);
     }
+
 }
