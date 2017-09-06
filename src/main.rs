@@ -946,6 +946,7 @@ fn p36() -> usize {
     sum
 }
 
+#[allow(dead_code)]
 fn add_right(v: &Vec<u64>) -> Vec<u64> {
     let digits: [u64; 9] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     let mut w = Vec::new();
@@ -960,11 +961,13 @@ fn add_right(v: &Vec<u64>) -> Vec<u64> {
     w
 }
 
+#[allow(dead_code)]
 fn left_truncate(n: u64) -> u64 {
     let zeroes = (n as f32).log(10f32) as u32;
     n % 10u64.pow(zeroes)
 }
 
+#[allow(dead_code)]
 fn left_truncatable(n: u64) -> bool {
     // Assumes that the number has already been tested to be prime itself.
     let mut nc = left_truncate(n);
@@ -997,16 +1000,19 @@ fn p37() -> u64 {
     sum
 }
 
+#[allow(dead_code)]
 fn places(n: u64) -> u32 {
     (n as f64).log(10f64) as u32 + 1
 }
 
+#[allow(dead_code)]
 fn pan_ok(n: u64) -> bool {
     let mut digits = [false; 10];
     digits[0]=true;
     no_repeats(n as usize, &mut digits)
 }
 
+#[allow(dead_code)]
 fn pandigital_multiple(n: u64) -> u64 {
     let mut n = n;
     let mut m = 2;
@@ -1061,9 +1067,42 @@ fn p38() -> u64 {
     highest
 }
 
+#[allow(dead_code)]
+fn p39() -> i64 {
+    let mut max_solutions = 0;
+    let mut n_max_solutions: i64 = 1;
+    for p in 1..1000 {
+        let p = p as i64;
+        let mut solutions = 0;
+        let mut a: i64 = 1;
+        loop {
+            let num = p * (p - 2 * a);
+            let denom = 2 * (p - a);
+            if num > 0 && denom > 0 && num % denom == 0 {
+                solutions += 1;
+            }
+            if denom == 0 {
+                break;
+            }
+            let b = num / denom;
+            if b <= a {
+                break;
+            }
+            a += 1;
+        }
+        if solutions > max_solutions {
+            max_solutions = solutions;
+            n_max_solutions = p;
+        }
+    }
+    n_max_solutions
+}
+
+
+
 fn main() {
     let start = PreciseTime::now();
-    let n = p38();
+    let n = p39();
     let end = PreciseTime::now();
     println!("seconds: {} answer: {:?}", start.to(end), n);
     // println!("{}", p1(10));
@@ -1111,4 +1150,5 @@ fn main() {
     // let n35 = p35();
     // let n36 = p36();
     // let n37 = p37();
+    // let n38 = p38();
 }
