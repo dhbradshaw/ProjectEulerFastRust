@@ -1,24 +1,29 @@
 extern crate arrayvec;
 extern crate chrono;
+extern crate eulerrust;
 extern crate fnv;
 extern crate num;
+extern crate permutohedron;
 extern crate time;
-extern crate eulerrust;
-use fnv::FnvHashMap;
-use num::FromPrimitive;
+
 use std::cmp::max;
 use std::collections::HashMap;
 use std::collections::HashSet;
 use std::fs::File;
 use std::io::Read;
 use std::iter::FromIterator;
-use time::PreciseTime;
+
 use chrono::{Datelike, NaiveDate, Weekday};
+use fnv::FnvHashMap;
+use num::FromPrimitive;
+use permutohedron::heap_recursive;
+use time::PreciseTime;
+
 use eulerrust::divisors::is_amicable;
 use eulerrust::fibonacci::Fibonacci;
 use eulerrust::odddigits::next_odd_digit_number;
 use eulerrust::palindrome::{is_palindrome, reverse_decimal_digits};
-use eulerrust::primes::{primes_below, nth_prime, sieve_16000, sieve_1_000_000, is_prime_no_memo};
+use eulerrust::primes::{primes_below, nth_prime, sieve_16000, sieve_1_000_000, is_prime, is_prime_no_memo};
 
 #[allow(dead_code)]
 fn p1(bar: u64) -> u64 {
@@ -1099,10 +1104,45 @@ fn p39() -> i64 {
 }
 
 
+#[allow(dead_code)]
+fn p40() -> u32 {
+    let digits = [1, 10, 100, 1000, 10000, 100000, 1000000];
+    let mut product = 1;
+    for d in &digits {
+        product *= eulerrust::champerownes::champerownes_digit(*d);
+    }
+    product
+}
+
+#[allow(dead_code)]
+fn p41() -> u64 {
+    let mut data = [1, 2, 3, 4, 5, 6];
+    let mut max_prime = 0;
+    let primes = primes_below(2767);
+    heap_recursive(&mut data, |permutation| {
+        match permutation[5] {
+            2 | 4 | 5 | 6 => (),
+            _ => {
+                let mut n = 0;
+                for i in permutation {
+                    n *= 10;
+                    n += *i;
+                }
+                n += 7_000_000;
+                if is_prime(n, &primes) {
+                    if n > max_prime {
+                        max_prime = n;
+                    }
+                }
+            }
+        }
+    });
+    max_prime
+}
 
 fn main() {
     let start = PreciseTime::now();
-    let n = p39();
+    let n = p41();
     let end = PreciseTime::now();
     println!("seconds: {} answer: {:?}", start.to(end), n);
     // println!("{}", p1(10));
@@ -1151,4 +1191,6 @@ fn main() {
     // let n36 = p36();
     // let n37 = p37();
     // let n38 = p38();
+    // let n39 = p39();
+    // let n40 = p40();
 }

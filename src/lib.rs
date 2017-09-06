@@ -1,3 +1,4 @@
+pub mod champerownes;
 pub mod collatz;
 pub mod divisors;
 pub mod fibonacci;
