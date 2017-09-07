@@ -1165,7 +1165,7 @@ fn p42() -> u64 {
     let mut count = 0;
     for name in data_string.split(",") {
         let n = word_score(&name, zero);
-        if is_triangular(n) {
+        if is_triangular(n as u64) {
             count += 1;
         }
     }
@@ -1218,9 +1218,26 @@ fn p44() -> u64 {
     }
 }
 
+#[allow(dead_code)]
+fn p45() -> u64 {
+    let mut hex = 1;
+    let mut diff = 5;
+    let mut count = 0;
+    loop {
+        hex = hex + diff;
+        if is_pentagonal(hex) && is_triangular(hex as u64) {
+            if count == 1 {
+                break hex
+            }
+            count += 1;
+        }
+        diff += 4
+    }
+}
+
 fn main() {
     let start = PreciseTime::now();
-    let n = p44();
+    let n = p45();
     let end = PreciseTime::now();
     println!("seconds: {} answer: {:?}", start.to(end), n);
     // println!("{}", p1(10));
@@ -1274,4 +1291,5 @@ fn main() {
     // let n41 = p41();
     // let n42 = p42();
     // let n43 = p43();
+    // let n44 = p44();
 }

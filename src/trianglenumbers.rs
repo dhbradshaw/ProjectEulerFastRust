@@ -18,9 +18,9 @@ impl Iterator for Triangular {
     }
 }
 
-pub fn is_triangular(n: u32) -> bool {
-    let discriminant = (1 + 8 * n) as f32;
-    discriminant.sqrt() % 1f32 == 0f32
+pub fn is_triangular(n: u64) -> bool {
+    let discriminant = (1 + 8 * n) as f64;
+    discriminant.sqrt() % 1f64 == 0f64
 }
 
 pub fn hello() {
