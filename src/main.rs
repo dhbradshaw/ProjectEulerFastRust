@@ -1141,6 +1141,7 @@ fn p41() -> u64 {
     max_prime
 }
 
+#[allow(dead_code)]
 fn word_score(s: &str, zero: u32) -> u32 {
     s.chars()
     .filter(|c| {c.is_alphabetic()})
@@ -1148,6 +1149,7 @@ fn word_score(s: &str, zero: u32) -> u32 {
     .sum()
 }
 
+#[allow(dead_code)]
 fn read_to_string(filename: &str) -> String {
     let mut file = File::open(filename).unwrap();
     let mut data_string = String::new();
@@ -1169,9 +1171,32 @@ fn p42() -> u64 {
     count
 }
 
+
+fn p43() -> u64 {
+    let mut data = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    let mut sum: u64 = 0;
+    heap_recursive(&mut data, |perm| {
+        if (perm[2 - 1] * 100 + perm[3 - 1] * 10 + perm[4 - 1]) % 2 == 0 &&
+        (perm[3 - 1] * 100 + perm[4 - 1] * 10 + perm[5 - 1]) % 3 == 0 &&
+        (perm[4 - 1] * 100 + perm[5 - 1] * 10 + perm[6 - 1]) % 5 == 0 &&
+        (perm[5 - 1] * 100 + perm[6 - 1] * 10 + perm[7 - 1]) % 7 == 0 &&
+        (perm[6 - 1] * 100 + perm[7 - 1] * 10 + perm[8 - 1]) % 11 == 0 &&
+        (perm[7 - 1] * 100 + perm[8 - 1] * 10 + perm[9 - 1]) % 13 == 0 &&
+        (perm[8 - 1] * 100 + perm[9 - 1] * 10 + perm[10 - 1]) % 17 == 0 {
+            let mut n = 0;
+            for i in perm {
+                n *= 10;
+                n += *i as u64;
+            }
+            sum += n;
+        }
+    });
+    sum
+}
+
 fn main() {
     let start = PreciseTime::now();
-    let n = p42();
+    let n = p43();
     let end = PreciseTime::now();
     println!("seconds: {} answer: {:?}", start.to(end), n);
     // println!("{}", p1(10));
@@ -1223,4 +1248,5 @@ fn main() {
     // let n39 = p39();
     // let n40 = p40();
     // let n41 = p41();
+    // let n42 = p42();
 }
