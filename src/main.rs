@@ -24,6 +24,7 @@ use eulerrust::fibonacci::Fibonacci;
 use eulerrust::odddigits::next_odd_digit_number;
 use eulerrust::palindrome::{is_palindrome, reverse_decimal_digits};
 use eulerrust::primes::{primes_below, nth_prime, sieve_16000, sieve_1_000_000, is_prime, is_prime_no_memo};
+use eulerrust::trianglenumbers::is_triangular;
 
 #[allow(dead_code)]
 fn p1(bar: u64) -> u64 {
@@ -1140,9 +1141,37 @@ fn p41() -> u64 {
     max_prime
 }
 
+fn word_score(s: &str, zero: u32) -> u32 {
+    s.chars()
+    .filter(|c| {c.is_alphabetic()})
+    .map(|c| {c as u32 - zero})
+    .sum()
+}
+
+fn read_to_string(filename: &str) -> String {
+    let mut file = File::open(filename).unwrap();
+    let mut data_string = String::new();
+    file.read_to_string(&mut data_string).unwrap();
+    data_string
+}
+
+#[allow(dead_code)]
+fn p42() -> u64 {
+    let data_string = read_to_string("p042_words.txt");
+    let zero = 'A' as u32 - 1;
+    let mut count = 0;
+    for name in data_string.split(",") {
+        let n = word_score(&name, zero);
+        if is_triangular(n) {
+            count += 1;
+        }
+    }
+    count
+}
+
 fn main() {
     let start = PreciseTime::now();
-    let n = p41();
+    let n = p42();
     let end = PreciseTime::now();
     println!("seconds: {} answer: {:?}", start.to(end), n);
     // println!("{}", p1(10));
@@ -1193,4 +1222,5 @@ fn main() {
     // let n38 = p38();
     // let n39 = p39();
     // let n40 = p40();
+    // let n41 = p41();
 }

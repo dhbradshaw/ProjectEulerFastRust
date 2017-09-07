@@ -18,8 +18,34 @@ impl Iterator for Triangular {
     }
 }
 
+pub fn is_triangular(n: u32) -> bool {
+    let discriminant = (1 + 8 * n) as f32;
+    discriminant.sqrt() % 1f32 == 0f32
+}
+
 pub fn hello() {
     let mut t = Triangular::new();
     println!("{} {} {}", t.next().unwrap(), t.next().unwrap(), t.next().unwrap());
     println!("Hello triangle module!")
+}
+
+
+#[cfg(test)]
+mod test {
+    use super::*;
+    #[test]
+    fn test_is_triangular() {
+        assert_eq!(is_triangular(1), true);
+        assert_eq!(is_triangular(2), false);
+        assert_eq!(is_triangular(3), true);
+        assert_eq!(is_triangular(4), false);
+        assert_eq!(is_triangular(5), false);
+        assert_eq!(is_triangular(6), true);
+        assert_eq!(is_triangular(7), false);
+        assert_eq!(is_triangular(54), false);
+        assert_eq!(is_triangular(55), true);
+        assert_eq!(is_triangular(56), false);
+
+
+    }
 }
