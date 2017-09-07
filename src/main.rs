@@ -23,6 +23,7 @@ use eulerrust::divisors::is_amicable;
 use eulerrust::fibonacci::Fibonacci;
 use eulerrust::odddigits::next_odd_digit_number;
 use eulerrust::palindrome::{is_palindrome, reverse_decimal_digits};
+use eulerrust::pentagonalnumbers::{is_pentagonal, pentagonal};
 use eulerrust::primes::{primes_below, nth_prime, sieve_16000, sieve_1_000_000, is_prime, is_prime_no_memo};
 use eulerrust::trianglenumbers::is_triangular;
 
@@ -1172,6 +1173,7 @@ fn p42() -> u64 {
 }
 
 
+#[allow(dead_code)]
 fn p43() -> u64 {
     let mut data = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     let mut sum: u64 = 0;
@@ -1194,9 +1196,31 @@ fn p43() -> u64 {
     sum
 }
 
+#[allow(dead_code)]
+fn p44() -> u64 {
+    let mut i_diff = 1;
+    loop {
+        let diff = pentagonal(i_diff);
+        let mut i_smaller = 1;
+        let mut smaller = pentagonal(i_smaller);
+        while smaller < diff / 2 {
+            let larger = smaller + diff;
+            if is_pentagonal(larger) {
+                let sum = smaller + larger;
+                if is_pentagonal(sum) {
+                    return diff;
+                }
+            }
+            i_smaller += 1;
+            smaller = pentagonal(i_smaller);
+        }
+        i_diff += 1;
+    }
+}
+
 fn main() {
     let start = PreciseTime::now();
-    let n = p43();
+    let n = p44();
     let end = PreciseTime::now();
     println!("seconds: {} answer: {:?}", start.to(end), n);
     // println!("{}", p1(10));
@@ -1249,4 +1273,5 @@ fn main() {
     // let n40 = p40();
     // let n41 = p41();
     // let n42 = p42();
+    // let n43 = p43();
 }
