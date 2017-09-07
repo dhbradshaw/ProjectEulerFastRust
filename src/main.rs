@@ -1235,9 +1235,56 @@ fn p45() -> u64 {
     }
 }
 
+#[allow(dead_code)]
+fn p46() -> usize {
+    // Get quick prime checker
+    let is_prime = sieve_16000();
+
+    // Get quick primes list
+    let mut primes = [0; 6000];
+    let mut primes_cursor: usize = 0;
+    for i in 2..16000 {
+        if is_prime[i] {
+            primes[primes_cursor] = i;
+            primes_cursor += 1;
+        }
+    }
+
+    // Now just check each composite
+    let mut n = 3;
+    loop {
+        let mut backs_goldbach = true;
+        if !is_prime[n] {
+            backs_goldbach = false;
+            let mut i_primes = 0;
+            let mut prime = primes[i_primes];
+            while prime < n {
+                let diff = n - prime;
+                if diff % 2 == 0 {
+                    if ((diff / 2) as f64).sqrt() % 1f64 == 0f64 {
+                        backs_goldbach = true;
+                        break;
+                    }
+                }
+                i_primes += 1;
+                prime = primes[i_primes];
+            }
+        }
+        if !backs_goldbach {
+            break n
+        }
+        n += 2;
+    }
+}
+
+#[allow(dead_code)]
+fn p47() -> u64 {
+    1
+}
+
 fn main() {
     let start = PreciseTime::now();
-    let n = p45();
+    let n = p47();
     let end = PreciseTime::now();
     println!("seconds: {} answer: {:?}", start.to(end), n);
     // println!("{}", p1(10));
@@ -1292,4 +1339,6 @@ fn main() {
     // let n42 = p42();
     // let n43 = p43();
     // let n44 = p44();
+    // let n45 = p45();
+    // let n46 = p46();
 }
