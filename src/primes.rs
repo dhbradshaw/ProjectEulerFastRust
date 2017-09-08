@@ -135,9 +135,38 @@ pub fn distinct_prime_factors(n: u64, primes: &Vec<u64>) -> HashSet<u64> {
     factors
 }
 
+pub fn most_consecutive_primes(n: u64, primes: &[u64]) -> usize {
+    let mut first = 0usize;
+    let mut last = 1usize;
+    let mut s = primes[first] + primes[last];
+    loop {
+        if primes[last] > n || primes[first] > n {
+            break 0;
+        }
+        if s < n {
+            last += 1;
+            s += primes[last];
+        }
+        if s == n {
+            break last - first + 1
+        }
+        if s > n {
+            s -= primes[first];
+            first += 1;
+        }
+    }
+}
+
 #[cfg(test)]
 mod test {
     use super::*;
+    #[test]
+    fn test_most_consecutive_primes() {
+        let primes = primes_below(100);
+        assert_eq!(most_consecutive_primes(3, &primes), 1);
+        assert_eq!(most_consecutive_primes(41, &primes), 6);
+        assert_eq!(most_consecutive_primes(953, &primes), 21);
+    }
     #[test]
     fn test_sieve() {
         assert_eq!(sieve_10(), [

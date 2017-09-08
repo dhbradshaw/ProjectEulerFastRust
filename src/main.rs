@@ -15,7 +15,7 @@ use std::iter::FromIterator;
 
 use chrono::{Datelike, NaiveDate, Weekday};
 use fnv::FnvHashMap;
-use num::{BigUint, FromPrimitive, ToPrimitive};
+use num::{BigUint, FromPrimitive};
 use permutohedron::heap_recursive;
 use time::PreciseTime;
 
@@ -435,7 +435,7 @@ fn p15() -> u64 {
 
 #[allow(dead_code)]
 fn p16() -> u32 {
-    num::pow(num::BigUint::new(vec![2]), 1000)
+    num::pow(BigUint::new(vec![2]), 1000)
         .to_str_radix(10)
         .chars()
         .map(|c| {c.to_digit(10).unwrap()})
@@ -492,9 +492,9 @@ fn p19() -> u32 {
 
 #[allow(dead_code)]
 fn p20() -> u32 {
-    let mut agg = num::BigUint::from(1 as u32);
+    let mut agg = BigUint::from(1 as u32);
     for i in 1..101 {
-        agg = agg * num::BigUint::from(i as u32)
+        agg = agg * BigUint::from(i as u32)
     }
     agg.to_str_radix(10)
         .chars()
@@ -579,10 +579,10 @@ fn p24() -> Vec<u8> {
 fn p25() -> u32 {
     let mut n = 2;
 
-    let ten = num::BigUint::from_u32(10).unwrap();
+    let ten = BigUint::from_u32(10).unwrap();
     let bound = num::pow(ten, 999);
-    let mut current = num::BigUint::new(vec![1]);
-    let mut last = num::BigUint::new(vec![1]);
+    let mut current = BigUint::new(vec![1]);
+    let mut last = BigUint::new(vec![1]);
 
     while current < bound {
         let sum = &current + last;
@@ -713,7 +713,7 @@ fn p29() -> usize {
     let mut set = HashSet::new();
     for a in 2..101 {
         for b in 2..101 {
-            let a_big = num::BigUint::from_u32(a).unwrap();
+            let a_big = BigUint::from_u32(a).unwrap();
             let p = num::pow(a_big, b);
             set.insert(p);
         }
@@ -1319,9 +1319,125 @@ fn p48() -> u64 {
     agg % 10_000_000_000
 }
 
+#[allow(dead_code)]
+fn p49() -> usize {
+    let is_prime = sieve_16000();
+    let mut data = [0, 0, 0, 0];
+    let mut i: usize = 9_999;
+    while i > 999 {
+        if is_prime[i] {
+            // Package number into array for permutation exploration
+            let mut ic = i;
+            data[3] = ic % 10;
+            ic /= 10;
+            data[2] = ic % 10;
+            ic /= 10;
+            data[1] = ic % 10;
+            ic /= 10;
+            data[0] = ic;
+
+            if data[0] == 0 || data[1] == 0 || data[2] == 0 || data[3] == 0 {
+                i -= 1;
+                continue
+            }
+
+            // Get all prime permutations of number
+            let mut prime_permutations = HashSet::new();
+            heap_recursive(&mut data, |perm| {
+                // Unpackage array into number
+                let mut n = perm[0];
+                n *= 10;
+                n += perm[1];
+                n *= 10;
+                n += perm[2];
+                n *= 10;
+                n += perm[3];
+
+                if is_prime[n] {
+                    prime_permutations.insert(n);
+                }
+            });
+
+            // Look for a sequence
+            for p1 in prime_permutations.iter() {
+                let mut diffs: HashMap<usize, usize> = HashMap::new();
+                for p2 in prime_permutations.iter() {
+                    let diff = if p2 > p1 { p2 - p1} else {p1 - p2};
+                    if diffs.contains_key(&diff) {
+                        // We have a sequence!
+                        let first = p1 - diff;
+                        if first != 1487 {
+                            let second = p1;
+                            let third = p1 + diff;
+                            let sequence = first * 100_000_000 + second * 10_000 + third;
+                            return sequence;
+                        }
+                    } else {
+                        diffs.insert(diff, *p2);
+                    }
+                }
+            }
+        }
+        i -= 1;
+    }
+    1
+}
+
+#[allow(dead_code)]
+fn p50() -> u64 {
+    // Get fast prime check
+    let is_prime = sieve_1_000_000();
+
+    // Get fast prime source.  While you do that, get a sequence sum.
+    let mut primes = [0u64; 400_000];
+    let mut i_primes: usize = 0;
+    let mut last: usize = 0;
+    let mut s: u64 = 0;
+    for i in 2usize..1_000_000usize {
+        if is_prime[i] {
+            let p = i as u64;
+            primes[i_primes] = p;
+            i_primes += 1;
+            if s + p < 1_000_000 {
+                s += p;
+                last = i_primes as usize;
+            }
+        }
+    }
+
+    // Walk along the sequence, decreasing sequence length each time you don't find a prime.
+    let mut first: usize = 0;
+    loop {
+        if s < 1_000_000 {
+            if is_prime[s as usize] {
+                break s
+            } else {
+                // slide to the right
+                s -= primes[first];
+                first += 1;
+                last += 1;
+                s += primes[last];
+            }
+        } else {
+            // decrease sequence_length
+            s -= primes[last];
+            last -= 1;
+
+            // carriage return
+            while first > 0 {
+                s -= primes[last];
+                last -= 1;
+                first -= 1;
+                s += primes[first];
+
+            }
+        }
+    }
+}
+
 fn main() {
     let start = PreciseTime::now();
-    let n = p48();
+    let n = p50();
     let end = PreciseTime::now();
     println!("seconds: {} answer: {:?}", start.to(end), n);
     // println!("{}", p1(10));
@@ -1379,4 +1495,6 @@ fn main() {
     // let n45 = p45();
     // let n46 = p46();
     // let n47 = p47();
+    // let n48 = p48();
+    // let n49 = p49();
 }
