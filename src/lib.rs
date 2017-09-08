@@ -6,6 +6,7 @@ pub mod lattice;
 pub mod lexicographic;
 pub mod maxpathsum;
 pub mod matrix;
+pub mod modofpower;
 pub mod numberletters;
 pub mod odddigits;
 pub mod palindrome;

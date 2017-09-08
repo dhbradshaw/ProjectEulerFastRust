@@ -1,3 +1,5 @@
+use std::collections::HashSet;
+
 pub fn primes_below(n: u64) -> Vec<u64> {
     let mut primes = Vec::new();
     primes.push(2);
@@ -115,6 +117,23 @@ pub fn sieve_1_000_000() -> [bool; 1000000] {
     is_prime
 }
 
+pub fn distinct_prime_factors(n: u64, primes: &Vec<u64>) -> HashSet<u64> {
+    let mut nc = n;
+    let mut factors = HashSet::new();
+    for p in primes.iter() {
+        while nc % *p == 0 {
+            nc /= *p;
+            factors.insert(*p);
+        }
+        if *p * *p > nc {
+            if nc != 1 {
+                factors.insert(nc);
+            }
+            break;
+        }
+    }
+    factors
+}
 
 #[cfg(test)]
 mod test {
@@ -135,5 +154,16 @@ mod test {
             false,
         ]);
     }
+    #[test]
+    fn test_distinct_prime_factors() {
+        let primes = primes_below(100);
+        let hs: HashSet<u64> = [2].iter().cloned().collect();
+        assert_eq!(distinct_prime_factors(2, &primes), hs);
 
+        let hs: HashSet<u64> = [2, 3].iter().cloned().collect();
+        assert_eq!(distinct_prime_factors(6, &primes), hs);
+
+        let hs: HashSet<u64> = [2, 5, 13].iter().cloned().collect();
+        assert_eq!(distinct_prime_factors(1300, &primes), hs);
+    }
 }

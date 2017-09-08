@@ -15,16 +15,25 @@ use std::iter::FromIterator;
 
 use chrono::{Datelike, NaiveDate, Weekday};
 use fnv::FnvHashMap;
-use num::FromPrimitive;
+use num::{BigUint, FromPrimitive, ToPrimitive};
 use permutohedron::heap_recursive;
 use time::PreciseTime;
 
 use eulerrust::divisors::is_amicable;
 use eulerrust::fibonacci::Fibonacci;
+use eulerrust::modofpower::mod_of_power;
 use eulerrust::odddigits::next_odd_digit_number;
 use eulerrust::palindrome::{is_palindrome, reverse_decimal_digits};
 use eulerrust::pentagonalnumbers::{is_pentagonal, pentagonal};
-use eulerrust::primes::{primes_below, nth_prime, sieve_16000, sieve_1_000_000, is_prime, is_prime_no_memo};
+use eulerrust::primes::{
+    distinct_prime_factors,
+    is_prime,
+    is_prime_no_memo,
+    nth_prime,
+    primes_below,
+    sieve_16000,
+    sieve_1_000_000,
+};
 use eulerrust::trianglenumbers::is_triangular;
 
 #[allow(dead_code)]
@@ -1279,12 +1288,40 @@ fn p46() -> usize {
 
 #[allow(dead_code)]
 fn p47() -> u64 {
-    1
+    let primes = primes_below(100_000);
+
+    let target_count = 4;
+    let mut i: u64 = 1;
+    let mut answers = Vec::new();
+    loop {
+        let unique_factors = distinct_prime_factors(i, &primes);
+        let factors_count = unique_factors.len();
+        if factors_count == target_count {
+            answers.push(i);
+            if answers.len() == target_count {
+                println!("{:?}", answers);
+                println!("{:?}", factors_count);
+                return answers[0]
+            }
+        } else {
+            answers.truncate(0);
+        }
+        i += 1;
+    }
+}
+
+#[allow(dead_code)]
+fn p48() -> u64 {
+    let mut agg = 0;
+    for n in 1..1001 {
+        agg += mod_of_power(n, n, 10_000_000_000);
+    }
+    agg % 10_000_000_000
 }
 
 fn main() {
     let start = PreciseTime::now();
-    let n = p47();
+    let n = p48();
     let end = PreciseTime::now();
     println!("seconds: {} answer: {:?}", start.to(end), n);
     // println!("{}", p1(10));
@@ -1341,4 +1378,5 @@ fn main() {
     // let n44 = p44();
     // let n45 = p45();
     // let n46 = p46();
+    // let n47 = p47();
 }
