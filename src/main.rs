@@ -19,7 +19,7 @@ use num::{BigUint, FromPrimitive};
 use permutohedron::heap_recursive;
 use time::PreciseTime;
 
-use eulerrust::divisors::is_amicable;
+use eulerrust::divisors::{divisors, is_amicable};
 use eulerrust::fibonacci::Fibonacci;
 use eulerrust::modofpower::mod_of_power;
 use eulerrust::odddigits::next_odd_digit_number;
@@ -295,12 +295,18 @@ fn p11 () -> u64 {
 #[allow(dead_code)]
 fn p12() -> u64 {
     // What is the value of the first triangle number to have over five hundred divisors?
-    let mut t = eulerrust::trianglenumbers::Triangular::new();
+    let mut n = 1;
+    let mut p;
     loop {
-        let n = t.next().unwrap();
-        if eulerrust::divisors::divisors(n).len() > 500 {
-            break n
+        if n % 2 == 0 {
+            p = divisors(n / 2).len() * divisors(n + 1).len();
+        } else {
+            p = divisors(n).len() * divisors((n + 1) / 2).len();
         }
+        if p > 500 {
+            break (n * (n + 1)) / 2
+        }
+        n += 1;
     }
 }
 
