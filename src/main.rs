@@ -174,11 +174,7 @@ fn p6() -> u64 {
 
 #[allow(dead_code)]
 fn p7() -> u64 {
-    let start = PreciseTime::now();
-    let out = nth_prime(10001);
-    let end = PreciseTime::now();
-    println!("p7 time: {} seconds", start.to(end));
-    out
+    nth_prime(10001)
 }
 
 #[allow(dead_code)]
