@@ -33,6 +33,7 @@ use eulerrust::primes::{
     primes_below,
     sieve_16000,
     sieve_1_000_000,
+    sieve_2_000_000,
 };
 use eulerrust::trianglenumbers::is_triangular;
 
@@ -227,8 +228,14 @@ fn p9() -> u64 {
 
 #[allow(dead_code)]
 fn p10() -> u64 {
-    // Find the sum of all the primes below two million.
-    primes_below(2000000).iter().sum()
+    let primes = sieve_2_000_000();
+    let mut s = 0;
+    for (i, is_prime) in primes.iter().enumerate() {
+        if *is_prime {
+            s += i;
+        }
+    }
+    s as u64
 }
 
 fn greatest_multiple(v: Vec<u64>, n: usize) -> u64 {

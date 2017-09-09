@@ -117,6 +117,25 @@ pub fn sieve_1_000_000() -> [bool; 1000000] {
     is_prime
 }
 
+pub fn sieve_2_000_000() -> [bool; 2000000] {
+    let mut is_prime = [true; 2000000];
+    let l = is_prime.len();
+    let sqrt = (l as f64).sqrt() as usize;
+
+    let mut i = 2;
+    while i < sqrt + 1 {
+        if is_prime[i] {
+            let mut unprime = i * i;
+            while unprime < l {
+                is_prime[unprime] = false;
+                unprime += i;
+            }
+        }
+        i += 1
+    }
+    is_prime
+}
+
 pub fn distinct_prime_factors(n: u64, primes: &Vec<u64>) -> HashSet<u64> {
     let mut nc = n;
     let mut factors = HashSet::new();
