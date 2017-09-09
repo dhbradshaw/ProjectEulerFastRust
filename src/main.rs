@@ -27,7 +27,7 @@ use eulerrust::palindrome::{
     is_palindrome,
     reverse_decimal_digits,
 };
-use eulerrust::pentagonalnumbers::{is_pentagonal, pentagonal};
+use eulerrust::pentagonalnumbers::{is_pentagonal};
 use eulerrust::primes::{
     distinct_prime_factors,
     is_prime,
@@ -1223,11 +1223,11 @@ fn p43() -> u64 {
 
 #[allow(dead_code)]
 fn p44() -> u64 {
-    let mut i_diff = 1;
+    let mut diff = 1;
+    let mut delta = 4;
     loop {
-        let diff = pentagonal(i_diff);
-        let mut i_smaller = 1;
-        let mut smaller = pentagonal(i_smaller);
+        let mut smaller = 1;
+        let mut delta_smaller = 4;
         while smaller < diff / 2 {
             let larger = smaller + diff;
             if is_pentagonal(larger) {
@@ -1236,10 +1236,11 @@ fn p44() -> u64 {
                     return diff;
                 }
             }
-            i_smaller += 1;
-            smaller = pentagonal(i_smaller);
+            smaller += delta_smaller;
+            delta_smaller += 3;
         }
-        i_diff += 1;
+        diff += delta;
+        delta += 3;
     }
 }
 

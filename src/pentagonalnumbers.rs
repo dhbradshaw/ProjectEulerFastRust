@@ -1,6 +1,6 @@
 pub fn is_pentagonal(n: u64) -> bool {
     let discriminant = 1 + 24 * n;
-    (1f64 + (discriminant as f64).sqrt())/6f64 % 1f64 == 0f64
+    (1f64 + (discriminant as f64).sqrt()) % 6f64 == 0f64
 }
 
 pub fn pentagonal(n: u64) -> u64 {
