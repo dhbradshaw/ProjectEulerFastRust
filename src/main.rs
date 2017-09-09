@@ -429,7 +429,7 @@ fn p13() -> u64 {
 
 #[allow(dead_code)]
 fn p14() -> usize {
-    eulerrust::collatz::longest_collatz(999_999)
+    eulerrust::collatz::longest_collatz_memo(999_999)
 }
 
 #[allow(dead_code)]

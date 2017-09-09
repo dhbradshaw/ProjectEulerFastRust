@@ -1,5 +1,3 @@
-use std::collections::HashMap;
-
 pub struct Collatz {
     n: u64
 }
@@ -25,24 +23,26 @@ impl Iterator for Collatz {
     }
 }
 
-pub fn count_collatz(n: usize, h: &mut HashMap<usize, usize>) -> usize {
+pub fn count_collatz(n: usize, lengths: &mut [usize; 500_000]) -> usize {
     if n == 1 {
         return 1;
     }
-    if let Some(val) = h.get(&n) {
-        return *val;
+    if n < 500_000 && lengths[n] > 0 {
+        return lengths[n];
     }
     let val = 1 + match n % 2 {
-        0 => count_collatz(n / 2, h),
-        _ => count_collatz(n * 3 + 1, h)
+        0 => count_collatz(n / 2, lengths),
+        _ => count_collatz(n * 3 + 1, lengths)
     };
-    h.insert(n, val);
+    if n < 500_000 {
+        lengths[n] = val;
+    }
     val
 }
 
 pub fn longest_collatz_memo(highest: usize) -> usize {
-    let mut max_length = 1;
-    let mut lengths = HashMap::new();
+    let mut max_length = 0;
+    let mut lengths: [usize; 500_000] = [0; 500_000];
     let mut cause = 0;
     for i in 1..highest + 1 {
         let length = count_collatz(i, &mut lengths);
@@ -101,5 +101,9 @@ mod test {
         assert_eq!(longest_collatz(2), 2);
         assert_eq!(longest_collatz(3), 3)
 
+    }
+    #[test]
+    fn test_longest_collatz_memo() {
+        assert_eq!(longest_collatz_memo(1), 1);
     }
 }
