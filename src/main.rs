@@ -11,7 +11,6 @@ use std::collections::HashMap;
 use std::collections::HashSet;
 use std::fs::File;
 use std::io::Read;
-use std::iter::FromIterator;
 
 use chrono::{Datelike, NaiveDate, Weekday};
 use fnv::FnvHashMap;
@@ -551,7 +550,11 @@ fn p22() -> u32 {
 fn p23() -> u32 {
     // Find the sum of all the positive integers which cannot be written as the sum of two abundant numbers.
     let abundants = eulerrust::divisors::abundants_below(28124);
-    let abundant_set: HashSet<u32> = HashSet::from_iter(abundants.iter().cloned());
+    let mut is_abundant = [false; 28124];
+    for a in &abundants {
+        is_abundant[*a as usize] = true;
+    }
+
     let mut total = 0;
     for n in 1..28124 {
         let too_high = n / 2 + 1;
@@ -561,7 +564,7 @@ fn p23() -> u32 {
                 break;
             }
             let partner = n - *abundant;
-            if abundant_set.contains(&partner) {
+            if is_abundant[partner as usize] {
                 is_abundant_sum = true;
                 break;
             }
