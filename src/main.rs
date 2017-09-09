@@ -212,17 +212,17 @@ fn p8(n: usize) -> u64 {
 }
 
 #[allow(dead_code)]
-fn p9() {
+fn p9() -> u64 {
     for a in 1..300 {
         let b_numerator = 500000 - 1000 * a;
         let b_denominator = 1000 - a;
         if b_numerator % b_denominator == 0 {
             let b = b_numerator / b_denominator;
             let c = 1000 - a - b;
-            println!("{}", a * b * c);
-            break;
+            return (a * b * c) as u64;
         }
     }
+    1
 }
 
 #[allow(dead_code)]
@@ -245,7 +245,7 @@ fn greatest_multiple(v: Vec<u64>, n: usize) -> u64 {
 }
 
 #[allow(dead_code)]
-fn p11 () {
+fn p11 () -> u64 {
     // What is the greatest product of four adjacent numbers in the same direction
     // (up, down, left, right, or diagonally) in the 20×20 grid?
     let s = "08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
@@ -289,24 +289,23 @@ fn p11 () {
         }).collect();
         winner = max(greatest_multiple(nums, 4), winner);
     }
-    println!("{}", winner);
+    winner
 }
 
 #[allow(dead_code)]
-fn p12() {
+fn p12() -> u64 {
     // What is the value of the first triangle number to have over five hundred divisors?
     let mut t = eulerrust::trianglenumbers::Triangular::new();
     loop {
         let n = t.next().unwrap();
         if eulerrust::divisors::divisors(n).len() > 500 {
-            println!("{}", n);
-            break;
+            break n
         }
     }
 }
 
 #[allow(dead_code)]
-fn p13() -> String {
+fn p13() -> u64 {
     // Work out the first ten digits of the sum of the following one-hundred 50-digit numbers.
     let s="37107287533902102798797998220837590246510135740250
         46376937677490009712648124896970078050417018260538
@@ -413,8 +412,7 @@ fn p13() -> String {
         let n = l.parse::<u64>().unwrap();
         n
     }).sum();
-    let first10: String = total.to_string().chars().take(10).collect();
-    first10
+    total
 }
 
 #[allow(dead_code)]
@@ -563,17 +561,21 @@ fn p23() -> u32 {
 }
 
 #[allow(dead_code)]
-fn p24() -> Vec<u8> {
-    let mut count = 1;
-    let mut v = vec![0,1,2,3,4,5,6,7,8,9];
-    loop {
-        v = eulerrust::lexicographic::next(&v).unwrap();
-        count += 1;
-        if count == 1000000 {
-            break v
-        }
-    }
+// fn p24() -> Vec<u8> {
+//     let mut count = 1;
+//     let mut v = vec![0,1,2,3,4,5,6,7,8,9];
+//     loop {
+//         v = eulerrust::lexicographic::next(&v).unwrap();
+//         count += 1;
+//         if count == 1000000 {
+//             break v
+//         }
+//     }
+// }
+fn p24() -> u32 {
+    eulerrust::lexicographic::nth_term(1_000_000)
 }
+
 
 #[allow(dead_code)]
 fn p25() -> u32 {
@@ -934,7 +936,6 @@ fn p35() -> usize {
             }
             if circular_prime {
                 circular_prime_count += 1;
-                println!("{} {}", n, circular_prime_count);
             }
         }
         n = next_odd_digit_number(n);
@@ -1052,7 +1053,6 @@ fn pandigital_multiple(n: u64) -> u64 {
 fn p38() -> u64 {
     let digits: [u64; 9] = [1,2,3,4,5,6,7,8,9];
     let c1 = 9;
-    println!("{:?}", places(c1));
     let mut highest = 0;
     for d in &digits {
         let c2 =10 * c1 + d;
@@ -1299,8 +1299,6 @@ fn p47() -> u64 {
         if factors_count == target_count {
             answers.push(i);
             if answers.len() == target_count {
-                println!("{:?}", answers);
-                println!("{:?}", factors_count);
                 return answers[0]
             }
         } else {
@@ -1436,65 +1434,73 @@ fn p50() -> u64 {
 }
 
 fn main() {
-    let start = PreciseTime::now();
-    let n = p50();
-    let end = PreciseTime::now();
-    println!("seconds: {} answer: {:?}", start.to(end), n);
-    // println!("{}", p1(10));
-    // println!("{}", p1_iterate(10));
-    // println!("{}", p1(1000));
-    // println!("{}", p1_iterate(1000));
-    // println!("{}", p2());
-    // println!("{}", p2_iterative());
-    // println!("{}", p3(600851475143));
-    // let start = PreciseTime::now();
-    // println!("{:?}", p4());
-    // let end = PreciseTime::now();
-    // println!("{} seconds", start.to(end));
-    // println!("{}", p5());
-    // println!("{}", p6());
-    // println!("{}", p7());
-    // println!("{:?}", p8(13)); // prints [1, 2, 3, 4, 5, 6]
-    // p9();
-    // println!("{}", p10());
-    // p11();
-    // p12();
-    // let mut n = p13();
-    // let n14 = p14();
-    // let n15 = p15();
-    // // let n15_factorial = p15_factorial();
-    // let n16 = p16();
-    // let n17 = p17();
-    // let n18 = p18();
-    // let n19 = p19();
-    // let n20 = p20();
-    // let n21 = p21();
-    // let n22 = p22();
-    // let n23 = p23();
-    // let n24 = p24();
-    // let n25 = p25();
-    // let n26 = p26();
-    // let n27 = p27();
-    // let n28 = p28();
-    // let n29 = p29();
-    // let n30 = p30();
-    // let n31 = p31();
-    // let n32 = p32();
-    // let n33 = p33();
-    // let n34 = p34();
-    // let n35 = p35();
-    // let n36 = p36();
-    // let n37 = p37();
-    // let n38 = p38();
-    // let n39 = p39();
-    // let n40 = p40();
-    // let n41 = p41();
-    // let n42 = p42();
-    // let n43 = p43();
-    // let n44 = p44();
-    // let n45 = p45();
-    // let n46 = p46();
-    // let n47 = p47();
-    // let n48 = p48();
-    // let n49 = p49();
+    let mut n;
+    let start_all = PreciseTime::now();
+
+    let start = PreciseTime::now(); n=p1(1000); let end = PreciseTime::now(); println!("p1 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p2() as u64; let end = PreciseTime::now(); println!("p2 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p3(600851475143); let end = PreciseTime::now(); println!("p3 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p4() as u64; let end = PreciseTime::now(); println!("p4 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p5() as u64; let end = PreciseTime::now(); println!("p5 seconds: {} answer: {:?}", start.to(end), n);
+
+    let start = PreciseTime::now(); n=p6() as u64; let end = PreciseTime::now(); println!("p6 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p7() as u64; let end = PreciseTime::now(); println!("p7 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p8(13); let end = PreciseTime::now(); println!("p8 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p9() as u64; let end = PreciseTime::now(); println!("p9 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p10() as u64; let end = PreciseTime::now(); println!("p10 seconds: {} answer: {:?}", start.to(end), n);
+
+
+    let start = PreciseTime::now(); n=p11() as u64; let end = PreciseTime::now(); println!("p11 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p12() as u64; let end = PreciseTime::now(); println!("p12 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p13() as u64; let end = PreciseTime::now(); println!("p13 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p14() as u64; let end = PreciseTime::now(); println!("p14 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p15() as u64; let end = PreciseTime::now(); println!("p15 seconds: {} answer: {:?}", start.to(end), n);
+
+    let start = PreciseTime::now(); n=p16() as u64; let end = PreciseTime::now(); println!("p16 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p17() as u64; let end = PreciseTime::now(); println!("p17 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p18() as u64; let end = PreciseTime::now(); println!("p18 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p19() as u64; let end = PreciseTime::now(); println!("p19 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p20() as u64; let end = PreciseTime::now(); println!("p20 seconds: {} answer: {:?}", start.to(end), n);
+
+
+    let start = PreciseTime::now(); n=p21() as u64; let end = PreciseTime::now(); println!("p21 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p22() as u64; let end = PreciseTime::now(); println!("p22 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p23() as u64; let end = PreciseTime::now(); println!("p23 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p24() as u64; let end = PreciseTime::now(); println!("p24 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p25() as u64; let end = PreciseTime::now(); println!("p25 seconds: {} answer: {:?}", start.to(end), n);
+
+    let start = PreciseTime::now(); n=p26() as u64; let end = PreciseTime::now(); println!("p26 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p27() as u64; let end = PreciseTime::now(); println!("p27 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p28() as u64; let end = PreciseTime::now(); println!("p28 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p29() as u64; let end = PreciseTime::now(); println!("p29 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p30() as u64; let end = PreciseTime::now(); println!("p30 seconds: {} answer: {:?}", start.to(end), n);
+
+
+    let start = PreciseTime::now(); n=p31() as u64; let end = PreciseTime::now(); println!("p31 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p32() as u64; let end = PreciseTime::now(); println!("p32 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p33() as u64; let end = PreciseTime::now(); println!("p33 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p34() as u64; let end = PreciseTime::now(); println!("p34 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p35() as u64; let end = PreciseTime::now(); println!("p35 seconds: {} answer: {:?}", start.to(end), n);
+
+    let start = PreciseTime::now(); n=p36() as u64; let end = PreciseTime::now(); println!("p36 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p37() as u64; let end = PreciseTime::now(); println!("p37 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p38() as u64; let end = PreciseTime::now(); println!("p38 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p39() as u64; let end = PreciseTime::now(); println!("p39 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p40() as u64; let end = PreciseTime::now(); println!("p40 seconds: {} answer: {:?}", start.to(end), n);
+
+
+    let start = PreciseTime::now(); n=p41() as u64; let end = PreciseTime::now(); println!("p41 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p42() as u64; let end = PreciseTime::now(); println!("p42 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p43() as u64; let end = PreciseTime::now(); println!("p43 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p44() as u64; let end = PreciseTime::now(); println!("p44 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p45() as u64; let end = PreciseTime::now(); println!("p45 seconds: {} answer: {:?}", start.to(end), n);
+
+    let start = PreciseTime::now(); n=p46() as u64; let end = PreciseTime::now(); println!("p46 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p47() as u64; let end = PreciseTime::now(); println!("p47 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p48() as u64; let end = PreciseTime::now(); println!("p48 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p49() as u64; let end = PreciseTime::now(); println!("p49 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p50() as u64; let end = PreciseTime::now(); println!("p50 seconds: {} answer: {:?}", start.to(end), n);
+
+    let end_all = PreciseTime::now();
+    println!("Total time {}", start_all.to(end_all))
 }

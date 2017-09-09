@@ -76,9 +76,47 @@ pub fn next(a: &[u8]) -> Option<Vec<u8>> {
     }
 }
 
+pub fn nth_term(n: u32) -> u32 {
+    let mut available = [true; 10]; // Track digits 0 through 9.
+    let factorials = [1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880];
+    let mut nc = n - 1;
+    let mut i = 9;
+    let mut digits = Vec::new();
+    while available.iter().filter(|b| **b).count() > 0 {
+        let f = factorials[i];
+        let digit_index = nc / f;
+        nc = nc % f;
+
+        let mut misses = 0;
+        for (i, present) in available.iter().enumerate() {
+            if !present {
+                misses += 1;
+            }
+            if digit_index + misses == i as u32 {
+                digits.push(i);
+                break;
+            }
+        }
+        if i > 0 {
+            i -= 1;
+        }
+        available[digits[digits.len() - 1]] = false;
+    }
+    let mut out = 0usize;
+    for d in digits.iter() {
+        out *= 10;
+        out += *d;
+    }
+    out as u32
+}
+
 #[cfg(test)]
 mod test {
     use super::*;
+    #[test]
+    fn test_nth_term() {
+        nth_term(1_000_000);
+    }
     #[test]
     fn test_next() {
         assert_eq!(next(&vec![1, 2]), Some(vec![2, 1]));
