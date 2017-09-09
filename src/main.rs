@@ -23,7 +23,11 @@ use eulerrust::divisors::{divisors, is_amicable};
 use eulerrust::fibonacci::Fibonacci;
 use eulerrust::modofpower::mod_of_power;
 use eulerrust::odddigits::next_odd_digit_number;
-use eulerrust::palindrome::{is_palindrome, reverse_decimal_digits};
+use eulerrust::palindrome::{
+    BinaryPalindromes,
+    is_palindrome,
+    reverse_decimal_digits,
+};
 use eulerrust::pentagonalnumbers::{is_pentagonal, pentagonal};
 use eulerrust::primes::{
     distinct_prime_factors,
@@ -961,17 +965,17 @@ fn reverse(s: &str) -> String {
 }
 
 #[allow(dead_code)]
-fn p36() -> usize {
+fn p36() -> u64 {
     let mut sum = 0;
-    for n in 1..1_000_000 {
-        let s10 = format!("{}", n);
-        if s10 == reverse(&s10) {
-            let s2 = format!("{:b}", n);
-            if s2 == reverse(&s2) {
-                sum += n;
-            }
+    let bps = BinaryPalindromes::new();
+    for bp in bps {
+        if bp >= 1_000_000 {
+            break;
         }
-
+        let s10 = format!("{}", bp);
+        if s10 == reverse(&s10) {
+            sum += bp;
+        }
     }
     sum
 }
