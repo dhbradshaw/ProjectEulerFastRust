@@ -1302,7 +1302,7 @@ fn p46() -> usize {
 
 #[allow(dead_code)]
 fn p47() -> u64 {
-    let primes = primes_below(100_000);
+    let primes = primes_below(50_000);
 
     let target_count = 4;
     let mut i: u64 = 1;
