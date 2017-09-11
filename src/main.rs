@@ -1108,13 +1108,13 @@ fn p39() -> i64 {
         let mut solutions = 0;
         let mut a: i64 = 1;
         loop {
-            let num = p * (p - 2 * a);
             let denom = 2 * (p - a);
-            if num > 0 && denom > 0 && num % denom == 0 {
-                solutions += 1;
-            }
             if denom == 0 {
                 break;
+            }
+            let num = p * (p - 2 * a);
+            if num > 0 && num % denom == 0 {
+                solutions += 1;
             }
             let b = num / denom;
             if b <= a {
