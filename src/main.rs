@@ -29,7 +29,7 @@ use eulerrust::palindrome::{
 };
 use eulerrust::pentagonalnumbers::{is_pentagonal};
 use eulerrust::primes::{
-    distinct_prime_factors,
+    distinct_prime_factor_count,
     is_prime,
     is_prime_no_memo,
     nth_prime,
@@ -1308,11 +1308,10 @@ fn p47() -> u64 {
     let mut i: u64 = 1;
     let mut answers = Vec::new();
     loop {
-        let unique_factors = distinct_prime_factors(i, &primes);
-        let factors_count = unique_factors.len();
-        if factors_count == target_count {
+        let count = distinct_prime_factor_count(i, &primes);
+        if count == target_count {
             answers.push(i);
-            if answers.len() == target_count {
+            if answers.len() as u64 == target_count {
                 return answers[0]
             }
         } else {

@@ -154,6 +154,28 @@ pub fn distinct_prime_factors(n: u64, primes: &Vec<u64>) -> HashSet<u64> {
     factors
 }
 
+pub fn distinct_prime_factor_count(n: u64, primes: &Vec<u64>) -> u64 {
+    let mut nc = n;
+    let mut count = 0;
+    for p in primes.iter() {
+        let mut factor = false;
+        while nc % *p == 0 {
+            nc /= *p;
+            factor = true;
+        }
+        if factor {
+            count += 1;
+        }
+        if *p * *p > nc {
+            if nc != 1 {
+                count += 1;
+            }
+            break;
+        }
+    }
+    count
+}
+
 pub fn most_consecutive_primes(n: u64, primes: &[u64]) -> usize {
     let mut first = 0usize;
     let mut last = 1usize;
