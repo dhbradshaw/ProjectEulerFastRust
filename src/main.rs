@@ -916,7 +916,7 @@ fn sum_digit_factorial(n: usize) -> usize {
 #[allow(dead_code)]
 fn p34() -> usize {
     let mut sum = 0;
-    for n in 10..2_550_000 {
+    for n in 10..1_900_000 {
         if n == sum_digit_factorial(n) {
             sum += n
         }
