@@ -1100,13 +1100,13 @@ fn p38() -> u64 {
 }
 
 #[allow(dead_code)]
-fn p39() -> i64 {
+fn p39() -> u64 {
     let mut max_solutions = 0;
-    let mut n_max_solutions: i64 = 1;
+    let mut n_max_solutions: u64 = 1;
     for p in 1..1000 {
-        let p = p as i64;
+        let p = p as u64;
         let mut solutions = 0;
-        let mut a: i64 = 1;
+        let mut a: u64 = 1;
         while 2 * a < p {
             let num = p * (p - 2 * a);
             let denom = 2 * (p - a);
