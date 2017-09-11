@@ -35,6 +35,7 @@ use eulerrust::primes::{
     nth_prime,
     primes_below,
     sieve_16000,
+    sieve_200_000,
     sieve_1_000_000,
     sieve_2_000_000,
 };
@@ -1302,20 +1303,35 @@ fn p46() -> usize {
 
 #[allow(dead_code)]
 fn p47() -> u64 {
-    let primes = primes_below(50_000);
+    let is_prime = sieve_200_000();
+    let primes: Vec<u64> = is_prime.iter().enumerate().filter(|&(_, &p)| p).map(|(i, _)| i as u64).collect();
 
     let target_count = 4;
     let mut i: u64 = 1;
-    let mut answers = Vec::new();
+    let mut answer = 0;
+    let mut sequence_length = 0;
     loop {
-        let count = distinct_prime_factor_count(i, &primes);
+        let count;
+
+        // If there are primes, we know they won't match.
+        let prime_coming = is_prime[(i as usize)..((i + 4 - sequence_length) as usize)]
+            .iter()
+            .fold(false, |b, c| b || *c);
+        if prime_coming {
+            count = 0;
+        } else {
+            count = distinct_prime_factor_count(i, &primes);
+        }
         if count == target_count {
-            answers.push(i);
-            if answers.len() as u64 == target_count {
-                return answers[0]
+            if sequence_length == 0 {
+                answer = i;
+            }
+            sequence_length += 1;
+            if sequence_length == target_count {
+                break answer
             }
         } else {
-            answers.truncate(0);
+            sequence_length = 0;
         }
         i += 1;
     }
