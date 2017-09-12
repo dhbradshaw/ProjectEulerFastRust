@@ -1255,24 +1255,25 @@ fn p43() -> u64 {
 
 #[allow(dead_code)]
 fn p44() -> u64 {
-    let mut diff = 1;
-    let mut delta = 4;
+    let mut i = 0;
+    let mut diff = 0;
     loop {
-        let mut smaller = 1;
-        let mut delta_smaller = 4;
-        while smaller < diff / 2 {
-            let larger = smaller + diff;
-            if is_pentagonal(larger) {
-                let sum = smaller + larger;
-                if is_pentagonal(sum) {
-                    return diff;
+        diff += 3 * i + 1;
+        i += 1;
+        let mut p = 0;
+        for d in 1..i {
+            p += 3 * d - 2;
+            let num = diff - p;
+            let den = 3 * d;
+            let j = num / den;
+            let r = num % den;
+            if r == 0 {
+                let rad = ((1 + 24 * (j * (3 * j - 1) + diff)) as f64).sqrt();
+                if (1f64 + rad) % 6f64 == 0f64 {
+                    return diff
                 }
             }
-            smaller += delta_smaller;
-            delta_smaller += 3;
         }
-        diff += delta;
-        delta += 3;
     }
 }
 
