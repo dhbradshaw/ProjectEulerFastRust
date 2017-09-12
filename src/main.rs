@@ -899,6 +899,8 @@ fn p32() -> u32 {
 
 #[allow(dead_code)]
 fn p33() -> usize {
+    let mut num_product = 1;
+    let mut den_product = 1;
     for n in 10..100 {
         let n1 = n / 10;
         let n2 = n % 10;
@@ -909,18 +911,26 @@ fn p33() -> usize {
             if d1 == n2 {
                 let ff = n1 as f64 / d2 as f64;
                 if ff == f {
-                    println!("{}/{}", n1, d2);
+                    num_product *= n1;
+                    den_product *= d2;
                 }
             }
             if d2 == n1 {
                 let ff = n2 as f64 / d1 as f64;
                 if ff == f {
-                    println!("{}/{}", n2, d1);
+                    num_product *= n2;
+                    den_product *= d1;
                 }
             }
         }
     }
-    1
+    for &i in [2, 3, 5, 7].iter() {
+        while den_product % i == 0 && num_product % i == 0 {
+            den_product /= i;
+            num_product /= i;
+        }
+    }
+    den_product
 }
 
 #[allow(dead_code)]
