@@ -243,8 +243,8 @@ fn p9() -> u64 {
 fn p10() -> u64 {
     let primes = sieve_2_000_000();
     let mut s = 0;
-    for (i, is_prime) in primes.iter().enumerate() {
-        if *is_prime {
+    for (i, &is_prime) in primes.iter().enumerate() {
+        if is_prime {
             s += i;
         }
     }
