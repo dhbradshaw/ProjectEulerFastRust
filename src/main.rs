@@ -172,9 +172,22 @@ fn p6() -> u64 {
     sum * sum - sum_of_squares
 }
 
-#[allow(dead_code)]
-fn p7() -> u64 {
-    nth_prime(10001)
+// fn p7() -> u64 {
+//     nth_prime(10001)
+// }
+
+fn p7() -> u32 {
+    let is_prime = sieve_200_000();
+    let mut count = 0;
+    for (i, &b) in is_prime.iter().enumerate() {
+        if b {
+            count += 1;
+            if count == 10001 {
+                return i as u32;
+            }
+        }
+    }
+    0
 }
 
 #[allow(dead_code)]
