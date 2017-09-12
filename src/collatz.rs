@@ -23,26 +23,28 @@ impl Iterator for Collatz {
     }
 }
 
-pub fn count_collatz(n: usize, lengths: &mut [usize; 500_000]) -> usize {
-    if n == 1 {
-        return 1;
+pub fn count_collatz(n: u32, lengths: &mut [u32; 500_000]) -> u32 {
+    if n < 500_000 && lengths[n as usize] > 0 {
+        lengths[n as usize]
+    } else {
+        if n == 1 {
+            return 1;
+        } else {
+            let val = 1 + match n % 2 {
+                0 => count_collatz(n / 2, lengths),
+                _ => count_collatz(n * 3 + 1, lengths)
+            };
+            if n < 500_000 {
+                lengths[n as usize] = val;
+            }
+            val
+        }
     }
-    if n < 500_000 && lengths[n] > 0 {
-        return lengths[n];
-    }
-    let val = 1 + match n % 2 {
-        0 => count_collatz(n / 2, lengths),
-        _ => count_collatz(n * 3 + 1, lengths)
-    };
-    if n < 500_000 {
-        lengths[n] = val;
-    }
-    val
 }
 
-pub fn longest_collatz_memo(highest: usize) -> usize {
+pub fn longest_collatz_memo(highest: u32) -> u32 {
     let mut max_length = 0;
-    let mut lengths: [usize; 500_000] = [0; 500_000];
+    let mut lengths: [u32; 500_000] = [0; 500_000];
     let mut cause = 0;
     for i in 1..highest + 1 {
         let length = count_collatz(i, &mut lengths);
