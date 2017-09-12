@@ -728,16 +728,50 @@ fn p28() -> u64 {
 }
 
 #[allow(dead_code)]
-fn p29() -> usize {
-    let mut set = HashSet::new();
-    for a in 2..101 {
-        for b in 2..101 {
-            let a_big = BigUint::from_u32(a).unwrap();
-            let p = num::pow(a_big, b);
-            set.insert(p);
+fn prime_representation(n: u16) -> [u16; 25] {
+    assert!(n < 101);
+    let primes = [
+        2, 3, 5, 7, 11,
+        13, 17, 19, 23, 29,
+        31, 37, 41, 43, 47,
+        53, 59, 61, 67, 71,
+        73, 79, 83, 89, 97
+    ];
+    let mut representation = [0; 25];
+    let mut nc = n;
+    let mut i = 0;
+    while nc > 1 && i < 25 {
+        let p = primes[i];
+        while nc % p == 0 {
+            representation[i] += 1;
+            nc /= p as u16;
+        }
+        i += 1
+    }
+    representation
+}
+
+#[allow(dead_code)]
+fn prime_representation_power(representation: &[u16; 25], power: u16) -> [u16; 25] {
+    let mut new_representation = [0; 25];
+    for (i, &n) in representation.iter().enumerate() {
+        if n > 0 {
+            new_representation[i] = n * power;
         }
     }
-    set.len()
+    new_representation
+}
+
+#[allow(dead_code)]
+fn p29() -> usize {
+    let mut s = HashSet::new();
+    for n in 2..101 {
+        let representation = prime_representation(n);
+        for power in 2..101 {
+            s.insert(prime_representation_power(&representation, power));
+        }
+    }
+    s.len()
 }
 
 #[allow(dead_code)]

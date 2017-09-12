@@ -152,7 +152,7 @@ pub fn sieve_2_000_000() -> [bool; 2000000] {
     let mut is_prime = [true; 2000000];
     is_prime[0]=false;
     is_prime[1]=false;
-    
+
     let l = is_prime.len();
     let sqrt = (l as f64).sqrt() as usize;
 
