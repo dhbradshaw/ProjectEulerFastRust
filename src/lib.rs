@@ -12,4 +12,5 @@ pub mod odddigits;
 pub mod palindrome;
 pub mod pentagonalnumbers;
 pub mod primes;
+pub mod problems;
 pub mod trianglenumbers;
