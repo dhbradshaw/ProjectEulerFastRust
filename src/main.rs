@@ -1258,13 +1258,13 @@ fn p43() -> u64 {
     let mut data = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     let mut sum: u64 = 0;
     heap_recursive(&mut data, |perm| {
-        if (perm[8 - 1] * 100 + perm[9 - 1] * 10 + perm[10 - 1]) % 17 == 0 &&
-            (perm[7 - 1] * 100 + perm[8 - 1] * 10 + perm[9 - 1]) % 13 == 0 &&
-            (perm[6 - 1] * 100 + perm[7 - 1] * 10 + perm[8 - 1]) % 11 == 0 &&
-            (perm[5 - 1] * 100 + perm[6 - 1] * 10 + perm[7 - 1]) % 7 == 0 &&
-            (perm[4 - 1] * 100 + perm[5 - 1] * 10 + perm[6 - 1]) % 5 == 0 &&
-            (perm[3 - 1] * 100 + perm[4 - 1] * 10 + perm[5 - 1]) % 3 == 0 &&
-            (perm[2 - 1] * 100 + perm[3 - 1] * 10 + perm[4 - 1]) % 2 == 0 {
+        if (perm[7] * 100 + perm[8] * 10 + perm[9]) % 17 == 0 &&
+            (perm[6] * 100 + perm[7] * 10 + perm[8]) % 13 == 0 &&
+            (perm[5] * 100 + perm[6] * 10 + perm[7]) % 11 == 0 &&
+            (perm[4] * 100 + perm[5] * 10 + perm[6]) % 7 == 0 &&
+            (perm[5]) % 5 == 0 &&
+            (perm[2] + perm[3] + perm[4]) % 3 == 0 &&
+            (perm[3]) % 2 == 0 {
             let mut n = 0;
             for i in perm {
                 n *= 10;
