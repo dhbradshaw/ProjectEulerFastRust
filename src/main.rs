@@ -952,6 +952,7 @@ fn sum_digit_factorial(n: usize) -> usize {
     let mut sum = 0;
     while nc > 0 {
         let last = nc % 10;
+        nc = nc / 10;
         sum += match last {
             0 => 1,
             1 => 1,
@@ -965,7 +966,6 @@ fn sum_digit_factorial(n: usize) -> usize {
             9 => 362880,
             _ => 0,
         };
-        nc = nc / 10;
     }
     sum
 }
