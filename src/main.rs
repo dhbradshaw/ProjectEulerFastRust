@@ -947,7 +947,7 @@ fn p33() -> usize {
 }
 
 #[allow(dead_code)]
-fn sum_digit_factorial(n: usize) -> usize {
+fn sum_digit_factorial(n: u32) -> u32 {
     let mut nc = n;
     let mut sum = 0;
     while nc > 0 {
@@ -971,9 +971,9 @@ fn sum_digit_factorial(n: usize) -> usize {
 }
 
 #[allow(dead_code)]
-fn p34() -> usize {
+fn p34() -> u32 {
     let mut sum = 0;
-    for n in 10..1_900_000 {
+    for n in 10..1_572_480 {
         if n == sum_digit_factorial(n) {
             sum += n
         }
