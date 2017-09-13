@@ -32,7 +32,6 @@ use eulerrust::primes::{
     distinct_prime_factor_count,
     is_prime,
     is_prime_no_memo,
-    nth_prime,
     primes_below,
     sieve_16000,
     sieve_200_000,
@@ -243,8 +242,8 @@ fn p9() -> u64 {
 fn p10() -> u64 {
     let primes = sieve_2_000_000();
     let mut s = 0;
-    for (i, &is_prime) in primes.iter().enumerate() {
-        if is_prime {
+    for (i, is_prime) in primes.iter().enumerate() {
+        if *is_prime {
             s += i;
         }
     }
@@ -591,17 +590,6 @@ fn p23() -> u32 {
 }
 
 #[allow(dead_code)]
-// fn p24() -> Vec<u8> {
-//     let mut count = 1;
-//     let mut v = vec![0,1,2,3,4,5,6,7,8,9];
-//     loop {
-//         v = eulerrust::lexicographic::next(&v).unwrap();
-//         count += 1;
-//         if count == 1000000 {
-//             break v
-//         }
-//     }
-// }
 fn p24() -> u32 {
     eulerrust::lexicographic::nth_term(1_000_000)
 }
