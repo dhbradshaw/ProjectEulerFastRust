@@ -112,9 +112,10 @@ pub fn p2_iterative() -> u64 {
 }
 
 #[allow(dead_code)]
-pub fn p3(n: u64) -> u64 {
+pub fn p3() -> u64 {
     /// The prime factors of 13195 are 5, 7, 13 and 29.
     /// What is the largest prime factor of the number 600851475143 ?
+    let n = 600851475143;
     let mut upper_limit = (n as f64).sqrt() as u64 + 1;
     let mut target = n;
     let mut factor = 2;
@@ -192,7 +193,8 @@ pub fn p7() -> u32 {
 }
 
 #[allow(dead_code)]
-pub fn p8(n: usize) -> u64 {
+pub fn p8() -> u64 {
+    let n = 13;
     let s = "73167176531330624919225119674426574742355349194934
     96983520312774506326239578318016984801869478851843
     85861560789112949495459501737958331952853208805511

@@ -23,13 +23,13 @@ fn main() {
 
     let start = PreciseTime::now(); n=p1(); let end = PreciseTime::now(); println!("p1 seconds: {} answer: {:?}", start.to(end), n);
     let start = PreciseTime::now(); n=p2() as u64; let end = PreciseTime::now(); println!("p2 seconds: {} answer: {:?}", start.to(end), n);
-    let start = PreciseTime::now(); n=p3(600851475143); let end = PreciseTime::now(); println!("p3 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p3(); let end = PreciseTime::now(); println!("p3 seconds: {} answer: {:?}", start.to(end), n);
     let start = PreciseTime::now(); n=p4() as u64; let end = PreciseTime::now(); println!("p4 seconds: {} answer: {:?}", start.to(end), n);
     let start = PreciseTime::now(); n=p5() as u64; let end = PreciseTime::now(); println!("p5 seconds: {} answer: {:?}", start.to(end), n);
 
     let start = PreciseTime::now(); n=p6() as u64; let end = PreciseTime::now(); println!("p6 seconds: {} answer: {:?}", start.to(end), n);
     let start = PreciseTime::now(); n=p7() as u64; let end = PreciseTime::now(); println!("p7 seconds: {} answer: {:?}", start.to(end), n);
-    let start = PreciseTime::now(); n=p8(13); let end = PreciseTime::now(); println!("p8 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p8(); let end = PreciseTime::now(); println!("p8 seconds: {} answer: {:?}", start.to(end), n);
     let start = PreciseTime::now(); n=p9() as u64; let end = PreciseTime::now(); println!("p9 seconds: {} answer: {:?}", start.to(end), n);
     let start = PreciseTime::now(); n=p10() as u64; let end = PreciseTime::now(); println!("p10 seconds: {} answer: {:?}", start.to(end), n);
 
