@@ -3,6 +3,7 @@ name = "eulerrust"
 version = "0.1.0"
 dependencies = [
  "arrayvec 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "bencher 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "chrono 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "fnv 1.0.5 (registry+https://github.com/rust-lang/crates.io-index)",
  "num 0.1.40 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -18,6 +19,11 @@ dependencies = [
  "nodrop 0.1.9 (registry+https://github.com/rust-lang/crates.io-index)",
  "odds 0.2.25 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
+
+[[package]]
+name = "bencher"
+version = "0.1.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "bitflags"
@@ -208,6 +214,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [metadata]
 "checksum arrayvec 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)" = "d1154a1f6c2d8ca95194edbee2380f23f2a51ba321a1217ea00e78166636b2a0"
+"checksum bencher 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)" = "1668b311500dd3b240933ee5ca5a80505e8378a4fa0a6457f629760e97d6c992"
 "checksum bitflags 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)" = "aad18937a628ec6abcd26d1489012cc0e18c21798210f491af69ded9b881106d"
 "checksum chrono 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)" = "7c20ebe0b2b08b0aeddba49c609fe7957ba2e33449882cb186a180bc60682fa9"
 "checksum conv 0.3.3 (registry+https://github.com/rust-lang/crates.io-index)" = "78ff10625fd0ac447827aa30ea8b861fead473bb60aeb73af6c1c58caf0d1299"

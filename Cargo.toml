@@ -10,3 +10,10 @@ fnv = "1.0.5"
 num = "0.1"
 permutohedron = "0.2"
 time = "*"
+
+[dev-dependencies]
+bencher = "0.1.4"
+
+[[bench]]
+name = "eulerrust"
+harness = false
