@@ -61,19 +61,9 @@ pub fn p1() -> u64 {
     agg
 }
 
-#[test]
-fn test_p1() {
-    assert!(p1(10) == 23)
-}
-
 #[allow(dead_code)]
 pub fn p1_iterate(bar: u64) -> u64 {
     (1..bar).filter(|n| n % 3 == 0 || n % 5 == 0).sum()
-}
-
-#[test]
-fn test_p1_iterate() {
-    assert!(p1_iterate(10) == 23)
 }
 
 #[allow(dead_code)]
@@ -173,10 +163,6 @@ pub fn p6() -> u64 {
     }
     sum * sum - sum_of_squares
 }
-
-// pub fn p7() -> u64 {
-//     nth_prime(10001)
-// }
 
 pub fn p7() -> u32 {
     let is_prime = sieve_200_000();
