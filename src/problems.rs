@@ -1231,28 +1231,107 @@ pub fn p42() -> u64 {
     count
 }
 
+#[derive(Debug)]
+struct Pandigital {
+    last_empty: usize,
+    number: [u8; 10],
+    taken: [bool; 10],
+}
 
-#[allow(dead_code)]
-pub fn p43() -> u64 {
-    let mut data = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-    let mut sum: u64 = 0;
-    heap_recursive(&mut data, |perm| {
-        if (perm[7] * 100 + perm[8] * 10 + perm[9]) % 17 == 0 &&
-            (perm[6] * 100 + perm[7] * 10 + perm[8]) % 13 == 0 &&
-            (perm[5] * 100 + perm[6] * 10 + perm[7]) % 11 == 0 &&
-            (perm[4] * 100 + perm[5] * 10 + perm[6]) % 7 == 0 &&
-            (perm[5]) % 5 == 0 &&
-            (perm[2] + perm[3] + perm[4]) % 3 == 0 &&
-            (perm[3]) % 2 == 0 {
-            let mut n = 0;
-            for i in perm {
-                n *= 10;
-                n += *i as u64;
-            }
-            sum += n;
+impl Pandigital {
+    fn new() -> Pandigital {
+        Pandigital {
+            last_empty: 9,
+            number: [0; 10],
+            taken: [false; 10],
         }
-    });
-    sum
+    }
+    fn from_three_digits(n: u16) -> Option<Pandigital> {
+        let mut pandigital = Pandigital::new();
+        let mut nc = n;
+        while nc > 0 {
+            let next = nc % 10;
+            match pandigital.taken[next as usize] {
+                true => return None,
+                false => {
+                    pandigital.taken[next as usize] = true;
+                    pandigital.number[pandigital.last_empty] = next as u8;
+                    pandigital.last_empty -= 1;
+                }
+            }
+            nc /= 10;
+        }
+        if n < 100 {
+            pandigital.taken[0] = true;
+            pandigital.last_empty -= 1;
+        }
+        Some(pandigital)
+    }
+    fn to_u64(&self) -> u64 {
+        let mut n: u64 = 0;
+        for i in (self.last_empty + 1)..10 {
+            n *= 10;
+            n += self.number[i] as u64;
+        }
+        n
+    }
+    fn clone(&self) -> Pandigital {
+        Pandigital {
+            last_empty: self.last_empty,
+            number: self.number.clone(),
+            taken: self.taken.clone(),
+        }
+    }
+    fn add_digit(&self, digit: u8) -> Option<Pandigital>{
+        if self.taken[digit as usize] {
+            return None
+        } else {
+            let mut c = self.clone();
+            c.taken[digit as usize] = true;
+            c.number[c.last_empty] = digit;
+            c.last_empty -= 1;
+            Some(c)
+        }
+    }
+    fn branch(&self, prime: u32) -> Vec<Pandigital> {
+        let mut branches = Vec::new();
+        let last = self.number[self.last_empty + 2];
+        if prime == 5 {
+            if ! (last == 0 || last == 5) {
+                return branches
+            }
+        }
+        let rest = (
+            self.number[self.last_empty + 1] * 10 +
+            last
+        ) as u32;
+        for (d, b) in self.taken.iter().enumerate() {
+            if !*b {
+                if ((d as u32) * 100 + rest) % prime == 0 {
+                    branches.push(self.add_digit(d as u8).unwrap())
+                }
+            }
+        }
+        branches
+    }
+}
+
+pub fn p43() -> u64 {
+    let p = 17;
+    let mut n = p;
+    let mut solutions = Vec::new();
+    while n <= 999 {
+        match Pandigital::from_three_digits(n) {
+            Some(pandigital) => solutions.push(pandigital),
+            None => {}
+        }
+        n += p;
+    }
+    let primes = [13, 11, 7, 5, 3, 2, 1];
+    for prime in primes.iter() {
+        solutions = solutions.iter().flat_map(|p| p.branch(*prime)).collect();
+    }
+    solutions.iter().map(|pandigital| pandigital.to_u64()).sum()
 }
 
 #[allow(dead_code)]
