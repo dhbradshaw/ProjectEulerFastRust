@@ -1222,9 +1222,19 @@ pub fn p42() -> u64 {
     let data_string = read_to_string("p042_words.txt");
     let zero = 'A' as u32 - 1;
     let mut count = 0;
+
+    let mut is_triangular = [false; 1000];
+    let mut t: usize = 1;
+    let mut diff: usize = 2;
+    while t < 1000 {
+        is_triangular[t] = true;
+        t += diff;
+        diff += 1;
+    }
+
     for name in data_string.split(",") {
         let n = word_score(&name, zero);
-        if is_triangular(n as u64) {
+        if is_triangular[n as usize] {
             count += 1;
         }
     }
