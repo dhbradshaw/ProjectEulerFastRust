@@ -307,13 +307,17 @@ pub fn p12() -> u64 {
     let mut n = 1;
     let mut p;
     loop {
-        if n % 2 == 0 {
-            p = divisors(n / 2).len() * divisors(n + 1).len();
-        } else {
-            p = divisors(n).len() * divisors((n + 1) / 2).len();
-        }
-        if p > 500 {
-            break (n * (n + 1)) / 2
+        // Numbers with lots of divisors for their size are divisible by 6.
+        let t = n * (n + 1) / 2;
+        if t % 6 == 0 {
+            if n % 2 == 0 {
+                p = divisors(n / 2).len() * divisors(n + 1).len();
+            } else {
+                p = divisors(n).len() * divisors((n + 1) / 2).len();
+            }
+            if p > 500 {
+                break (n * (n + 1)) / 2
+            }
         }
         n += 1;
     }
