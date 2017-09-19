@@ -1439,17 +1439,23 @@ pub fn p44() -> u64 {
 #[allow(dead_code)]
 pub fn p45() -> u64 {
     let mut hex = 1;
-    let mut diff = 5;
+    let mut pent = 1;
+    let mut hex_diff = 5;
+    let mut pent_diff = 4;
     let mut count = 0;
     loop {
-        hex = hex + diff;
-        if is_pentagonal(hex) && is_triangular(hex as u64) {
+        hex += hex_diff;
+        while pent < hex {
+            pent += pent_diff;
+            pent_diff += 3;
+        }
+        if pent == hex && is_triangular(hex as u64) {
             if count == 1 {
                 break hex
             }
             count += 1;
         }
-        diff += 4
+        hex_diff += 4
     }
 }
 
