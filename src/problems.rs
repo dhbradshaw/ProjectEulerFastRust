@@ -553,10 +553,22 @@ pub fn p22() -> u32 {
 #[allow(dead_code)]
 pub fn p23() -> u32 {
     // Find the sum of all the positive integers which cannot be written as the sum of two abundant numbers.
-    let abundants = super::divisors::abundants_below(28124);
+    let mut divisor_sums = [0u32; 28124];
+    for i in 2..28124 / 2 {
+        let mut j = 2;
+        while i * j < 28124 {
+            divisor_sums[i * j] += i as u32;
+            j += 1;
+        }
+    }
+
     let mut is_abundant = [false; 28124];
-    for a in &abundants {
-        is_abundant[*a as usize] = true;
+    let mut abundants = Vec::new();
+    for (i, s) in divisor_sums.iter().enumerate() {
+        if *s > i as u32 {
+            is_abundant[i] = true;
+            abundants.push(i);
+        }
     }
 
     let mut total = 0;
@@ -577,7 +589,7 @@ pub fn p23() -> u32 {
             total += n;
         }
     }
-    total
+    total as u32
 }
 
 #[allow(dead_code)]
