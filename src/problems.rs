@@ -1448,6 +1448,36 @@ pub fn p46() -> usize {
     }
 }
 
+// #[allow(dead_code)]
+// pub fn p46() -> usize {
+//     // Get quick prime checker
+//     let is_prime = sieve_16000();
+//
+//     // Now just check each composite
+//     let mut c = 3;
+//     loop {
+//         let mut backs_goldbach = true;
+//         if !is_prime[c] {
+//             backs_goldbach = false;
+//             let mut n = 1;
+//             let mut a = 2 * n * n;
+//             while a <= c - 2 {
+//                 if is_prime[c - a] {
+//                     backs_goldbach = true;
+//                     break
+//                 }
+//                 n += 1;
+//                 a = 2 * n * n;
+//             }
+//             if !backs_goldbach {
+//                 break c
+//             }
+//         }
+//         c += 2;
+//     }
+// }
+
+
 #[allow(dead_code)]
 pub fn p47() -> u64 {
     let is_prime = sieve_200_000();
