@@ -811,20 +811,67 @@ fn digit_5th_power_sum(n: u32) -> u32 {
     agg
 }
 
+struct UphillNumber {
+    // A number whose digits are ordered so that they never decrease as you travel from left to right.
+    digits: [u8; 6]
+}
+
+impl UphillNumber {
+    fn new() -> UphillNumber {
+        UphillNumber{digits: [0u8; 6]}
+    }
+    fn to_u32(&self) -> u32 {
+        let mut n = 0;
+        for d in self.digits.iter() {
+            n *= 10;
+            n += *d as u32;
+        }
+        n
+    }
+}
+
+impl Iterator for UphillNumber {
+    type Item = u32;
+    fn next(&mut self) -> Option<u32> {
+        if self.digits[5] < 9u8 {
+            self.digits[5] += 1;
+        } else {
+            let mut n = self.to_u32() + 1;
+            let mut index = 5;
+            while n > 0 {
+                let last = n % 10;
+                n /= 10;
+                self.digits[index] = last as u8;
+                index -= 1;
+            }
+            for i in 0..5 {
+                let second = i + 1;
+                if self.digits[second] < self.digits[i] {
+                    self.digits[second] = self.digits[i];
+                }
+            }
+        }
+        Some(self.to_u32())
+    }
+}
+
 #[allow(dead_code)]
 pub fn p30() -> u32 {
-    // Find the sum of all the numbers that can be written as the sum of fifth powers of their
-    // digits.
-
-    let bound = 9u32.pow(5) * 6;
-    let mut agg = 0;
-    for n in 2..bound {
-        if n == digit_5th_power_sum(n){
-            agg += n
+    let mut un = UphillNumber::new();
+    un.next(); // since 1 is not included in the sum
+    let mut sum = 0;
+    for n in un {
+        let dps = digit_5th_power_sum(n);
+        if digit_5th_power_sum(dps) == dps {
+            sum += dps;
+        }
+        if n > 300_000 {
+            break
         }
     }
-    agg
+    sum
 }
+
 
 #[allow(dead_code)]
 fn coin_choices(amount: u32, type_count: usize) -> u32 {
