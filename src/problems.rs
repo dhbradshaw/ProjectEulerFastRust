@@ -1414,9 +1414,8 @@ pub fn p46() -> usize {
     // Now just check each composite
     let mut c = 3;
     loop {
-        let mut backs_goldbach = true;
         if !is_prime[c] {
-            backs_goldbach = false;
+            let mut backs_goldbach = false;
             let mut n = 1;
             let mut a = 2 * n * n;
             while a <= c - 2 {
