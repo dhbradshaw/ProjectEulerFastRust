@@ -19,7 +19,7 @@ use self::num::PrimInt;
 use self::permutohedron::heap_recursive;
 
 
-use super::divisors::{divisors, is_amicable};
+use super::divisors::divisors;
 use super::fibonacci::Fibonacci;
 use super::modofpower::mod_of_power;
 use super::odddigits::next_odd_digit_number;
@@ -518,7 +518,19 @@ pub fn p20() -> u32 {
 
 #[allow(dead_code)]
 pub fn p21() -> u32 {
-    (1..10000).filter(|n| is_amicable(*n as u64)).sum()
+    let mut divisor_sums = [1u32; 30000];
+    for i in 2..30000 / 2 {
+        let mut j = 2;
+        while i * j < 30000 {
+            divisor_sums[i * j] += i as u32;
+            j += 1;
+        }
+    }
+    divisor_sums[0] = 0;
+    (1..10000).filter(|n| {
+        let partner = divisor_sums[*n as usize];
+        *n != partner && *n == divisor_sums[partner as usize]
+    }).sum()
 }
 
 #[allow(dead_code)]
@@ -553,7 +565,7 @@ pub fn p22() -> u32 {
 #[allow(dead_code)]
 pub fn p23() -> u32 {
     // Find the sum of all the positive integers which cannot be written as the sum of two abundant numbers.
-    let mut divisor_sums = [0u32; 28124];
+    let mut divisor_sums = [1u32; 28124];
     for i in 2..28124 / 2 {
         let mut j = 2;
         while i * j < 28124 {
@@ -561,7 +573,7 @@ pub fn p23() -> u32 {
             j += 1;
         }
     }
-
+    divisor_sums[0] = 0;
     let mut is_abundant = [false; 28124];
     let mut abundants = Vec::new();
     for (i, s) in divisor_sums.iter().enumerate() {
