@@ -546,21 +546,14 @@ pub fn p22() -> u32 {
 
     // Convert names to vectors of integers and sort
     let zero = 'A' as u32 - 1;
-    let mut names: Vec<Vec<_>> = names.split(",").map(
-        |s| {
-            s.chars()
-            .filter(|c| {c.is_alphabetic()})
-            .map(|c| {c as u32 - zero})
-            .collect()
-        }
-    ).collect();
+    let mut names: Vec<_> = names.split(",").collect();
     names.sort();
 
     // Total scores
     let mut sum = 0;
     for (i, name) in names.iter().enumerate() {
         let place: u32 = i as u32 + 1;
-        let score: u32 = name.iter().sum();
+        let score: u32 = name.chars().filter(|c| {c.is_alphabetic()}).map(|c| {c as u32 - zero}).sum();
         sum += place * score;
     }
     sum
