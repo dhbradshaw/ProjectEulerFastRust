@@ -1411,71 +1411,29 @@ pub fn p46() -> usize {
     // Get quick prime checker
     let is_prime = sieve_16000();
 
-    // Get quick primes list
-    let mut primes = [0; 6000];
-    let mut primes_cursor: usize = 0;
-    for i in 2..16000 {
-        if is_prime[i] {
-            primes[primes_cursor] = i;
-            primes_cursor += 1;
-        }
-    }
-
     // Now just check each composite
-    let mut n = 3;
+    let mut c = 3;
     loop {
         let mut backs_goldbach = true;
-        if !is_prime[n] {
+        if !is_prime[c] {
             backs_goldbach = false;
-            let mut i_primes = 0;
-            let mut prime = primes[i_primes];
-            while prime < n {
-                let diff = n - prime;
-                if diff % 2 == 0 {
-                    if ((diff / 2) as f64).sqrt() % 1f64 == 0f64 {
-                        backs_goldbach = true;
-                        break;
-                    }
+            let mut n = 1;
+            let mut a = 2 * n * n;
+            while a <= c - 2 {
+                if is_prime[c - a] {
+                    backs_goldbach = true;
+                    break
                 }
-                i_primes += 1;
-                prime = primes[i_primes];
+                n += 1;
+                a = 2 * n * n;
+            }
+            if !backs_goldbach {
+                break c
             }
         }
-        if !backs_goldbach {
-            break n
-        }
-        n += 2;
+        c += 2;
     }
 }
-
-// #[allow(dead_code)]
-// pub fn p46() -> usize {
-//     // Get quick prime checker
-//     let is_prime = sieve_16000();
-//
-//     // Now just check each composite
-//     let mut c = 3;
-//     loop {
-//         let mut backs_goldbach = true;
-//         if !is_prime[c] {
-//             backs_goldbach = false;
-//             let mut n = 1;
-//             let mut a = 2 * n * n;
-//             while a <= c - 2 {
-//                 if is_prime[c - a] {
-//                     backs_goldbach = true;
-//                     break
-//                 }
-//                 n += 1;
-//                 a = 2 * n * n;
-//             }
-//             if !backs_goldbach {
-//                 break c
-//             }
-//         }
-//         c += 2;
-//     }
-// }
 
 
 #[allow(dead_code)]
