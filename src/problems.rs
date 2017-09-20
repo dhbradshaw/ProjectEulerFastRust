@@ -1236,7 +1236,7 @@ pub fn p39() -> u16 {
     let p = 1000;
     let c_max = p / 2;
     let mut is_square = [false; 250000];
-    let mut solution_count = [0; 1001];
+    let mut solution_count: [u16; 1001] = [0; 1001];
     for c in 1..c_max {
         let c_squared = c * c;
         is_square[c_squared] = true;
@@ -1251,6 +1251,8 @@ pub fn p39() -> u16 {
                 let p = a + b + c;
                 if p <= 1000 {
                     solution_count[p] += 1;
+                } else {
+                    break;
                 }
             }
             a += 1;
