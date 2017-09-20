@@ -971,8 +971,8 @@ pub fn p33() -> usize {
         for d in (n + 1)..100 {
             let d1 = d / 10;
             let d2 = d % 10;
-            let f = n as f64 / d as f64;
             if d1 == n2 {
+                let f = n as f64 / d as f64;
                 let ff = n1 as f64 / d2 as f64;
                 if ff == f {
                     num_product *= n1;
@@ -980,6 +980,7 @@ pub fn p33() -> usize {
                 }
             }
             if d2 == n1 {
+                let f = n as f64 / d as f64;
                 let ff = n2 as f64 / d1 as f64;
                 if ff == f {
                     num_product *= n2;
