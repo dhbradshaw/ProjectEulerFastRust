@@ -1,4 +1,4 @@
-use std::cmp::min;
+use std::cmp::{max, min};
 // 0123
 // 0132
 // 0213
@@ -33,6 +33,56 @@ fn least_greater(n: u8, slice: &[u8]) -> Option<u8> {
         return Some(greaters.iter().fold(255, |a, b| min(a, *b)))
     }
     return None
+}
+
+fn largest_lesser(n: u8, slice: &[u8]) -> Option<u8> {
+    let lessers: Vec<u8> = slice.iter().filter(|m| {**m < n}).map(|n| *n).collect();
+    if lessers.len() > 0 {
+        return Some(lessers.iter().fold(0, |a, b| max(a, *b)))
+    }
+    return None
+}
+
+pub fn last(a: &[u8]) -> Option<Vec<u8>> {
+    let l = a.len();
+    if l < 2 {
+        return None
+    }
+    if l == 2 {
+        if a[0] < a[1] {
+            return None
+        } else {
+            return Some(vec![a[1], a[0]])
+        }
+    } else {
+        let head = a[0];
+        let tail = &a[1..];
+        let last_ = last(tail);
+        match last_ {
+            Some(last_) => {
+                let mut out = vec![head];
+                out.extend(last_);
+                Some(out)
+            }
+            None => {
+                let ll = largest_lesser(head, tail);
+                match ll {
+                    Some(new_head) => {
+                        let mut rest: Vec<u8> = a.iter()
+                            .filter(|n| **n!=new_head)
+                            .map(|n| *n)
+                            .collect();
+                        rest.sort();
+                        rest.reverse();
+                        let mut out = vec![new_head];
+                        out.extend(&rest);
+                        Some(out)
+                    }
+                    None => None
+                }
+            }
+        }
+    }
 }
 
 pub fn next(a: &[u8]) -> Option<Vec<u8>> {
