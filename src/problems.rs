@@ -423,23 +423,20 @@ const P13_INPUT: &'static str = r"3710728753390210279879799822083759024651013574
 77158542502016545090413245809786882778948721859617
 72107838435069186155435662884062257473692284509516
 20849603980134001723930671666823555245252804609722
-53503534226472524250874054075591789781264330331690
-";
+53503534226472524250874054075591789781264330331690";
 
 #[allow(dead_code)]
 pub fn p13() -> u64 {
     // Work out the first ten digits of the sum of the following one-hundred 50-digit numbers.
-    let total: u64 = P13_INPUT.lines().map(|line| {
-        let l: String = line
-            .chars()
-            .filter(|a| a.is_digit(10))
-            .take(11)
-            .collect();
-        let n = l.parse::<u64>().unwrap();
-        n
-    }).sum();
-    let digit_count =  (total as f64).log(10f64).ceil();
-    total / 10.pow(digit_count as u32 - 10)
+    let mut total: u64 = P13_INPUT
+        .lines()
+        .map(|line| &line[..11])
+        .filter_map(|line| line.parse::<u64>().ok())
+        .sum();
+    while total >= 10_000_000_000 {
+        total /= 10;
+    }
+    total
 }
 
 #[allow(dead_code)]
