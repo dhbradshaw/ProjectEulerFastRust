@@ -1,3 +1,29 @@
+use std::cmp::{min, max};
+
+pub fn gcd(a: usize, b: usize) -> usize {
+    // greatest common divisor from Rosetta code (Stein's algorithm)
+    // https://rosettacode.org/wiki/Greatest_common_divisor#Stein.27s_Algorithm
+    match ((a, b), (a & 1, b & 1)) {
+        ((x, y), _) if x == y => {
+            y
+        },
+        ((0, x), _) | ((x, 0), _) => {
+            x
+        },
+        ((x, y), (0, 1)) | ((y, x), (1, 0)) => {
+            gcd(x >> 1, y)
+        },
+        ((x, y), (0, 0)) => {
+            gcd(x >> 1, y >> 1) << 1
+        },
+        ((x, y), (1, 1)) => {
+            let (x, y) = (min(x, y), max(x, y));
+            gcd((y - x) >> 1, x)
+        }
+        _ => unreachable!(),
+    }
+}
+
 pub fn divisors(n: u64) -> Vec<u64> {
     let limit = (n as f64).sqrt() as u64;
     let mut v0 = Vec::new();

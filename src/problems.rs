@@ -19,7 +19,7 @@ use self::num::PrimInt;
 use self::permutohedron::heap_recursive;
 
 
-use super::divisors::divisors;
+use super::divisors::{divisors, gcd};
 use super::fibonacci::Fibonacci;
 use super::modofpower::mod_of_power;
 use super::odddigits::next_odd_digit_number;
@@ -1204,61 +1204,80 @@ pub fn p38() -> u64 {
 }
 
 // #[allow(dead_code)]
-// pub fn p39() -> u64 {
-//     let mut max_solutions = 0;
-//     let mut n_max_solutions: u64 = 1;
-//     for p in 1..1000 {
-//         let p = p as u64;
-//         let mut solutions = 0;
-//         let mut a: u64 = 1;
-//         while 3 * a < p {
-//             let num = p * (p - 2 * a);
-//             let denom = 2 * (p - a);
-//             if num % denom == 0 {
-//                 solutions += 1;
-//             }
-//             let b = num / denom;
-//             if b <= a {
-//                 break;
+// pub fn p39() -> u16 {
+//     let p = 1000;
+//     let c_max = p / 2;
+//     let mut is_square = [false; 250000];
+//     let mut solution_count: [u16; 1001] = [0; 1001];
+//     for c in 1..c_max {
+//         let c_squared = c * c;
+//         is_square[c_squared] = true;
+//
+//         let mut a = 1;
+//         let mut a_squared = a * a;
+//
+//         while a_squared <= c_squared / 2 {
+//             let b_squared = c_squared - a_squared;
+//             if is_square[b_squared] {
+//                 let b = (b_squared as f32).sqrt().round() as usize;
+//                 let p = a + b + c;
+//                 if p <= 1000 {
+//                     solution_count[p] += 1;
+//                 } else {
+//                     break;
+//                 }
 //             }
 //             a += 1;
-//         }
-//         if solutions > max_solutions {
-//             max_solutions = solutions;
-//             n_max_solutions = p;
+//             a_squared = a * a;
 //         }
 //     }
-//     n_max_solutions
+//     let mut max_index = 0;
+//     let mut max_count = 0;
+//     for (i, count) in solution_count.iter().enumerate() {
+//         if *count > max_count {
+//             max_count = *count;
+//             max_index = i;
+//         }
+//     }
+//     max_index as u16
 // }
 
-#[allow(dead_code)]
 pub fn p39() -> u16 {
-    let p = 1000;
-    let c_max = p / 2;
-    let mut is_square = [false; 250000];
-    let mut solution_count: [u16; 1001] = [0; 1001];
-    for c in 1..c_max {
-        let c_squared = c * c;
-        is_square[c_squared] = true;
+    let mut solution_count = [0u16; 1001];
+    let mut m = 2;
+    loop {
+        let m_squared = m * m;
+        let mut n = 1 + m % 2; // If m is even, n should be odd and vice verse.
+        let mut n_squared = n * n;
+        if m_squared + n_squared >= 500 {
+            break
+        }
+        while n < m {
+            // Find triplet
+            let a = m_squared - n_squared;
+            let b = 2 * m * n;
+            let c = m_squared + n_squared;
 
-        let mut a = 1;
-        let mut a_squared = a * a;
-
-        while a_squared <= c_squared / 2 {
-            let b_squared = c_squared - a_squared;
-            if is_square[b_squared] {
-                let b = (b_squared as f32).sqrt().round() as usize;
-                let p = a + b + c;
-                if p <= 1000 {
-                    solution_count[p] += 1;
-                } else {
-                    break;
+            // Mark triplet and multiples as solutions.
+            let mut p = a + b + c;
+            if p >= 1000 {
+                break
+            }
+            if gcd(a, b) == 1 { // Avoid overcounting due non-primitive triples.
+                let mut k = 1;
+                while k * p <= 1000 {
+                    solution_count[k * p] += 1;
+                    k += 1;
                 }
             }
-            a += 1;
-            a_squared = a * a;
+
+            // Keep one odd and one even.
+            n += 2;
+            n_squared = n * n;
         }
+        m += 1;
     }
+
     let mut max_index = 0;
     let mut max_count = 0;
     for (i, count) in solution_count.iter().enumerate() {
