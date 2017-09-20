@@ -23,11 +23,7 @@ use super::divisors::{divisors, gcd};
 use super::fibonacci::Fibonacci;
 use super::modofpower::mod_of_power;
 use super::odddigits::next_odd_digit_number;
-use super::palindrome::{
-    BinaryPalindromes,
-    is_palindrome,
-    reverse_decimal_digits,
-};
+use super::palindrome::BinaryPalindromes;
 use super::primes::{
     distinct_prime_factor_count,
     is_prime,
@@ -118,31 +114,66 @@ pub fn p3() -> u64 {
     max(target, factor)
 }
 
+// #[allow(dead_code)]
+// pub fn p4() -> u32 {
+//     /// A palindromic number reads the same both ways.
+//     /// The largest palindrome made from the product of two 2-digit numbers is
+//     /// 9009 = 91 × 99.
+//     /// Find the largest palindrome made from the product of two 3-digit numbers.
+//     let mut largest_palindrome = 0;
+//     let mut i = 999;
+//     while i > 99 {
+//         let mut j = i;
+//         while j > 99 {
+//             let multiple = i * j;
+//             if multiple > largest_palindrome {
+//                 let digits = reverse_decimal_digits(multiple);
+//                 if is_palindrome(&digits) {
+//                     largest_palindrome = multiple
+//                 }
+//             } else {
+//                 break;
+//             }
+//             j -= 1;
+//         }
+//         i -= 1;
+//     }
+//     largest_palindrome
+// }
+
+fn even_digit_palindrome_from_n(n: u16) -> u32 {
+    let mut p = n as u32;
+    let mut nc = n;
+    while nc > 0 {
+        p *= 10;
+        p += (nc % 10) as u32;
+        nc /= 10;
+    }
+    p
+}
+
 #[allow(dead_code)]
 pub fn p4() -> u32 {
-    /// A palindromic number reads the same both ways.
-    /// The largest palindrome made from the product of two 2-digit numbers is
-    /// 9009 = 91 × 99.
-    /// Find the largest palindrome made from the product of two 3-digit numbers.
-    let mut largest_palindrome = 0;
-    let mut i = 999;
-    while i > 99 {
-        let mut j = i;
-        while j > 99 {
-            let multiple = i * j;
-            if multiple > largest_palindrome {
-                let digits = reverse_decimal_digits(multiple);
-                if is_palindrome(&digits) {
-                    largest_palindrome = multiple
-                }
-            } else {
+    let mut i: u16 = 999;
+    loop {
+        let p = even_digit_palindrome_from_n(i);
+        let mut solved = false;
+
+        let mut j = 999;
+        while j * j >= p {
+            if p % j == 0 {
+                solved = true;
                 break;
             }
             j -= 1;
         }
+
+        if solved {
+            break p
+        }
+
         i -= 1;
     }
-    largest_palindrome
 }
 
 #[allow(dead_code)]
