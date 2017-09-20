@@ -23,7 +23,7 @@ use super::divisors::{divisors, gcd};
 use super::fibonacci::Fibonacci;
 use super::modofpower::mod_of_power;
 use super::odddigits::next_odd_digit_number;
-use super::palindrome::BinaryPalindromes;
+use super::palindrome::{BinaryPalindromes, reverse_digits};
 use super::primes::{
     distinct_prime_factor_count,
     is_prime,
@@ -1064,10 +1064,6 @@ pub fn p35() -> usize {
     circular_prime_count
 }
 
-fn reverse(s: &str) -> String {
-    s.chars().rev().collect::<String>()
-}
-
 #[allow(dead_code)]
 pub fn p36() -> u64 {
     let mut sum = 0;
@@ -1076,8 +1072,7 @@ pub fn p36() -> u64 {
         if bp >= 1_000_000 {
             break;
         }
-        let s10 = format!("{}", bp);
-        if s10 == reverse(&s10) {
+        if bp == reverse_digits(bp, 10) {
             sum += bp;
         }
     }

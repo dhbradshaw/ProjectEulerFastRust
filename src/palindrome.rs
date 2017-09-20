@@ -18,6 +18,17 @@ pub fn is_palindrome(s: &[u32]) -> bool {
     true
 }
 
+pub fn reverse_digits(n: u64, radix: u64) -> u64 {
+    let mut nc = n;
+    let mut reverse = 0;
+    while nc > 0 {
+        reverse *= radix;
+        reverse += nc % radix;
+        nc /= radix;
+    }
+    reverse
+}
+
 pub fn binary_palindrome_from_base(base: u64, odd_length: bool) -> u64 {
     let mut left = base;
     let mut right = base;
