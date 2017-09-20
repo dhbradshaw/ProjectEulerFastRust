@@ -1220,7 +1220,7 @@ pub fn p39() -> u16 {
             let c = m_squared + n_squared;
 
             // Mark triplet and multiples as solutions.
-            let mut p = a + b + c;
+            let p = a + b + c;
             if p >= 1000 {
                 break
             }
