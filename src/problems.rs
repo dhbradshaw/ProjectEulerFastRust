@@ -1203,45 +1203,6 @@ pub fn p38() -> u64 {
     highest
 }
 
-// #[allow(dead_code)]
-// pub fn p39() -> u16 {
-//     let p = 1000;
-//     let c_max = p / 2;
-//     let mut is_square = [false; 250000];
-//     let mut solution_count: [u16; 1001] = [0; 1001];
-//     for c in 1..c_max {
-//         let c_squared = c * c;
-//         is_square[c_squared] = true;
-//
-//         let mut a = 1;
-//         let mut a_squared = a * a;
-//
-//         while a_squared <= c_squared / 2 {
-//             let b_squared = c_squared - a_squared;
-//             if is_square[b_squared] {
-//                 let b = (b_squared as f32).sqrt().round() as usize;
-//                 let p = a + b + c;
-//                 if p <= 1000 {
-//                     solution_count[p] += 1;
-//                 } else {
-//                     break;
-//                 }
-//             }
-//             a += 1;
-//             a_squared = a * a;
-//         }
-//     }
-//     let mut max_index = 0;
-//     let mut max_count = 0;
-//     for (i, count) in solution_count.iter().enumerate() {
-//         if *count > max_count {
-//             max_count = *count;
-//             max_index = i;
-//         }
-//     }
-//     max_index as u16
-// }
-
 pub fn p39() -> u16 {
     let mut solution_count = [0u16; 1001];
     let mut m = 2;
