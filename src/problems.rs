@@ -1257,32 +1257,6 @@ pub fn p40() -> u32 {
     product
 }
 
-// #[allow(dead_code)]
-// pub fn p41() -> u64 {
-//     let mut data = [1, 2, 3, 4, 5, 6];
-//     let mut max_prime = 0;
-//     let primes = primes_below(2767);
-//     heap_recursive(&mut data, |permutation| {
-//         match permutation[5] {
-//             2 | 4 | 5 | 6 => (),
-//             _ => {
-//                 let mut n = 0;
-//                 for i in permutation {
-//                     n *= 10;
-//                     n += *i;
-//                 }
-//                 n += 7_000_000;
-//                 if is_prime(n, &primes) {
-//                     if n > max_prime {
-//                         max_prime = n;
-//                     }
-//                 }
-//             }
-//         }
-//     });
-//     max_prime
-// }
-
 #[allow(dead_code)]
 pub fn p41() -> u64 {
     let a = [7,6,5,4,3,2,1];
