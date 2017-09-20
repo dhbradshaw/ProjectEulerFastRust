@@ -17,8 +17,9 @@ pub fn primes_below(n: u64) -> Vec<u64> {
 }
 
 pub fn is_prime(n: u64, primes: &[u64]) -> bool {
+    let limit = (n as f64).sqrt() as u64;
     for p in primes {
-        if *p > ((n as f64).sqrt() as u64) {
+        if *p > limit {
             break;
         }
         if n % p == 0 {
