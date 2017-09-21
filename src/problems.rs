@@ -251,12 +251,14 @@ pub fn p9() -> u64 {
 
 #[allow(dead_code)]
 pub fn p10() -> u64 {
-    let primes = sieve_2_000_000();
-    let mut s = 0;
-    for (i, is_prime) in primes.iter().enumerate() {
-        if *is_prime {
+    let is_prime = sieve_2_000_000();
+    let mut s = 2;
+    let mut i = 3;
+    while i < 2_000_000 {
+        if is_prime[i] {
             s += i;
         }
+        i += 2;
     }
     s as u64
 }
