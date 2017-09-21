@@ -21,7 +21,7 @@ fn main() {
     let mut n;
     let start_all = PreciseTime::now();
 
-    let start = PreciseTime::now(); n=p1(); let end = PreciseTime::now(); println!("p1 seconds: {} answer: {:?}", start.to(end), n);
+    let start = PreciseTime::now(); n=p1() as u64; let end = PreciseTime::now(); println!("p1 seconds: {} answer: {:?}", start.to(end), n);
     let start = PreciseTime::now(); n=p2() as u64; let end = PreciseTime::now(); println!("p2 seconds: {} answer: {:?}", start.to(end), n);
     let start = PreciseTime::now(); n=p3(); let end = PreciseTime::now(); println!("p3 seconds: {} answer: {:?}", start.to(end), n);
     let start = PreciseTime::now(); n=p4() as u64; let end = PreciseTime::now(); println!("p4 seconds: {} answer: {:?}", start.to(end), n);

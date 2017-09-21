@@ -15,7 +15,6 @@ use std::io::Read;
 use self::chrono::{Datelike, NaiveDate, Weekday};
 use self::fnv::FnvHashMap;
 use self::num::{BigUint, FromPrimitive};
-use self::num::PrimInt;
 use self::permutohedron::heap_recursive;
 
 
@@ -37,24 +36,45 @@ use super::primes::{
 };
 use super::trianglenumbers::is_triangular;
 
-#[allow(dead_code)]
-pub fn p1() -> u64 {
-    let bar = 1000;
-    /// If we list all the natural numbers below 10 that are multiples of 3 or 5,
-    /// we get 3, 5, 6 and 9. The sum of these multiples is 23.
-    /// Find the sum of all the multiples of 3 or 5 below 1000.");
-    let mut n = 1;
+// #[allow(dead_code)]
+// pub fn p1() -> u64 {
+//     let bar = 1000;
+//     /// If we list all the natural numbers below 10 that are multiples of 3 or 5,
+//     /// we get 3, 5, 6 and 9. The sum of these multiples is 23.
+//     /// Find the sum of all the multiples of 3 or 5 below 1000.");
+//     let mut n = 1;
+//     let mut agg = 0;
+//     loop {
+//         if n == bar {
+//             break;
+//         }
+//         if n % 3 == 0 || n % 5 == 0 {
+//             agg += n;
+//         }
+//         n += 1;
+//     }
+//     agg
+// }
+
+pub fn sum_multiples_under(bar: u32, base: u32) -> u32 {
     let mut agg = 0;
+    let mut n = 0;
     loop {
-        if n == bar {
-            break;
+        n += base;
+        if n >= bar {
+            break agg
         }
-        if n % 3 == 0 || n % 5 == 0 {
-            agg += n;
-        }
-        n += 1;
+        agg += n;
     }
-    agg
+}
+
+#[allow(dead_code)]
+pub fn p1() -> u32 {
+    // If we list all the natural numbers below 10 that are multiples of 3 or 5,
+    // we get 3, 5, 6 and 9. The sum of these multiples is 23.
+    // Find the sum of all the multiples of 3 or 5 below 1000.");
+    let bar = 1000;
+    sum_multiples_under(bar, 3) + sum_multiples_under(bar, 5) - sum_multiples_under(bar, 15)
 }
 
 #[allow(dead_code)]
