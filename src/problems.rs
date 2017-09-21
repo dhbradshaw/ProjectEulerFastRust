@@ -961,30 +961,69 @@ pub fn p32() -> u32 {
     sum
 }
 
+// #[allow(dead_code)]
+// pub fn p33() -> usize {
+//     let mut num_product = 1;
+//     let mut den_product = 1;
+//     for n in 10..100 {
+//         let n1 = n / 10;
+//         let n2 = n % 10;
+//         for d in (n + 1)..100 {
+//             let d1 = d / 10;
+//             let d2 = d % 10;
+//             if d1 == n2 {
+//                 d % d1
+//                 let f = n as f64 / d as f64;
+//                 let ff = n1 as f64 / d2 as f64;
+//                 if ff == f {
+//                     num_product *= n1;
+//                     den_product *= d2;
+//                 }
+//             }
+//             if d2 == n1 {
+//                 let f = n as f64 / d as f64;
+//                 let ff = n2 as f64 / d1 as f64;
+//                 if ff == f {
+//                     num_product *= n2;
+//                     den_product *= d1;
+//                 }
+//             }
+//         }
+//     }
+//     for &i in [2, 3, 5, 7].iter() {
+//         while den_product % i == 0 && num_product % i == 0 {
+//             den_product /= i;
+//             num_product /= i;
+//         }
+//     }
+//     den_product
+// }
+
 #[allow(dead_code)]
 pub fn p33() -> usize {
     let mut num_product = 1;
     let mut den_product = 1;
-    for n in 10..100 {
-        let n1 = n / 10;
-        let n2 = n % 10;
-        for d in (n + 1)..100 {
-            let d1 = d / 10;
-            let d2 = d % 10;
-            if d1 == n2 {
-                let f = n as f64 / d as f64;
-                let ff = n1 as f64 / d2 as f64;
-                if ff == f {
-                    num_product *= n1;
-                    den_product *= d2;
+    for n in 1..10 {
+        for d in (n+1)..10 {
+            let f = n as f32 / d as f32;
+            for extra in 1..10 {
+                if extra > n || (extra == n && d > extra) {
+                    let na = n * 10 + extra;
+                    let da = extra * 10 + d;
+                    let ff = na as f32 / da as f32;
+                    if ff == f {
+                        num_product *= n;
+                        den_product *= d;
+                    }
                 }
-            }
-            if d2 == n1 {
-                let f = n as f64 / d as f64;
-                let ff = n2 as f64 / d1 as f64;
-                if ff == f {
-                    num_product *= n2;
-                    den_product *= d1;
+                if d > extra || (extra == d && extra > n) {
+                    let nb = extra * 10 + n;
+                    let db = d * 10 + extra;
+                    let ff = nb as f32 / db as f32;
+                    if ff == f {
+                        num_product *= n;
+                        den_product *= d;
+                    }
                 }
             }
         }
