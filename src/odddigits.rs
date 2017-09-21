@@ -66,21 +66,23 @@ pub fn next_odd_sans_five(n: u32) -> u32 {
     // But never creates them, so if you just use this you're golden.
     let mut nc = n;
     let mut last = nc % 10;
-    if last == 9 {
-        while last == 9 {
-            nc /= 10;
-            last = nc % 10;
+    match last {
+        9 => {
+            while last == 9 {
+                nc /= 10;
+                last = nc % 10;
+            }
+            nc -= last;
+            nc += next_odd_sans_five_digit(last);
+            while nc < n {
+                nc *= 10;
+                nc += 1;
+            }
+        },
+        _ => {
+            nc -= last;
+            nc += next_odd_sans_five_digit(last);
         }
-        nc -= last;
-        nc += next_odd_sans_five_digit(last);
-        while nc < n {
-            nc *= 10;
-            nc += 1;
-        }
-    }
-    else {
-        nc -= last;
-        nc += next_odd_sans_five_digit(last);
     }
     nc
 }

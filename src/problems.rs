@@ -1056,21 +1056,23 @@ pub fn p34() -> u32 {
 
 #[allow(dead_code)]
 fn rotate(n: usize) -> usize {
-    let zeroes = (n as f64).log(10.0) as u32;
+    let zeroes = if n >= 10_000 {
+        if n >= 100_000 {5} else {4}
+    } else {
+        if n >= 1000 {3} else {2}
+    };
+
     let last = n % 10;
     let rest = n / 10;
-    rest + last * 10usize.pow(zeroes)
+    last * 10usize.pow(zeroes) + rest
 }
 
 #[allow(dead_code)]
 pub fn p35() -> usize {
-    let mut n = 7;
-    let mut circular_prime_count = 3; // Skipping 2, 3, and 5 so counting them.
+    let mut n = 111;
+    let mut circular_prime_count = 13; // Problem states that there are 13 below 100.
     let is_prime = sieve_1_000_000();
     loop {
-        if n >= 1_000_000 {
-            break
-        }
         if is_prime[n] {
             let mut circular_prime = true;
             let mut r = rotate(n);
@@ -1086,8 +1088,11 @@ pub fn p35() -> usize {
             }
         }
         n = next_odd_sans_five(n as u32) as usize;
+        if n >= 1_000_000 {
+            break circular_prime_count
+        }
     }
-    circular_prime_count
+
 }
 
 #[allow(dead_code)]
