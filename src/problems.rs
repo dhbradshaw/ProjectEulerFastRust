@@ -861,11 +861,16 @@ impl Iterator for UphillNumber {
             self.digits[5] += 1;
         } else {
             let mut n = self.to_u32() + 1;
+            if n > 999_999 {
+                return None;
+            }
             let mut index = 5;
             while n > 0 {
                 let last = n % 10;
                 n /= 10;
-                self.digits[index] = last as u8;
+                if index < 6 {
+                    self.digits[index] = last as u8;
+                }
                 index -= 1;
             }
             for i in 0..5 {
@@ -1019,6 +1024,44 @@ pub fn p33() -> usize {
     den_product
 }
 
+// #[allow(dead_code)]
+// fn equals_sum_digit_factorial(n: u32) -> bool {
+//     let mut nc = n;
+//     let mut sum = 0;
+//     while nc > 0 {
+//         let last = nc % 10;
+//         nc = nc / 10;
+//         sum += match last {
+//             0 => 1,
+//             1 => 1,
+//             2 => 2,
+//             3 => 6,
+//             4 => 24,
+//             5 => 120,
+//             6 => 720,
+//             7 => 5040,
+//             8 => 40320,
+//             9 => 362880,
+//             _ => 0,
+//         };
+//         if sum > n {
+//             return false;
+//         }
+//     }
+//     sum == n
+// }
+//
+// #[allow(dead_code)]
+// pub fn p34() -> u32 {
+//     let mut sum = 0;
+//     for n in 10..1_572_480 {
+//         if equals_sum_digit_factorial(n) {
+//             sum += n
+//         }
+//     }
+//     sum
+// }
+
 #[allow(dead_code)]
 fn sum_digit_factorial(n: u32) -> u32 {
     let mut nc = n;
@@ -1045,10 +1088,30 @@ fn sum_digit_factorial(n: u32) -> u32 {
 
 #[allow(dead_code)]
 pub fn p34() -> u32 {
+    let mut un1 = UphillNumber::new();
+
+    // Start at 11 since we skip the first 10 according to problem definition.
+    un1.digits[4] = 1u8;
+    un1.digits[5] = 1u8;
+
     let mut sum = 0;
-    for n in 10..1_572_480 {
-        if n == sum_digit_factorial(n) {
-            sum += n
+    for n in un1 {
+        let s = sum_digit_factorial(n);
+        let ss = sum_digit_factorial(s);
+        if s == ss && s >= n {
+            sum += s
+        }
+    }
+    let mut un2 = UphillNumber::new();
+    un2.digits = [1u8; 6];
+    for n in un2 {
+        let s = sum_digit_factorial(n + 1_000_000);
+        let ss = sum_digit_factorial(s);
+        if s == ss && s >= n {
+            sum += s;
+        }
+        if n >= 1_572_480 {
+            break;
         }
     }
     sum
