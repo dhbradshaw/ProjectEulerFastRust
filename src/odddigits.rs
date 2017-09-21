@@ -45,6 +45,46 @@ pub fn next_odd_digit_number(n: usize) -> usize {
     }
 }
 
+pub fn next_odd_sans_five_digit(d: u32) -> u32 {
+    match d {
+        9 => 1,
+        8 => 9,
+        7 => 9,
+        6 => 7,
+        5 => 7,
+        4 => 7,
+        3 => 7,
+        2 => 3,
+        1 => 3,
+        0 => 1,
+        _ => 0
+    }
+}
+
+pub fn next_odd_sans_five(n: u32) -> u32 {
+    // Doesn't find hidden even digits.
+    // But never creates them, so if you just use this you're golden.
+    let mut nc = n;
+    let mut last = nc % 10;
+    if last == 9 {
+        while last == 9 {
+            nc /= 10;
+            last = nc % 10;
+        }
+        nc -= last;
+        nc += next_odd_sans_five_digit(last);
+        while nc < n {
+            nc *= 10;
+            nc += 1;
+        }
+    }
+    else {
+        nc -= last;
+        nc += next_odd_sans_five_digit(last);
+    }
+    nc
+}
+
 #[cfg(test)]
 mod test {
     use super::*;

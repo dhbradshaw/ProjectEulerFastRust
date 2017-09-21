@@ -22,7 +22,7 @@ use super::divisors::{divisors, gcd};
 use super::fibonacci::Fibonacci;
 use super::lexicographic;
 use super::modofpower::mod_of_power;
-use super::odddigits::next_odd_digit_number;
+use super::odddigits::next_odd_sans_five;
 use super::palindrome::{BinaryPalindromes, reverse_digits};
 use super::primes::{
     distinct_prime_factor_count,
@@ -1064,9 +1064,9 @@ fn rotate(n: usize) -> usize {
 
 #[allow(dead_code)]
 pub fn p35() -> usize {
-    let mut circular_prime_count = 0;
+    let mut n = 7;
+    let mut circular_prime_count = 3; // Skipping 2, 3, and 5 so counting them.
     let is_prime = sieve_1_000_000();
-    let mut n = 2;
     loop {
         if n >= 1_000_000 {
             break
@@ -1085,7 +1085,7 @@ pub fn p35() -> usize {
                 circular_prime_count += 1;
             }
         }
-        n = next_odd_digit_number(n);
+        n = next_odd_sans_five(n as u32) as usize;
     }
     circular_prime_count
 }
