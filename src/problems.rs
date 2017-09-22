@@ -1698,26 +1698,86 @@ pub fn p49() -> usize {
     1
 }
 
+// #[allow(dead_code)]
+// pub fn p50() -> u64 {
+//     // Get fast prime check
+//     let is_prime = sieve_1_000_000();
+//
+//     // Get fast prime source.  While you do that, get a sequence sum.
+//     let mut primes = [0u64; 400_000];
+//     let mut i_primes: usize = 0;
+//     let mut last: usize = 0;
+//     let mut s: u64 = 0;
+//     for i in 2usize..1_000_000usize {
+//         if is_prime[i] {
+//             let p = i as u64;
+//             primes[i_primes] = p;
+//             i_primes += 1;
+//             if s + p < 1_000_000 {
+//                 s += p;
+//                 last = i_primes as usize;
+//             }
+//         }
+//     }
+//
+//     // Walk along the sequence, decreasing sequence length each time you don't find a prime.
+//     let mut first: usize = 0;
+//     loop {
+//         if s < 1_000_000 {
+//             if is_prime[s as usize] {
+//                 break s
+//             } else {
+//                 // slide to the right
+//                 s -= primes[first];
+//                 first += 1;
+//                 last += 1;
+//                 s += primes[last];
+//             }
+//         } else {
+//             // decrease sequence_length
+//             s -= primes[last];
+//             last -= 1;
+//
+//             // carriage return
+//             while first > 0 {
+//                 s -= primes[last];
+//                 last -= 1;
+//                 first -= 1;
+//                 s += primes[first];
+//             }
+//         }
+//     }
+// }
+
 #[allow(dead_code)]
-pub fn p50() -> u64 {
+pub fn p50() -> u32 {
     // Get fast prime check
     let is_prime = sieve_1_000_000();
 
     // Get fast prime source.  While you do that, get a sequence sum.
-    let mut primes = [0u64; 400_000];
+    let mut primes = [0u32; 30_000];
     let mut i_primes: usize = 0;
     let mut last: usize = 0;
-    let mut s: u64 = 0;
-    for i in 2usize..1_000_000usize {
-        if is_prime[i] {
-            let p = i as u64;
-            primes[i_primes] = p;
+
+    primes[last] = 2;
+    let mut s: u32 = 2;
+    let mut candidate: u32 = 3;
+
+    loop {
+        if is_prime[candidate as usize] {
             i_primes += 1;
-            if s + p < 1_000_000 {
-                s += p;
-                last = i_primes as usize;
+            primes[i_primes] = candidate;
+
+            let new_sum = s + candidate;
+            if new_sum < 1_000_000 {
+                s = new_sum;
+                last = i_primes;
             }
         }
+        if candidate >= 50_000 {
+            break;
+        }
+        candidate += 2;
     }
 
     // Walk along the sequence, decreasing sequence length each time you don't find a prime.
@@ -1744,7 +1804,6 @@ pub fn p50() -> u64 {
                 last -= 1;
                 first -= 1;
                 s += primes[first];
-
             }
         }
     }

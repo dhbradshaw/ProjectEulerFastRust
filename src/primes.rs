@@ -127,8 +127,8 @@ pub fn sieve_200_000() -> [bool; 200_000] {
     is_prime
 }
 
-pub fn sieve_1_000_000() -> [bool; 1000000] {
-    let mut is_prime = [true; 1000000];
+pub fn sieve_1_000_000() -> [bool; 1_000_000] {
+    let mut is_prime = [true; 1_000_000];
     is_prime[0]=false;
     is_prime[1]=false;
 
@@ -136,6 +136,13 @@ pub fn sieve_1_000_000() -> [bool; 1000000] {
     let sqrt = (l as f64).sqrt() as usize;
 
     let mut i = 2;
+    let mut unprime = i * i;
+    while unprime < l {
+        is_prime[unprime] = false;
+        unprime += i;
+    }
+
+    i = 3;
     while i < sqrt + 1 {
         if is_prime[i] {
             let mut unprime = i * i;
@@ -144,7 +151,7 @@ pub fn sieve_1_000_000() -> [bool; 1000000] {
                 unprime += i;
             }
         }
-        i += 1
+        i += 2;
     }
     is_prime
 }
