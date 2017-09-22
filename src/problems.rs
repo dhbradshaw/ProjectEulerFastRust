@@ -18,7 +18,7 @@ use self::num::{BigUint, FromPrimitive};
 use self::permutohedron::heap_recursive;
 
 
-use super::divisors::{divisors, gcd};
+use super::divisors::{divisor_count, divisors, gcd};
 use super::fibonacci::Fibonacci;
 use super::lexicographic;
 use super::modofpower::mod_of_power;
@@ -338,9 +338,9 @@ pub fn p12() -> u64 {
         let t = n * (n + 1) / 2;
         if t % 6 == 0 {
             if n % 2 == 0 {
-                p = divisors(n / 2).len() * divisors(n + 1).len();
+                p = divisor_count(n / 2) * divisor_count(n + 1);
             } else {
-                p = divisors(n).len() * divisors((n + 1) / 2).len();
+                p = divisor_count(n) * divisor_count((n + 1) / 2);
             }
             if p > 500 {
                 break (n * (n + 1)) / 2

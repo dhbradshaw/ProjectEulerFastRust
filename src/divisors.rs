@@ -45,6 +45,23 @@ pub fn divisors(n: u64) -> Vec<u64> {
     v0
 }
 
+pub fn divisor_count(n: u64) -> u32 {
+    let limit = (n as f64).sqrt() as u64;
+    let mut test = 1;
+    let mut count = 0;
+    while test <= limit {
+        if n % test == 0 {
+            count += 1;
+            let partner = n / test;
+            if partner != test { // Test already got counted.  Don't count it again.
+                count += 1;
+            }
+        }
+        test += 1;
+    }
+    count
+}
+
 pub fn proper_divisors(n: u64) -> Vec<u64> {
     let mut v = divisors(n);
     v.pop();
