@@ -225,6 +225,29 @@ pub fn distinct_prime_factor_count(n: u64, primes: &Vec<u64>) -> u64 {
     count
 }
 
+pub fn nonself_prime_factor_counts_200_000() -> [u8; 200_000] {
+    let mut counts = [0u8; 200_000];
+    let length = counts.len();
+    let mut n = 2usize;
+    let mut index = n * 2;
+    while index < length {
+        counts[index] += 1;
+        index += n;
+    }
+    n = 3;
+    while n < length / 2 {
+        if counts[n] == 0 {
+            index = 2 * n;
+            while index < length {
+                counts[index] += 1;
+                index += n;
+            }
+        }
+        n += 2;
+    }
+    counts
+}
+
 pub fn most_consecutive_primes(n: u64, primes: &[u64]) -> usize {
     let mut first = 0usize;
     let mut last = 1usize;
@@ -284,5 +307,23 @@ mod test {
 
         let hs: HashSet<u64> = [2, 5, 13].iter().cloned().collect();
         assert_eq!(distinct_prime_factors(1300, &primes), hs);
+    }
+    #[test]
+    fn test_nonself_prime_factor_counts_200_000() {
+        let counts = nonself_prime_factor_counts_200_000();
+        assert_eq!(counts[0], 0);
+        assert_eq!(counts[1], 0);
+        assert_eq!(counts[2], 0);
+        assert_eq!(counts[3], 0);
+        assert_eq!(counts[4], 1);
+        assert_eq!(counts[5], 0);
+        assert_eq!(counts[6], 2);
+        assert_eq!(counts[7], 0);
+        assert_eq!(counts[8], 1);
+        assert_eq!(counts[9], 1);
+        assert_eq!(counts[10], 2);
+        assert_eq!(counts[11], 0);
+        assert_eq!(counts[24], 2);
+        assert_eq!(counts[30], 3);
     }
 }
