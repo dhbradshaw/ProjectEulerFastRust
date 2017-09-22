@@ -1595,33 +1595,41 @@ pub fn p47() -> u64 {
     let primes: Vec<u64> = is_prime.iter().enumerate().filter(|&(_, &p)| p).map(|(i, _)| i as u64).collect();
 
     let target_count = 4;
-    let mut i: u64 = 1;
-    let mut answer = 0;
-    let mut sequence_length = 0;
-    loop {
-        let count;
 
-        // If there are primes, we know they won't match.
-        let prime_coming = is_prime[(i as usize)..((i + 4 - sequence_length) as usize)]
-            .iter()
-            .fold(false, |b, c| b || *c);
-        if prime_coming {
-            count = 0;
-        } else {
-            count = distinct_prime_factor_count(i, &primes);
-        }
-        if count == target_count {
-            if sequence_length == 0 {
-                answer = i;
+    // Four primes each = 16 prime factors ... 2 could have 2, 2 could have three.  All others must be distinct, so 14.
+    // 2 3 5 7  9 11 13 17  19 23 29 31  37 41
+    let mut i: u64 = 2 * 3 * 5 * 41;
+    let mut answer = 0;
+    loop {
+        // If there are primes, we know they won't match. Skip to after the last prime.
+        let mut skip = 0;
+        let last = i + target_count - 1;
+        for d in 0..4 {
+            let index = last - d;
+            if is_prime[index as usize] {
+                skip = index -i + 1;
+                break;
             }
-            sequence_length += 1;
-            if sequence_length == target_count {
-                break answer
-            }
-        } else {
-            sequence_length = 0;
         }
-        i += 1;
+        if skip > 0 {
+            i += skip;
+            continue;
+        } else {
+            // If not, it's worth doing the slower factor count check.
+            for d in 0..4 {
+                let index = last - d;
+                if distinct_prime_factor_count(index, &primes) != target_count {
+                    skip = index - i + 1;
+                    break;
+                }
+            }
+            if skip > 0 {
+                i += skip;
+                continue;
+            } else {
+                break i
+            }
+        }
     }
 }
 
@@ -1698,56 +1706,6 @@ pub fn p49() -> usize {
     1
 }
 
-// #[allow(dead_code)]
-// pub fn p50() -> u64 {
-//     // Get fast prime check
-//     let is_prime = sieve_1_000_000();
-//
-//     // Get fast prime source.  While you do that, get a sequence sum.
-//     let mut primes = [0u64; 400_000];
-//     let mut i_primes: usize = 0;
-//     let mut last: usize = 0;
-//     let mut s: u64 = 0;
-//     for i in 2usize..1_000_000usize {
-//         if is_prime[i] {
-//             let p = i as u64;
-//             primes[i_primes] = p;
-//             i_primes += 1;
-//             if s + p < 1_000_000 {
-//                 s += p;
-//                 last = i_primes as usize;
-//             }
-//         }
-//     }
-//
-//     // Walk along the sequence, decreasing sequence length each time you don't find a prime.
-//     let mut first: usize = 0;
-//     loop {
-//         if s < 1_000_000 {
-//             if is_prime[s as usize] {
-//                 break s
-//             } else {
-//                 // slide to the right
-//                 s -= primes[first];
-//                 first += 1;
-//                 last += 1;
-//                 s += primes[last];
-//             }
-//         } else {
-//             // decrease sequence_length
-//             s -= primes[last];
-//             last -= 1;
-//
-//             // carriage return
-//             while first > 0 {
-//                 s -= primes[last];
-//                 last -= 1;
-//                 first -= 1;
-//                 s += primes[first];
-//             }
-//         }
-//     }
-// }
 
 #[allow(dead_code)]
 pub fn p50() -> u32 {
