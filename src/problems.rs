@@ -18,7 +18,7 @@ use self::num::{BigUint, FromPrimitive};
 use self::permutohedron::heap_recursive;
 
 
-use super::divisors::{divisor_count, divisors, gcd};
+use super::divisors::{divisor_count, gcd};
 use super::fibonacci::Fibonacci;
 use super::lexicographic;
 use super::modofpower::mod_of_power;
@@ -807,7 +807,7 @@ pub fn prime_representation_power(representation: &[u16; 25], power: u16) -> [u1
 
 #[allow(dead_code)]
 pub fn p29() -> usize {
-    let mut s = HashSet::new();
+    let mut s = HashSet::with_capacity(10_000);
     for n in 2..101 {
         let representation = prime_representation(n);
         for power in 2..101 {
