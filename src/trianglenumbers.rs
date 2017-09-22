@@ -1,11 +1,14 @@
 pub struct Triangular {
     last_added: u64,
-    sum: u64
+    sum: u64,
 }
 
 impl Triangular {
     pub fn new() -> Triangular {
-        Triangular { last_added: 0, sum: 0 }
+        Triangular {
+            last_added: 0,
+            sum: 0,
+        }
     }
 }
 
@@ -25,7 +28,12 @@ pub fn is_triangular(n: u64) -> bool {
 
 pub fn hello() {
     let mut t = Triangular::new();
-    println!("{} {} {}", t.next().unwrap(), t.next().unwrap(), t.next().unwrap());
+    println!(
+        "{} {} {}",
+        t.next().unwrap(),
+        t.next().unwrap(),
+        t.next().unwrap()
+    );
     println!("Hello triangle module!")
 }
 

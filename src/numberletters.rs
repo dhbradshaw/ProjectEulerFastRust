@@ -27,7 +27,7 @@ fn spell_under_20(n: u16) -> String {
 fn spell_under_100(n: u16) -> String {
     let tens = n / 10;
     if tens < 2 {
-        return spell_under_20(n)
+        return spell_under_20(n);
     }
     let s = match tens {
         2 => "twenty",
@@ -44,14 +44,14 @@ fn spell_under_100(n: u16) -> String {
     let ones = n % 10;
     let out = match ones {
         0 => format!("{}", s),
-        _ => format!("{}-{}", s, spell_under_20(ones))
+        _ => format!("{}-{}", s, spell_under_20(ones)),
     };
     out
 }
 
 fn spell_under_1001(n: u16) -> String {
     if n == 1000 {
-        return String::from("one thousand")
+        return String::from("one thousand");
     }
 
     let hundreds = n / 100;
@@ -60,17 +60,20 @@ fn spell_under_1001(n: u16) -> String {
         let hundred_string = spell_under_20(hundreds);
         if rest > 0 {
             let rest_string = spell_under_100(rest);
-            return format!("{} hundred and {}", hundred_string, rest_string)
+            return format!("{} hundred and {}", hundred_string, rest_string);
         } else {
-            return format!("{} hundred", hundred_string)
+            return format!("{} hundred", hundred_string);
         }
     } else {
-        return spell_under_100(rest)
+        return spell_under_100(rest);
     }
 }
 
 pub fn letter_count_under_1001(n: u16) -> u32 {
-    let chars: Vec<char> = spell_under_1001(n).chars().filter(|c| c.is_alphabetic()).collect();
+    let chars: Vec<char> = spell_under_1001(n)
+        .chars()
+        .filter(|c| c.is_alphabetic())
+        .collect();
     chars.len() as u32
 }
 

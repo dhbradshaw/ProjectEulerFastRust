@@ -1,7 +1,7 @@
 pub fn highest_even_digit(n: usize) -> Option<(usize, usize)> {
     let mut nc = n;
     if n == 0 {
-        return Some((0, 1))
+        return Some((0, 1));
     }
     let mut place = 1;
     let mut highest_place = 0;
@@ -16,7 +16,7 @@ pub fn highest_even_digit(n: usize) -> Option<(usize, usize)> {
         place += 1;
     }
     if highest_place == 0 {
-        return None
+        return None;
     }
     Some((highest_even_digit, highest_place))
 }
@@ -33,7 +33,7 @@ pub fn next_odd_digit_number(n: usize) -> usize {
                 nc += 1;
             }
             nc
-        },
+        }
         None => {
             // Try adding two.  If no even digit, return.  Else, increment the even digit, fill rest with ones
             let nc = n + 2;
@@ -41,7 +41,7 @@ pub fn next_odd_digit_number(n: usize) -> usize {
                 Some(_) => next_odd_digit_number(nc),
                 None => nc,
             }
-        },
+        }
     }
 }
 
@@ -57,7 +57,7 @@ pub fn next_odd_sans_five_digit(d: u32) -> u32 {
         2 => 3,
         1 => 3,
         0 => 1,
-        _ => 0
+        _ => 0,
     }
 }
 
@@ -78,7 +78,7 @@ pub fn next_odd_sans_five(n: u32) -> u32 {
                 nc *= 10;
                 nc += 1;
             }
-        },
+        }
         _ => {
             nc -= last;
             nc += next_odd_sans_five_digit(last);

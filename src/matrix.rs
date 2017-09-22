@@ -7,17 +7,17 @@ pub struct AbstractMatrix {
 
 impl AbstractMatrix {
     pub fn new(order: usize) -> AbstractMatrix {
-        AbstractMatrix{order}
+        AbstractMatrix { order }
     }
     pub fn rows(&self) -> Vec<Vec<(usize, usize)>> {
-        (0..self.order).map(
-            |i| (0..self.order).map(|j| (i, j)).collect()
-        ).collect()
+        (0..self.order)
+            .map(|i| (0..self.order).map(|j| (i, j)).collect())
+            .collect()
     }
     pub fn columns(&self) -> Vec<Vec<(usize, usize)>> {
-        (0..self.order).map(
-            |j| (0..self.order).map(|i| (i, j)).collect()
-        ).collect()
+        (0..self.order)
+            .map(|j| (0..self.order).map(|i| (i, j)).collect())
+            .collect()
     }
 
     fn climb(&self, sum: usize) -> Vec<(usize, usize)> {
@@ -60,7 +60,9 @@ impl AbstractMatrix {
     }
     pub fn descends(&self) -> Vec<Vec<(usize, usize)>> {
         let largest = (self.order - 1) as i32;
-        (-largest..largest + 1).map(|diff| self.descend(diff)).collect()
+        (-largest..largest + 1)
+            .map(|diff| self.descend(diff))
+            .collect()
     }
 }
 
@@ -85,11 +87,7 @@ mod test {
         let matrix2 = AbstractMatrix::new(2);
         assert_eq!(
             matrix2.climbs(),
-            vec![
-                vec![(0, 0)],
-                vec![(1, 0), (0, 1)],
-                vec![(1, 1)],
-            ]
+            vec![vec![(0, 0)], vec![(1, 0), (0, 1)], vec![(1, 1)]]
         );
     }
     #[test]
@@ -109,11 +107,7 @@ mod test {
         let matrix2 = AbstractMatrix::new(2);
         assert_eq!(
             matrix2.descends(),
-            vec![
-                vec![(0, 1)],
-                vec![(0, 0), (1, 1)],
-                vec![(1, 0)],
-            ]
+            vec![vec![(0, 1)], vec![(0, 0), (1, 1)], vec![(1, 0)]]
         );
     }
     #[test]
@@ -121,13 +115,19 @@ mod test {
         let matrix1 = AbstractMatrix::new(1);
         assert_eq!(matrix1.rows(), vec![vec![(0, 0)]]);
         let matrix2 = AbstractMatrix::new(2);
-        assert_eq!(matrix2.rows(), vec![vec![(0, 0), (0, 1)], vec![(1, 0), (1, 1)]]);
+        assert_eq!(
+            matrix2.rows(),
+            vec![vec![(0, 0), (0, 1)], vec![(1, 0), (1, 1)]]
+        );
     }
     #[test]
     fn columns() {
         let matrix1 = AbstractMatrix::new(1);
         assert_eq!(matrix1.columns(), vec![vec![(0, 0)]]);
         let matrix2 = AbstractMatrix::new(2);
-        assert_eq!(matrix2.columns(), vec![vec![(0, 0), (1, 0)], vec![(0, 1), (1, 1)]]);
+        assert_eq!(
+            matrix2.columns(),
+            vec![vec![(0, 0), (1, 0)], vec![(0, 1), (1, 1)]]
+        );
     }
 }

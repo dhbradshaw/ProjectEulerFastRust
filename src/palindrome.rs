@@ -10,9 +10,9 @@ pub fn reverse_decimal_digits(n: u32) -> Vec<u32> {
 
 pub fn is_palindrome(s: &[u32]) -> bool {
     let l = s.len();
-    for i in 0..l/2 {
+    for i in 0..l / 2 {
         if s[i] != s[l - 1 - i] {
-            return false
+            return false;
         }
     }
     true
@@ -40,8 +40,7 @@ pub fn binary_palindrome_from_base(base: u64, odd_length: bool) -> u64 {
 
             right /= 2;
         }
-    }
-    else {
+    } else {
         while right > 0 {
             left *= 2;
             left += right % 2;
@@ -60,7 +59,11 @@ pub struct BinaryPalindromes {
 
 impl BinaryPalindromes {
     pub fn new() -> BinaryPalindromes {
-        BinaryPalindromes {base: 0, palindrome: 0, odd_length: false}
+        BinaryPalindromes {
+            base: 0,
+            palindrome: 0,
+            odd_length: false,
+        }
     }
 }
 

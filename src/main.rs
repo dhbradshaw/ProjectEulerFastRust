@@ -4,6 +4,7 @@ extern crate eulerrust;
 
 use time::PreciseTime;
 
+#[cfg_attr(rustfmt, rustfmt_skip)]
 use eulerrust::problems::{
     p1, p2, p3, p4, p5,
     p6, p7, p8, p9, p10,
@@ -17,6 +18,7 @@ use eulerrust::problems::{
     p46, p47, p48, p49, p50,
 };
 
+#[cfg_attr(rustfmt, rustfmt_skip)]
 fn main() {
     let mut n;
     let start_all = PreciseTime::now();

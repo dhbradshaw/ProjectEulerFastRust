@@ -1,5 +1,5 @@
 pub struct Collatz {
-    n: u64
+    n: u64,
 }
 
 impl Collatz {
@@ -13,10 +13,10 @@ impl Iterator for Collatz {
     fn next(&mut self) -> Option<Self::Item> {
         if self.n % 2 == 0 {
             self.n = self.n / 2;
-            return Some(self.n)
+            return Some(self.n);
         }
         if self.n == 1 {
-            return None
+            return None;
         }
         self.n = self.n * 3 + 1;
         Some(self.n)
@@ -30,10 +30,11 @@ pub fn count_collatz(n: u32, lengths: &mut [u16; 500_000]) -> u16 {
         if n == 1 {
             return 1;
         } else {
-            let val = 1 + match n % 2 {
-                0 => count_collatz(n / 2, lengths),
-                _ => count_collatz(n * 3 + 1, lengths)
-            };
+            let val = 1 +
+                match n % 2 {
+                    0 => count_collatz(n / 2, lengths),
+                    _ => count_collatz(n * 3 + 1, lengths),
+                };
             if n < 500_000 {
                 lengths[n as usize] = val;
             }
@@ -68,7 +69,7 @@ pub fn longest_collatz(highest: usize) -> usize {
             }
             n = match n % 2 {
                 0 => n / 2,
-                _ => n * 3 + 1
+                _ => n * 3 + 1,
             };
             length += 1;
         }

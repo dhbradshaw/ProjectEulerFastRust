@@ -4,18 +4,10 @@ pub fn gcd(a: usize, b: usize) -> usize {
     // greatest common divisor from Rosetta code (Stein's algorithm)
     // https://rosettacode.org/wiki/Greatest_common_divisor#Stein.27s_Algorithm
     match ((a, b), (a & 1, b & 1)) {
-        ((x, y), _) if x == y => {
-            y
-        },
-        ((0, x), _) | ((x, 0), _) => {
-            x
-        },
-        ((x, y), (0, 1)) | ((y, x), (1, 0)) => {
-            gcd(x >> 1, y)
-        },
-        ((x, y), (0, 0)) => {
-            gcd(x >> 1, y >> 1) << 1
-        },
+        ((x, y), _) if x == y => y,
+        ((0, x), _) | ((x, 0), _) => x,
+        ((x, y), (0, 1)) | ((y, x), (1, 0)) => gcd(x >> 1, y),
+        ((x, y), (0, 0)) => gcd(x >> 1, y >> 1) << 1,
         ((x, y), (1, 1)) => {
             let (x, y) = (min(x, y), max(x, y));
             gcd((y - x) >> 1, x)
@@ -53,7 +45,8 @@ pub fn divisor_count(n: u64) -> u32 {
         if n % test == 0 {
             count += 1;
             let partner = n / test;
-            if partner != test { // Test already got counted.  Don't count it again.
+            if partner != test {
+                // Test already got counted.  Don't count it again.
                 count += 1;
             }
         }
@@ -122,8 +115,8 @@ mod test {
     #[test]
     fn test_is_abundant() {
         let v: Vec<u64> = (1..13)
-            .map(|n| {n as u64})
-            .filter(|n| {is_abundant(*n)})
+            .map(|n| n as u64)
+            .filter(|n| is_abundant(*n))
             .collect();
         assert_eq!(v, vec![12 as u64]);
     }

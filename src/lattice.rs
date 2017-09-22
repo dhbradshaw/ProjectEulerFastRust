@@ -3,27 +3,25 @@ pub fn next_level(a: Vec<u64>, size_increment: i32) -> Vec<u64> {
     match size_increment {
         -1 => {
             let size = l - 1;
-            let b: Vec<u64> = (0..size).map(|i| {
-                a[i] + a[i + 1]
-            }).collect();
+            let b: Vec<u64> = (0..size).map(|i| a[i] + a[i + 1]).collect();
             b
-        },
+        }
         1 => {
             let size = l + 1;
-            let b: Vec<u64> = (0..size).map(|i| {
-                if i == 0 {
-                    return a[0];
-                }
-                if i == l {
-                    return a[l - 1];
-                }
-                a[i] + a[i - 1]
-            }).collect();
+            let b: Vec<u64> = (0..size)
+                .map(|i| {
+                    if i == 0 {
+                        return a[0];
+                    }
+                    if i == l {
+                        return a[l - 1];
+                    }
+                    a[i] + a[i - 1]
+                })
+                .collect();
             b
-        },
-        _ => {
-            Vec::new()
         }
+        _ => Vec::new(),
     }
 }
 

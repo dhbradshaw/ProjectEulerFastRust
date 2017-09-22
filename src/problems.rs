@@ -24,16 +24,8 @@ use super::lexicographic;
 use super::modofpower::mod_of_power;
 use super::odddigits::next_odd_sans_five;
 use super::palindrome::{BinaryPalindromes, reverse_digits};
-use super::primes::{
-    nonself_prime_factor_counts_200_000,
-    is_prime,
-    is_prime_no_memo,
-    primes_below,
-    sieve_16000,
-    sieve_150_000,
-    sieve_1_000_000,
-    sieve_2_000_000,
-};
+use super::primes::{nonself_prime_factor_counts_200_000, is_prime, is_prime_no_memo, primes_below,
+                    sieve_16000, sieve_150_000, sieve_1_000_000, sieve_2_000_000};
 use super::trianglenumbers::is_triangular;
 
 // #[allow(dead_code)]
@@ -62,7 +54,7 @@ pub fn sum_multiples_under(bar: u32, base: u32) -> u32 {
     loop {
         n += base;
         if n >= bar {
-            break agg
+            break agg;
         }
         agg += n;
     }
@@ -104,7 +96,7 @@ pub fn p2() -> u64 {
 
 #[allow(dead_code)]
 pub fn p2_iterative() -> u64 {
-    let f = Fibonacci{last: 0, curr:1};
+    let f = Fibonacci { last: 0, curr: 1 };
     let mut agg: u64 = 0;
     for n in f {
         if n % 2 == 0 {
@@ -226,13 +218,15 @@ pub fn p8() -> u64 {
     84580156166097919133875499200524063689912560717606
     05886116467109405077541002256983155200055935729725
     71636269561882670428252483600823257530420752963450";
-    let v = s.chars().filter_map(|a| a.to_digit(10)).collect::<Vec<u32>>();
+    let v = s.chars()
+        .filter_map(|a| a.to_digit(10))
+        .collect::<Vec<u32>>();
     let l = v.len();
 
     let mut largest = 0;
     let mut i = 0;
     while (i + n) < l {
-        let candidate = (i..(i + n)).fold(1, |multiple, index| {multiple * (v[index]) as u64});
+        let candidate = (i..(i + n)).fold(1, |multiple, index| multiple * (v[index]) as u64);
         largest = max(largest, candidate);
         i += 1;
     }
@@ -272,8 +266,9 @@ fn greatest_multiple(v: Vec<u64>, n: usize) -> u64 {
     let mut start = 0;
     let mut largest = 0;
     while (start + n) <= l {
-        let multiple = &v[start..start + n].iter()
-            .fold(1, |multiple, e| {multiple * (*e) as u64});
+        let multiple = &v[start..start + n].iter().fold(1, |multiple, e| {
+            multiple * (*e) as u64
+        });
         largest = max(largest, *multiple);
         start += 1;
     }
@@ -281,7 +276,7 @@ fn greatest_multiple(v: Vec<u64>, n: usize) -> u64 {
 }
 
 #[allow(dead_code)]
-pub fn p11 () -> u64 {
+pub fn p11() -> u64 {
     // What is the greatest product of four adjacent numbers in the same direction
     // (up, down, left, right, or diagonally) in the 20×20 grid?
     let s = "08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
@@ -304,11 +299,13 @@ pub fn p11 () -> u64 {
         20 69 36 41 72 30 23 88 34 62 99 69 82 67 59 85 74 04 36 16
         20 73 35 29 78 31 90 01 74 31 49 71 48 86 81 16 23 57 05 54
         01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48";
-    let matrix: Vec<Vec<u64>> = s.lines().map(
-        |line| {line.split_whitespace().map(
-            |digits| {digits.parse::<u64>().unwrap()}
-        ).collect()}
-    ).collect();
+    let matrix: Vec<Vec<u64>> = s.lines()
+        .map(|line| {
+            line.split_whitespace()
+                .map(|digits| digits.parse::<u64>().unwrap())
+                .collect()
+        })
+        .collect();
 
     let order = matrix.len();
     let am = super::matrix::AbstractMatrix::new(order);
@@ -319,10 +316,12 @@ pub fn p11 () -> u64 {
     vecs.extend(am.climbs());
     vecs.extend(am.descends());
     for row in vecs {
-        let nums: Vec<u64> = row.iter().map(|p| {
-            let &(i, j) = p;
-            matrix[i][j]
-        }).collect();
+        let nums: Vec<u64> = row.iter()
+            .map(|p| {
+                let &(i, j) = p;
+                matrix[i][j]
+            })
+            .collect();
         winner = max(greatest_multiple(nums, 4), winner);
     }
     winner
@@ -343,7 +342,7 @@ pub fn p12() -> u64 {
                 p = divisor_count(n) * divisor_count((n + 1) / 2);
             }
             if p > 500 {
-                break (n * (n + 1)) / 2
+                break (n * (n + 1)) / 2;
             }
         }
         n += 1;
@@ -486,7 +485,7 @@ pub fn p16() -> u32 {
     num::pow(BigUint::new(vec![2]), 1000)
         .to_str_radix(10)
         .chars()
-        .map(|c| {c.to_digit(10).unwrap()})
+        .map(|c| c.to_digit(10).unwrap())
         .sum()
 }
 
@@ -501,26 +500,27 @@ pub fn p17() -> u32 {
 
 #[allow(dead_code)]
 pub fn p18() -> u32 {
-    let triangle: Vec<Vec<u32>> = vec![
-        vec![04, 62, 98, 27, 23, 09, 70, 98, 73, 93, 38, 53, 60, 04, 23],
-        vec![63, 66, 04, 68, 89, 53, 67, 30, 73, 16, 69, 87, 40, 31],
-        vec![91, 71, 52, 38, 17, 14, 91, 43, 58, 50, 27, 29, 48],
-        vec![70, 11, 33, 28, 77, 73, 17, 78, 39, 68, 17, 57],
-        vec![53, 71, 44, 65, 25, 43, 91, 52, 97, 51, 14],
-        vec![41, 48, 72, 33, 47, 32, 37, 16, 94, 29],
-        vec![41, 41, 26, 56, 83, 40, 80, 70, 33],
-        vec![99, 65, 04, 28, 06, 16, 70, 92,],
-        vec![88, 02, 77, 73, 07, 63, 67,],
-        vec![19, 01, 23, 75, 03, 34],
-        vec![20, 04, 82, 47, 65],
-        vec![18, 35, 87, 10],
-        vec![17, 47, 82],
-        vec![95, 64],
-        vec![75],
-    ];
+    let triangle: Vec<Vec<u32>> =
+        vec![
+            vec![04, 62, 98, 27, 23, 09, 70, 98, 73, 93, 38, 53, 60, 04, 23],
+            vec![63, 66, 04, 68, 89, 53, 67, 30, 73, 16, 69, 87, 40, 31],
+            vec![91, 71, 52, 38, 17, 14, 91, 43, 58, 50, 27, 29, 48],
+            vec![70, 11, 33, 28, 77, 73, 17, 78, 39, 68, 17, 57],
+            vec![53, 71, 44, 65, 25, 43, 91, 52, 97, 51, 14],
+            vec![41, 48, 72, 33, 47, 32, 37, 16, 94, 29],
+            vec![41, 41, 26, 56, 83, 40, 80, 70, 33],
+            vec![99, 65, 04, 28, 06, 16, 70, 92],
+            vec![88, 02, 77, 73, 07, 63, 67],
+            vec![19, 01, 23, 75, 03, 34],
+            vec![20, 04, 82, 47, 65],
+            vec![18, 35, 87, 10],
+            vec![17, 47, 82],
+            vec![95, 64],
+            vec![75],
+        ];
     let mut agg = (&triangle[0]).to_vec();
     for i in 0..(triangle.len() - 1) {
-        agg = super::maxpathsum::highest_values(&triangle[i+1], &agg);
+        agg = super::maxpathsum::highest_values(&triangle[i + 1], &agg);
     }
     agg[0]
 }
@@ -561,10 +561,12 @@ pub fn p21() -> u32 {
         }
     }
     divisor_sums[0] = 0;
-    (1..10000).filter(|n| {
-        let partner = divisor_sums[*n as usize];
-        *n != partner && *n == divisor_sums[partner as usize]
-    }).sum()
+    (1..10000)
+        .filter(|n| {
+            let partner = divisor_sums[*n as usize];
+            *n != partner && *n == divisor_sums[partner as usize]
+        })
+        .sum()
 }
 
 #[allow(dead_code)]
@@ -583,7 +585,10 @@ pub fn p22() -> u32 {
     let mut sum = 0;
     for (i, name) in names.iter().enumerate() {
         let place: u32 = i as u32 + 1;
-        let score: u32 = name.chars().filter(|c| {c.is_alphabetic()}).map(|c| {c as u32 - zero}).sum();
+        let score: u32 = name.chars()
+            .filter(|c| c.is_alphabetic())
+            .map(|c| c as u32 - zero)
+            .sum();
         sum += place * score;
     }
     sum
@@ -615,7 +620,7 @@ pub fn p23() -> u32 {
         let too_high = n / 2 + 1;
         let mut is_abundant_sum = false;
         for abundant in &abundants {
-            if *abundant >=  too_high {
+            if *abundant >= too_high {
                 break;
             }
             let partner = n - *abundant;
@@ -665,7 +670,7 @@ fn cycle_size(den: usize) -> usize {
         num = (num % den) * 10;
         last_index = *map.entry(num).or_insert(index);
         if index != last_index {
-            break index - last_index
+            break index - last_index;
         }
         index += 1;
     }
@@ -681,7 +686,7 @@ fn cycle_size_fnv(den: usize) -> usize {
         num = (num % den) * 10;
         last_index = *map.entry(num).or_insert(index);
         if index != last_index {
-            break index - last_index
+            break index - last_index;
         }
         index += 1;
     }
@@ -697,7 +702,7 @@ fn cycle_size_array(den: usize) -> usize {
         num %= den;
         last_index = a[num];
         if last_index != 0 {
-            break index - last_index
+            break index - last_index;
         }
         a[num] = index;
         num *= 10;
@@ -727,17 +732,20 @@ pub fn p27() -> i32 {
     let mut max_count = 0;
     let mut ab_max = 0;
     let primes = sieve_16000();
-    while b < 1001 { // loop through b
+    while b < 1001 {
+        // loop through b
         if primes[b as usize] {
             let mut a: i32 = -999;
-            while a < 1000 { // loop through a
+            while a < 1000 {
+                // loop through a
                 let mut n = 0;
-                loop { // loop through n
+                loop {
+                    // loop through n
                     let quad = n * n + a * n + b;
                     if quad > 1 && primes[quad as usize] {
                         n += 1;
                     } else {
-                        break
+                        break;
                     }
                 }
                 if n > max_count {
@@ -765,7 +773,7 @@ pub fn p28() -> u64 {
         agg += top_right + 3 * bottom_left;
         order += 2;
         if order > bound {
-            break agg
+            break agg;
         }
     }
 }
@@ -774,11 +782,31 @@ pub fn p28() -> u64 {
 pub fn prime_representation(n: u16) -> [u16; 25] {
     assert!(n < 101);
     let primes = [
-        2, 3, 5, 7, 11,
-        13, 17, 19, 23, 29,
-        31, 37, 41, 43, 47,
-        53, 59, 61, 67, 71,
-        73, 79, 83, 89, 97
+        2,
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        23,
+        29,
+        31,
+        37,
+        41,
+        43,
+        47,
+        53,
+        59,
+        61,
+        67,
+        71,
+        73,
+        79,
+        83,
+        89,
+        97,
     ];
     let mut representation = [0; 25];
     let mut nc = n;
@@ -843,12 +871,12 @@ fn digit_5th_power_sum(n: u32) -> u32 {
 
 struct UphillNumber {
     // A number whose digits are ordered so that they never decrease as you travel from left to right.
-    digits: [u8; 6]
+    digits: [u8; 6],
 }
 
 impl UphillNumber {
     fn new() -> UphillNumber {
-        UphillNumber{digits: [0u8; 6]}
+        UphillNumber { digits: [0u8; 6] }
     }
     fn to_u32(&self) -> u32 {
         let mut n = 0;
@@ -901,7 +929,7 @@ pub fn p30() -> u32 {
             sum += dps;
         }
         if n > 300_000 {
-            break
+            break;
         }
     }
     sum
@@ -913,11 +941,13 @@ fn coin_choices(amount: u32, type_count: usize) -> u32 {
     let coins = [1, 2, 5, 10, 20, 50, 100, 200];
     match type_count {
         1 => 1,
-        2 ... 8 => {
+        2...8 => {
             let largest_coin = coins[type_count - 1];
             let max_n = amount / largest_coin;
             let choices = 0..(max_n + 1);
-            choices.map(|n| {coin_choices(amount - n * largest_coin, type_count - 1)}).sum()
+            choices
+                .map(|n| coin_choices(amount - n * largest_coin, type_count - 1))
+                .sum()
         }
         _ => 0,
     }
@@ -997,7 +1027,7 @@ pub fn p33() -> usize {
     let mut num_product = 1;
     let mut den_product = 1;
     for n in 1..10 {
-        for d in (n+1)..10 {
+        for d in (n + 1)..10 {
             let f = n as f32 / d as f32;
             for extra in 1..10 {
                 if extra > n || (extra == n && d > extra) {
@@ -1126,9 +1156,9 @@ pub fn p34() -> u32 {
 #[allow(dead_code)]
 fn rotate(n: usize) -> usize {
     let zeroes = if n >= 10_000 {
-        if n >= 100_000 {5} else {4}
+        if n >= 100_000 { 5 } else { 4 }
     } else {
-        if n >= 1000 {3} else {2}
+        if n >= 1000 { 3 } else { 2 }
     };
 
     let last = n % 10;
@@ -1158,7 +1188,7 @@ pub fn p35() -> usize {
         }
         n = next_odd_sans_five(n as u32) as usize;
         if n >= 1_000_000 {
-            break circular_prime_count
+            break circular_prime_count;
         }
     }
 
@@ -1241,7 +1271,7 @@ pub fn places(n: u64) -> u32 {
 #[allow(dead_code)]
 pub fn pan_ok(n: u64) -> bool {
     let mut digits = [false; 10];
-    digits[0]=true;
+    digits[0] = true;
     no_repeats(n as usize, &mut digits)
 }
 
@@ -1259,19 +1289,19 @@ pub fn pandigital_multiple(n: u64) -> u64 {
         return 0;
     }
 
-    match  pan_ok(n) {
+    match pan_ok(n) {
         true => n,
-        _ => 0
+        _ => 0,
     }
 }
 
 #[allow(dead_code)]
 pub fn p38() -> u64 {
-    let digits: [u64; 9] = [1,2,3,4,5,6,7,8,9];
+    let digits: [u64; 9] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     let c1 = 9;
     let mut highest = 0;
     for d in &digits {
-        let c2 =10 * c1 + d;
+        let c2 = 10 * c1 + d;
         let m = pandigital_multiple(c2);
         if m > highest {
             highest = m;
@@ -1307,7 +1337,7 @@ pub fn p39() -> u16 {
         let mut n = 1 + m % 2; // If m is even, n should be odd and vice verse.
         let mut n_squared = n * n;
         if m_squared + n_squared >= 500 {
-            break
+            break;
         }
         while n < m {
             // Find triplet
@@ -1318,9 +1348,10 @@ pub fn p39() -> u16 {
             // Mark triplet and multiples as solutions.
             let p = a + b + c;
             if p >= 1000 {
-                break
+                break;
             }
-            if gcd(a, b) == 1 { // Avoid overcounting due non-primitive triples.
+            if gcd(a, b) == 1 {
+                // Avoid overcounting due non-primitive triples.
                 let mut k = 1;
                 while k * p <= 1000 {
                     solution_count[k * p] += 1;
@@ -1358,7 +1389,7 @@ pub fn p40() -> u32 {
 
 #[allow(dead_code)]
 pub fn p41() -> u64 {
-    let a = [7,6,5,4,3,2,1];
+    let a = [7, 6, 5, 4, 3, 2, 1];
     let primes = primes_below(2767);
     let mut t = lexicographic::last(&a).unwrap();
     loop {
@@ -1369,7 +1400,7 @@ pub fn p41() -> u64 {
             n += *d as u64;
         }
         if is_prime(n, &primes) {
-            break n
+            break n;
         }
     }
 }
@@ -1377,9 +1408,9 @@ pub fn p41() -> u64 {
 #[allow(dead_code)]
 fn word_score(s: &str, zero: u32) -> u32 {
     s.chars()
-    .filter(|c| {c.is_alphabetic()})
-    .map(|c| {c as u32 - zero})
-    .sum()
+        .filter(|c| c.is_alphabetic())
+        .map(|c| c as u32 - zero)
+        .sum()
 }
 
 #[allow(dead_code)]
@@ -1465,9 +1496,9 @@ impl Pandigital {
             taken: self.taken.clone(),
         }
     }
-    fn add_digit(&self, digit: u8) -> Option<Pandigital>{
+    fn add_digit(&self, digit: u8) -> Option<Pandigital> {
         if self.taken[digit as usize] {
-            return None
+            return None;
         } else {
             let mut c = self.clone();
             c.taken[digit as usize] = true;
@@ -1480,14 +1511,11 @@ impl Pandigital {
         let mut branches = Vec::new();
         let last = self.number[self.last_empty + 2];
         if prime == 5 {
-            if ! (last == 0 || last == 5) {
-                return branches
+            if !(last == 0 || last == 5) {
+                return branches;
             }
         }
-        let rest = (
-            self.number[self.last_empty + 1] * 10 +
-            last
-        ) as u32;
+        let rest = (self.number[self.last_empty + 1] * 10 + last) as u32;
         for (d, b) in self.taken.iter().enumerate() {
             if !*b {
                 if ((d as u32) * 100 + rest) % prime == 0 {
@@ -1535,7 +1563,7 @@ pub fn p44() -> u64 {
             if r == 0 {
                 let rad = ((1 + 24 * (j * (3 * j - 1) + diff)) as f64).sqrt();
                 if (1f64 + rad) % 6f64 == 0f64 {
-                    return diff
+                    return diff;
                 }
             }
         }
@@ -1557,7 +1585,7 @@ pub fn p45() -> u64 {
         }
         if pent == hex && is_triangular(hex as u64) {
             if count == 1 {
-                break hex
+                break hex;
             }
             count += 1;
         }
@@ -1580,13 +1608,13 @@ pub fn p46() -> usize {
             while a <= c - 2 {
                 if is_prime[c - a] {
                     backs_goldbach = true;
-                    break
+                    break;
                 }
                 n += 1;
                 a = 2 * n * n;
             }
             if !backs_goldbach {
-                break c
+                break c;
             }
         }
         c += 2;
@@ -1608,7 +1636,7 @@ pub fn p47() -> u64 {
         for d in 0..4 {
             let index = last - d;
             if counts[index as usize] != target_count {
-                skip = index -i + 1;
+                skip = index - i + 1;
                 break;
             }
         }
@@ -1616,7 +1644,7 @@ pub fn p47() -> u64 {
             i += skip;
             continue;
         } else {
-            break i
+            break i;
         }
     }
 }
@@ -1649,7 +1677,7 @@ pub fn p49() -> usize {
 
             if data[0] == 0 || data[1] == 0 || data[2] == 0 || data[3] == 0 {
                 i -= 1;
-                continue
+                continue;
             }
 
             // Get all prime permutations of number
@@ -1673,7 +1701,7 @@ pub fn p49() -> usize {
             for p1 in prime_permutations.iter() {
                 let mut diffs: HashMap<usize, usize> = HashMap::new();
                 for p2 in prime_permutations.iter() {
-                    let diff = if p2 > p1 { p2 - p1} else {p1 - p2};
+                    let diff = if p2 > p1 { p2 - p1 } else { p1 - p2 };
                     if diffs.contains_key(&diff) {
                         // We have a sequence!
                         let first = p1 - diff;
@@ -1731,7 +1759,7 @@ pub fn p50() -> u32 {
     loop {
         if s < 1_000_000 {
             if is_prime[s as usize] {
-                break s
+                break s;
             } else {
                 // slide to the right
                 s -= primes[first];

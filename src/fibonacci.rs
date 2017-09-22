@@ -1,6 +1,6 @@
 pub struct Fibonacci {
-	pub last: u64,
-	pub curr: u64,
+    pub last: u64,
+    pub curr: u64,
 }
 
 impl Iterator for Fibonacci {

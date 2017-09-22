@@ -23,7 +23,7 @@ pub fn is_prime(n: u64, primes: &[u64]) -> bool {
             break;
         }
         if n % p == 0 {
-            return false
+            return false;
         }
     }
     true
@@ -58,13 +58,13 @@ pub fn nth_prime(n: usize) -> u64 {
             primes.push(test);
         }
     }
-    primes[primes.len()-1]
+    primes[primes.len() - 1]
 }
 
 pub fn sieve_10() -> [bool; 10] {
     let mut is_prime = [true; 10];
-    is_prime[0]=false;
-    is_prime[1]=false;
+    is_prime[0] = false;
+    is_prime[1] = false;
 
     let l = is_prime.len();
     let sqrt = (l as f64).sqrt() as usize;
@@ -85,8 +85,8 @@ pub fn sieve_10() -> [bool; 10] {
 
 pub fn sieve_16000() -> [bool; 16000] {
     let mut is_prime = [true; 16000];
-    is_prime[0]=false;
-    is_prime[1]=false;
+    is_prime[0] = false;
+    is_prime[1] = false;
 
     let l = is_prime.len();
     let sqrt = (l as f64).sqrt() as usize;
@@ -107,8 +107,8 @@ pub fn sieve_16000() -> [bool; 16000] {
 
 pub fn sieve_150_000() -> [bool; 150_000] {
     let mut is_prime = [true; 150_000];
-    is_prime[0]=false;
-    is_prime[1]=false;
+    is_prime[0] = false;
+    is_prime[1] = false;
 
     let l = is_prime.len();
     let sqrt = (l as f64).sqrt() as usize;
@@ -136,8 +136,8 @@ pub fn sieve_150_000() -> [bool; 150_000] {
 
 pub fn sieve_1_000_000() -> [bool; 1_000_000] {
     let mut is_prime = [true; 1_000_000];
-    is_prime[0]=false;
-    is_prime[1]=false;
+    is_prime[0] = false;
+    is_prime[1] = false;
 
     let l = is_prime.len();
     let sqrt = (l as f64).sqrt() as usize;
@@ -165,8 +165,8 @@ pub fn sieve_1_000_000() -> [bool; 1_000_000] {
 
 pub fn sieve_2_000_000() -> [bool; 2000000] {
     let mut is_prime = [true; 2000000];
-    is_prime[0]=false;
-    is_prime[1]=false;
+    is_prime[0] = false;
+    is_prime[1] = false;
 
     let l = is_prime.len();
     let sqrt = (l as f64).sqrt() as usize;
@@ -268,7 +268,7 @@ pub fn most_consecutive_primes(n: u64, primes: &[u64]) -> usize {
             s += primes[last];
         }
         if s == n {
-            break last - first + 1
+            break last - first + 1;
         }
         if s > n {
             s -= primes[first];
@@ -289,19 +289,22 @@ mod test {
     }
     #[test]
     fn test_sieve() {
-        assert_eq!(sieve_10(), [
-            true,
-            true,
-            true,
-            true,
-            false,
+        assert_eq!(
+            sieve_10(),
+            [
+                true,
+                true,
+                true,
+                true,
+                false,
 
-            true,
-            false,
-            true,
-            false,
-            false,
-        ]);
+                true,
+                false,
+                true,
+                false,
+                false,
+            ]
+        );
     }
     #[test]
     fn test_distinct_prime_factors() {
