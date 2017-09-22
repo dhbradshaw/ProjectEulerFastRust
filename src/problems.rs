@@ -25,7 +25,6 @@ use super::modofpower::mod_of_power;
 use super::odddigits::next_odd_sans_five;
 use super::palindrome::{BinaryPalindromes, reverse_digits};
 use super::primes::{
-    distinct_prime_factor_count,
     nonself_prime_factor_counts_200_000,
     is_prime,
     is_prime_no_memo,
@@ -1521,6 +1520,7 @@ pub fn p44() -> u64 {
     loop {
         diff += 3 * i + 1;
         i += 1;
+
         let mut p = 0;
         for d in 1..i {
             p += 3 * d - 2;
@@ -1589,51 +1589,6 @@ pub fn p46() -> usize {
     }
 }
 
-
-// #[allow(dead_code)]
-// pub fn p47() -> u64 {
-//     let is_prime = sieve_200_000();
-//     let primes: Vec<u64> = is_prime.iter().enumerate().filter(|&(_, &p)| p).map(|(i, _)| i as u64).collect();
-//
-//     let target_count = 4;
-//
-//     // Four primes each = 16 prime factors ... 2 could have 2, 2 could have three.  All others must be distinct, so 14.
-//     // 2 3 5 7  9 11 13 17  19 23 29 31  37 41
-//     let mut i: u64 = 2 * 3 * 5 * 41;
-//     let mut answer = 0;
-//     loop {
-//         // If there are primes, we know they won't match. Skip to after the last prime.
-//         let mut skip = 0;
-//         let last = i + target_count - 1;
-//         for d in 0..4 {
-//             let index = last - d;
-//             if is_prime[index as usize] {
-//                 skip = index -i + 1;
-//                 break;
-//             }
-//         }
-//         if skip > 0 {
-//             i += skip;
-//             continue;
-//         } else {
-//             // If not, it's worth doing the slower factor count check.
-//             for d in 0..4 {
-//                 let index = last - d;
-//                 if distinct_prime_factor_count(index, &primes) != target_count {
-//                     skip = index - i + 1;
-//                     break;
-//                 }
-//             }
-//             if skip > 0 {
-//                 i += skip;
-//                 continue;
-//             } else {
-//                 break i
-//             }
-//         }
-//     }
-// }
-
 #[allow(dead_code)]
 pub fn p47() -> u64 {
     let counts = nonself_prime_factor_counts_200_000();
@@ -1642,9 +1597,8 @@ pub fn p47() -> u64 {
     // Four primes each = 16 prime factors ... 2 could have 2, 2 could have three.  All others must be distinct, so 14.
     // 2 3 5 7  9 11 13 17  19 23 29 31  37 41
     let mut i: u64 = 2 * 3 * 5 * 41;
-    let mut answer = 0;
     loop {
-        // If there are primes, we know they won't match. Skip to after the last prime.
+        // Look forward to the end to avoid extra checks.
         let mut skip = 0;
         let last = i + (target_count as u64) - 1;
         for d in 0..4 {
