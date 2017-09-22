@@ -30,7 +30,7 @@ use super::primes::{
     is_prime_no_memo,
     primes_below,
     sieve_16000,
-    sieve_200_000,
+    sieve_150_000,
     sieve_1_000_000,
     sieve_2_000_000,
 };
@@ -186,15 +186,19 @@ pub fn p6() -> u64 {
 }
 
 pub fn p7() -> u32 {
-    let is_prime = sieve_200_000();
-    let mut count = 0;
-    for (i, &b) in is_prime.iter().enumerate() {
-        if b {
+    let is_prime = sieve_150_000();
+    let length = is_prime.len();
+
+    let mut count = 1;
+    let mut i = 3;
+    while i <= length {
+        if is_prime[i] {
             count += 1;
             if count == 10001 {
                 return i as u32;
             }
         }
+        i += 2;
     }
     0
 }
