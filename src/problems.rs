@@ -575,11 +575,11 @@ pub fn p22() -> u32 {
     file.read_to_string(&mut names).unwrap();
 
     // Convert names to vectors of integers and sort
-    let zero = 'A' as u32 - 1;
     let mut names: Vec<_> = names.split(",").collect();
     names.sort();
 
     // Total scores
+    let zero = 'A' as u32 - 1;
     let mut sum = 0;
     for (i, name) in names.iter().enumerate() {
         let place: u32 = i as u32 + 1;
