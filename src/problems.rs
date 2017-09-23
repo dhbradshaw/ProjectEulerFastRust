@@ -1729,7 +1729,7 @@ pub fn p50() -> u32 {
     let is_prime = sieve_1_000_000();
 
     // Get fast prime source.  While you do that, get a sequence sum.
-    let mut primes = [0u32; 30_000];
+    let mut primes = [0u32; 15_000];
     let mut i_primes: usize = 0;
     let mut last: usize = 0;
 
