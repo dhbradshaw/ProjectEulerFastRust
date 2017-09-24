@@ -1154,16 +1154,39 @@ pub fn p34() -> u32 {
 }
 
 #[allow(dead_code)]
-fn rotate(n: usize) -> usize {
-    let zeroes = if n >= 10_000 {
-        if n >= 100_000 { 5 } else { 4 }
-    } else {
-        if n >= 1000 { 3 } else { 2 }
-    };
+fn check_rotations(n: usize, is_prime: &[bool; 1_000_000]) -> bool {
+    // Encode digits into array.
+    let mut nc = n;
+    let mut digits = [0; 6];
+    let l = digits.len();
+    let mut index = l - 1;
+    let mut digit_count = 0;
+    while nc > 0 {
+        digits[index] = nc % 10;
+        nc /= 10;
+        if index > 0 {
+            index -= 1;
+        } else {
+            digit_count = 1;
+        }
+    }
 
-    let last = n % 10;
-    let rest = n / 10;
-    last * 10usize.pow(zeroes) + rest
+    digit_count += l - 1 - index;
+    let first = l - digit_count;
+    for r in 0..(digit_count + 10) {
+        // Decode rotated number from array.
+        let mut rotated = 0;
+        for d in 0..digit_count {
+            rotated *= 10;
+            rotated += digits[first + ((r + d) % digit_count)];
+        }
+
+        // Make the check.
+        if !is_prime[rotated] {
+            return false;
+        }
+    }
+    true
 }
 
 #[allow(dead_code)]
@@ -1172,26 +1195,14 @@ pub fn p35() -> usize {
     let mut circular_prime_count = 13; // Problem states that there are 13 below 100.
     let is_prime = sieve_1_000_000();
     loop {
-        if is_prime[n] {
-            let mut circular_prime = true;
-            let mut r = rotate(n);
-            while r != n {
-                if !is_prime[r] {
-                    circular_prime = false;
-                    break;
-                }
-                r = rotate(r);
-            }
-            if circular_prime {
-                circular_prime_count += 1;
-            }
+        if is_prime[n] && check_rotations(n, &is_prime) {
+            circular_prime_count += 1;
         }
         n = next_odd_sans_five(n as u32) as usize;
         if n >= 1_000_000 {
             break circular_prime_count;
         }
     }
-
 }
 
 #[allow(dead_code)]
