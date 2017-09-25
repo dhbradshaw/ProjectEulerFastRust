@@ -87,9 +87,74 @@ pub fn next_odd_sans_five(n: u32) -> u32 {
     nc
 }
 
+pub struct UphillOddSansFive {
+    digits: [u8; 6],
+    options: [u8; 4],
+}
+
+impl UphillOddSansFive {
+    pub fn new() -> UphillOddSansFive {
+        UphillOddSansFive {digits: [0; 6], options: [1, 3, 7, 9]}
+    }
+    pub fn to_u32(&self) -> u32 {
+        let mut n = 0;
+        for d in self.digits.iter() {
+            n *= 10;
+            n += *d as u32;
+        }
+        n
+    }
+}
+
+impl Iterator for UphillOddSansFive {
+    type Item = u32;
+
+    fn next(&mut self) -> Option<u32> {
+        let l = self.digits.len();
+        for place in 1..(l + 1) {
+            let index = self.digits.len() - place;
+            let digit = self.digits[index];
+            let mut lowest_option = 0;
+            for option in self.options.iter() {
+                if digit < *option {
+                    self.digits[index] = *option;
+                    lowest_option = *option;
+                    break;
+                }
+            }
+            if lowest_option > 0 {
+                for c in 0..place {
+                    self.digits[index + c] = lowest_option;
+                }
+                return Some(self.to_u32());
+            }
+        }
+        None
+    }
+}
+
 #[cfg(test)]
 mod test {
     use super::*;
+    #[test]
+    fn test_uphill_sans_five() {
+        let mut uosf = UphillOddSansFive::new();
+        assert_eq!(uosf.next(), Some(1));
+        assert_eq!(uosf.next(), Some(3));
+        assert_eq!(uosf.next(), Some(7));
+        assert_eq!(uosf.next(), Some(9));
+        assert_eq!(uosf.next(), Some(11));
+        assert_eq!(uosf.next(), Some(13));
+        assert_eq!(uosf.next(), Some(17));
+        assert_eq!(uosf.next(), Some(19));
+        assert_eq!(uosf.next(), Some(33));
+        assert_eq!(uosf.next(), Some(37));
+        assert_eq!(uosf.next(), Some(39));
+        assert_eq!(uosf.next(), Some(77));
+        assert_eq!(uosf.next(), Some(79));
+        assert_eq!(uosf.next(), Some(99));
+        assert_eq!(uosf.next(), Some(111));
+    }
     #[test]
     fn test_next_odd_digit_number() {
         assert_eq!(next_odd_digit_number(0), 1);

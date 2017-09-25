@@ -1060,44 +1060,6 @@ pub fn p33() -> usize {
     den_product
 }
 
-// #[allow(dead_code)]
-// fn equals_sum_digit_factorial(n: u32) -> bool {
-//     let mut nc = n;
-//     let mut sum = 0;
-//     while nc > 0 {
-//         let last = nc % 10;
-//         nc = nc / 10;
-//         sum += match last {
-//             0 => 1,
-//             1 => 1,
-//             2 => 2,
-//             3 => 6,
-//             4 => 24,
-//             5 => 120,
-//             6 => 720,
-//             7 => 5040,
-//             8 => 40320,
-//             9 => 362880,
-//             _ => 0,
-//         };
-//         if sum > n {
-//             return false;
-//         }
-//     }
-//     sum == n
-// }
-//
-// #[allow(dead_code)]
-// pub fn p34() -> u32 {
-//     let mut sum = 0;
-//     for n in 10..1_572_480 {
-//         if equals_sum_digit_factorial(n) {
-//             sum += n
-//         }
-//     }
-//     sum
-// }
-
 #[allow(dead_code)]
 fn sum_digit_factorial(n: u32) -> u32 {
     let mut nc = n;

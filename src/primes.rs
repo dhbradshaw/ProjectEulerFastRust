@@ -292,8 +292,8 @@ mod test {
         assert_eq!(
             sieve_10(),
             [
-                true,
-                true,
+                false,
+                false,
                 true,
                 true,
                 false,
