@@ -75,7 +75,7 @@ pub fn sieve_10() -> [bool; 10] {
             let mut unprime = i * i;
             while unprime < l {
                 is_prime[unprime] = false;
-                unprime += i;
+                unprime += 2 * i;
             }
         }
         i += 1
@@ -97,7 +97,7 @@ pub fn sieve_16000() -> [bool; 16000] {
             let mut unprime = i * i;
             while unprime < l {
                 is_prime[unprime] = false;
-                unprime += i;
+                unprime += 2 * i;
             }
         }
         i += 1
@@ -126,7 +126,7 @@ pub fn sieve_150_000() -> [bool; 150_000] {
             let mut unprime = i * i;
             while unprime < l {
                 is_prime[unprime] = false;
-                unprime += i;
+                unprime += 2 * i;
             }
         }
         i += 2;
@@ -155,7 +155,7 @@ pub fn sieve_1_000_000() -> [bool; 1_000_000] {
             let mut unprime = i * i;
             while unprime < l {
                 is_prime[unprime] = false;
-                unprime += i;
+                unprime += 2 * i;
             }
         }
         i += 2;
@@ -184,7 +184,7 @@ pub fn sieve_2_000_000() -> [bool; 2000000] {
             let mut unprime = i * i;
             while unprime < l {
                 is_prime[unprime] = false;
-                unprime += i;
+                unprime += 2 * i;
             }
         }
         i += 2;
