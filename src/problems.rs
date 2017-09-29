@@ -691,7 +691,7 @@ pub fn p26() -> usize {
     let mut max_length: usize = 0;
     let mut den_max: usize = 0;
     let mut den = 999;
-    while max_length <= den {
+    while max_length < den {
         let size = cycle_size_array(den);
         if size > max_length {
             max_length = size;
