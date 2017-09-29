@@ -22,31 +22,11 @@ use super::divisors::{divisor_count, gcd};
 use super::fibonacci::Fibonacci;
 use super::lexicographic;
 use super::modofpower::mod_of_power;
-use super::odddigits::next_odd_sans_five;
+use super::odddigits::{next_odd_sans_five, UphillOddSansFive};
 use super::palindrome::{BinaryPalindromes, reverse_digits};
 use super::primes::{nonself_prime_factor_counts_200_000, is_prime, is_prime_no_memo, primes_below,
                     sieve_16000, sieve_150_000, sieve_1_000_000, sieve_2_000_000};
 use super::trianglenumbers::is_triangular;
-
-// #[allow(dead_code)]
-// pub fn p1() -> u64 {
-//     let bar = 1000;
-//     /// If we list all the natural numbers below 10 that are multiples of 3 or 5,
-//     /// we get 3, 5, 6 and 9. The sum of these multiples is 23.
-//     /// Find the sum of all the multiples of 3 or 5 below 1000.");
-//     let mut n = 1;
-//     let mut agg = 0;
-//     loop {
-//         if n == bar {
-//             break;
-//         }
-//         if n % 3 == 0 || n % 5 == 0 {
-//             agg += n;
-//         }
-//         n += 1;
-//     }
-//     agg
-// }
 
 pub fn sum_multiples_under(bar: u32, base: u32) -> u32 {
     let mut agg = 0;
@@ -67,11 +47,6 @@ pub fn p1() -> u32 {
     // Find the sum of all the multiples of 3 or 5 below 1000.");
     let bar = 1000;
     sum_multiples_under(bar, 3) + sum_multiples_under(bar, 5) - sum_multiples_under(bar, 15)
-}
-
-#[allow(dead_code)]
-pub fn p1_iterate(bar: u64) -> u64 {
-    (1..bar).filter(|n| n % 3 == 0 || n % 5 == 0).sum()
 }
 
 #[allow(dead_code)]
@@ -715,12 +690,14 @@ pub fn p26() -> usize {
     // Of all the denominators below 1000, which has the longest repeating cycle?
     let mut max_length: usize = 0;
     let mut den_max: usize = 0;
-    for den in 1..1000 {
+    let mut den = 999;
+    while max_length <= den {
         let size = cycle_size_array(den);
         if size > max_length {
             max_length = size;
             den_max = den;
         }
+        den -= 2;
     }
     den_max
 }
@@ -978,6 +955,57 @@ fn no_repeats(n: usize, digits: &mut [bool]) -> bool {
 
 #[allow(dead_code)]
 pub fn p32() -> u32 {
+    // The following C code by Tabookie gets 0.4 ms:
+    // #include <stdio.h>
+    // #include <stdlib.h>
+    // #include <math.h>
+    //
+    // int isPand(int n){//assume 9-digit
+    // 	int digits[10] = {0};
+    // 	for(int i=0;i<9;i++){
+    // 		int temp = n%10;
+    // 		if(digits[temp]||temp==0)return 0;
+    // 		digits[temp] = 1;
+    // 		n/=10;
+    // 	}
+    // 	return 1;
+    //
+    // }
+
+
+    // int main(void){
+    //
+    // 	_Bool state[10000] = {0};
+    //
+    // 	for(int a = 10;a<100;a++){
+    // 		for(int b = 99 + a%3 ;b<1000;b+=3){
+    // 			if(b<100)continue;
+    // 			int prod = a * b;
+    // 			if(prod>9999)break;
+    // 			if(prod<1000||prod%3!=a%3)continue;
+    // 			if(isPand(a*10000000+b*10000+prod))state[prod] = 1;
+    // 		}
+    // 	}
+    // 	for(int a = 1;a<10;a++){
+    // 		for(int b = 999 + a%3 ;b<10000;b+=3){
+    // 			if(b<1000)continue;
+    // 			int prod = a * b;
+    // 			if(prod>9999)break;
+    // 			if(prod<1000||prod%3!=a%3)continue;
+    // 			if(isPand(a*100000000+b*10000+prod))state[prod] = 1;
+    // 		}
+    // 	}
+    // 	int sum = 0;
+    // 	for(int i=1000;i<10000;i++){
+    // 		if(state[i]==1)sum+=i;
+    // 	}
+    // 	printf("%d",sum);
+    //
+    // 	return 0;
+    // }
+
+
+
     let mut pandigital_products = HashSet::new();
     let mut sum = 0;
 
