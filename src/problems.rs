@@ -14,7 +14,7 @@ use std::io::Read;
 
 use self::chrono::{Datelike, NaiveDate, Weekday};
 use self::fnv::FnvHashMap;
-use self::num::{BigUint, FromPrimitive};
+use self::num::{BigUint};
 use self::permutohedron::heap_recursive;
 
 
@@ -619,20 +619,12 @@ pub fn p24() -> u32 {
 
 #[allow(dead_code)]
 pub fn p25() -> u32 {
-    let mut n = 2;
-
-    let ten = BigUint::from_u32(10).unwrap();
-    let bound = num::pow(ten, 999);
-    let mut current = BigUint::new(vec![1]);
-    let mut last = BigUint::new(vec![1]);
-
-    while current < bound {
-        let sum = &current + last;
-        last = current;
-        current = sum;
-        n += 1;
-    }
-    n
+    // f(n) = (phi ^ n) / sqrt(5)
+    // => log(f(n)) = log((phi ^ n)/(sqrt(5)))
+    let r5 = 5f64.sqrt();
+    let phi = (1f64 + r5) / 2f64;
+    let close = (999f64 + r5.log(10f64)) / phi.log(10f64);
+    close.ceil() as u32
 }
 
 #[allow(dead_code)]
