@@ -31,17 +31,23 @@ pub fn is_prime(n: u64, primes: &[u64]) -> bool {
 
 pub fn is_prime_no_memo(n: u64) -> bool {
     match n {
+        0 => false,
         1 => false,
         2 => true,
+        3 => true,
         n if n % 2 == 0 => false,
+        n if n % 3 == 0 => false,
         _ => {
             let sqrt = (n as f32).sqrt() as u64;
-            let mut test = 3;
-            while test <= sqrt {
-                if n % test == 0 {
+            let mut base = 6;
+            while base <= sqrt {
+                if n % (base - 1) == 0 {
                     return false;
                 }
-                test += 2;
+                if n % (base + 1) == 0 {
+                    return false;
+                }
+                base += 6;
             }
             true
         }
@@ -335,5 +341,29 @@ mod test {
         assert_eq!(counts[11], 0);
         assert_eq!(counts[24], 2);
         assert_eq!(counts[30], 3);
+    }
+    #[test]
+    fn test_is_prime_no_memo() {
+        assert_eq!(is_prime_no_memo(0), false);
+        assert_eq!(is_prime_no_memo(1), false);
+        assert_eq!(is_prime_no_memo(2), true);
+        assert_eq!(is_prime_no_memo(3), true);
+        assert_eq!(is_prime_no_memo(4), false);
+        assert_eq!(is_prime_no_memo(5), true);
+        assert_eq!(is_prime_no_memo(6), false);
+        assert_eq!(is_prime_no_memo(7), true);
+        assert_eq!(is_prime_no_memo(8), false);
+        assert_eq!(is_prime_no_memo(9), false);
+        assert_eq!(is_prime_no_memo(10), false);
+        assert_eq!(is_prime_no_memo(11), true);
+        assert_eq!(is_prime_no_memo(12), false);
+        assert_eq!(is_prime_no_memo(13), true);
+        assert_eq!(is_prime_no_memo(14), false);
+        assert_eq!(is_prime_no_memo(15), false);
+        assert_eq!(is_prime_no_memo(16), false);
+        assert_eq!(is_prime_no_memo(17), true);
+        assert_eq!(is_prime_no_memo(18), false);
+        assert_eq!(is_prime_no_memo(19), true);
+        assert_eq!(is_prime_no_memo(20), false);
     }
 }

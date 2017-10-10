@@ -1204,7 +1204,7 @@ pub fn p36() -> u64 {
 
 #[allow(dead_code)]
 fn add_right(v: &Vec<u64>) -> Vec<u64> {
-    let digits: [u64; 9] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    let digits: [u64; 4] = [1, 3, 7, 9];
     let mut w = Vec::new();
     for branch in v {
         for d in digits.iter() {
