@@ -1420,6 +1420,7 @@ pub fn p42() -> u64 {
     let zero = 'A' as u32 - 1;
     let mut count = 0;
 
+    // Up to 38 letters if all are Z or 70 letters for a less extreme case.
     let mut is_triangular = [false; 1000];
     let mut t: usize = 1;
     let mut diff: usize = 2;
