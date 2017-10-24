@@ -76,6 +76,13 @@ pub fn sieve_10() -> [bool; 10] {
     let sqrt = (l as f64).sqrt() as usize;
 
     let mut i = 2;
+    let mut unprime = i * i;
+    while unprime < l {
+        is_prime[unprime] = false;
+        unprime += i;
+    }
+    i = 3;
+
     while i < sqrt + 1 {
         if is_prime[i] {
             let mut unprime = i * i;
@@ -84,7 +91,7 @@ pub fn sieve_10() -> [bool; 10] {
                 unprime += 2 * i;
             }
         }
-        i += 1
+        i += 2
     }
     is_prime
 }
@@ -98,6 +105,13 @@ pub fn sieve_16000() -> [bool; 16000] {
     let sqrt = (l as f64).sqrt() as usize;
 
     let mut i = 2;
+    let mut unprime = i * i;
+    while unprime < l {
+        is_prime[unprime] = false;
+        unprime += i;
+    }
+
+    i = 3;
     while i < sqrt + 1 {
         if is_prime[i] {
             let mut unprime = i * i;
@@ -106,7 +120,7 @@ pub fn sieve_16000() -> [bool; 16000] {
                 unprime += 2 * i;
             }
         }
-        i += 1
+        i += 2;
     }
     is_prime
 }
