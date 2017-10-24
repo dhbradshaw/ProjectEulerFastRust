@@ -22,7 +22,7 @@ use super::divisors::{divisor_count, gcd};
 use super::fibonacci::Fibonacci;
 use super::lexicographic;
 use super::modofpower::mod_of_power;
-use super::odddigits::{next_odd_sans_five, UphillOddSansFive};
+use super::odddigits::next_odd_sans_five;
 use super::palindrome::{BinaryPalindromes, reverse_digits};
 use super::primes::{nonself_prime_factor_counts_200_000, is_prime, is_prime_no_memo, primes_below,
                     sieve_16000, sieve_150_000, sieve_1_000_000, sieve_2_000_000};
@@ -446,7 +446,7 @@ pub fn p14() -> u32 {
 
 #[allow(dead_code)]
 pub fn p15() -> u64 {
-    super::lattice::corner_to_corner(20)
+    super::lattice::corner_to_corner_fast(20)
 }
 
 // #[allow(dead_code)]
