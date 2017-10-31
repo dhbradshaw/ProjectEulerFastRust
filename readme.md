@@ -24,7 +24,7 @@ $ rustc --version
 rustc 1.21.0 (3b72af97e 2017-10-09)
 ```  
 
-To look at a given problem, go to `src/problems/rs`.
+Or just browse.  To look at the code for a given problem, go to `src/problems/rs`.
 
 ## Community challenge: 0.1 => 0.01 seconds.
 I read a statement on Hacker News that said that skilled programmers can look at the code of a beginner and improve its efficiency by a factor of 10.  Can that happen here?  
@@ -138,6 +138,63 @@ Here are some aspects of beauty (note that this is an unordered list):
 - Idiomaticity
 
 ## Lessons Learned
+Several people, upon learning what I was working on, have asked me what I've learned.  So I thought I would write a bit on that here.
+
+Here are some of the main things.
+
+### 1. If you want fast code, you need to measure its speed.
+
+My first attempt at a fast solution to problem 14 on Collatz chains used a Hashmap for memoization.  But when I actually measured its performance compared to a naive approach, it was significantly slower.  That completely surprised me coming from Python where using dicts and sets for memoization was one of my most useful tricks.
+
+### 2.  Hunt where there's game.
+
+If you're searching for a rare condition, the slowest thing you can do is check everything.  For example, if you're looking for numbers that are both hexagonal and pentagonal numbers, don't check every number to see if it's hexagonal and pentagonal.
+
+Instead, generate hexagonal numbers.  Maybe even co-generate pentagonal numbers.
+
+If you're looking for palindromes that meet a particular condition, don't check every number to see if it's a palindrome.  Generate the palindromes.
+
+Don't check large even numbers to see if they're prime.
+
+This principle sped several solutions up by multiple orders of magnitude.  Applying it is also one of the most fun parts of figuring out the right solution to these problems.
+
+### 3.  Memoize if you can.  But also avoid hashing if you can.
+
+If you're going for speed, memoizing can be a huge help.  However, hashing has real overhead.  Even with FNV or another fast hasher, it's going to cost you to use a Hashmap or a Hashset.
+
+Project Euler problems tend to be special in that often the parameter space that you care about are dense sets of integers.  So for many of the problems you can avoid hashing by using an array of booleans in place of a Hash Set or an array of integers in place of a Hashmap.  If you can get away with that, it will speed up your code considerably.
+
+I used this trick with problem 14.  Where the Hashmap solution was slower than the non-memoizing solution, the Array solution was a fair amount faster.  Hashing is part of the issue here.  Another part is the speed difference between the stack and the heap.  So,
+
+### 4.  If you can, use the stack not the heap.
+
+This is obvious, I think, to programmers with some systems work under their belt.  My experience before now has been primarily Mathematica, Matlab, Python, and Javascript.  So it's been nice to have tools that let me distinguish between the stack and the heap and use the stack when it's profitable.  It was surprising how much the stack can actually hold.  However,
+
+### 5.  While the stack is awesome, it has limits.
+
+1.  Important note learned from experience: if your rust code crashes with no error message and for no apparent reason, you may have been putting too much onto the stack.  It's impressive how much room there is there, but there are limits.
+2.  I achieved measurable speed ups by decreasing the size of arrays that I had on the stack.  For example, a u32 array with a length=100_000 will be measurably slower than a u16 array with the same length.  
+3.  I haven't quantified this, but I also get the sense that large arrays are associated with more variance in the time it takes a bit of code to run.
+
+### 6.  If you need bulk information, process in bulk.  In other words, sieves are awesome.
+
+A prime sieve is a perfect example of this.  If you need all the primes under 2 million, you can find them much more quickly by finding all those primes at once using a sieve than by checking integers one at a time to see if they are prime.
+
+But the same sieve concept can be and is used in other ways for other problems here and leads to significant speed improvements for those other solutions as well.
+
+### 7.  A small subset of Rust is already enough to do interesting things.
+
+The code here is simple.  It only uses a small subset of what Rust has to offer.  But that small subset was enough to let me solve interesting problems in interesting ways and achieve speeds that I'm proud of.  
+
+The point I'm trying to make is that while there is a ton to learn, you don't need to learn everything to do something interesting.  It's worthwhile finding a useful subset of a new tool and then expanding your knowledge as the need arises.
+
+### 8.  Math is faster than string formatting.
+
+I gradually moved over to handling as much number manipulation as possible using math instead of using string formatting.  Use modulus rather than getting the last character of a stringified number, for example.
+
+### 9.  Math on built in types is faster than using BigInt or similar libraries.
+
+Rust has a BigInt library that's handy.  But if you want fast Euler Rust solutions and if it's feasible, then it's better to use math to avoid working with it.
 
 ## Contributors
 Only me :-(.
