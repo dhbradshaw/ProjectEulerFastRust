@@ -449,13 +449,6 @@ pub fn p15() -> u64 {
     super::lattice::corner_to_corner_fast(20)
 }
 
-// #[allow(dead_code)]
-// pub fn p15_factorial() -> u64 {
-//     let f_20 = super::lattice::factorial(20);
-//     super::lattice::factorial(40)/(f_20 * f_20)
-// }
-
-
 #[allow(dead_code)]
 pub fn p16() -> u32 {
     num::pow(BigUint::new(vec![2]), 1000)
