@@ -49,58 +49,59 @@ I started going after the slowest algorithms to speed them up.  Since that was f
 
 So here are my times next to the average and fasted posted times for each of the different problems.  The times are on my laptop, a 17 inch $300 HP from 2016.
 
-|  | Title            | Avg`*`  | Fastest`*` | This |
-| ------- |:---------------------:| -----:| -----:| -----:|
-| 1 | Multiples of 3 and 5        | NA | NA | 2.7e-6 |
-| 2 | Even Fibonacci numbers      | NA | NA | 1.9e-7 |
-| 3 | Largest prime factor        |  | 1.8e-6 | 1.8e-5 |
-| 4 | Largest palindrome product  | Avg | Fastest | 1.8e-5 |
-| 5 | Smallest multiple           | Avg | Fastest | 1.3e-7 |
-| 6 | Sum square difference       | Avg | Fastest | 3.0e-7 |
-| 7 | 10001st prime               | Avg | Fastest | 6.3e-4 |
-| 8 | Largest product in a series | Avg | Fastest | 4.3e-5 |
-| 9 | Special Pythagorean triplet | Avg | Fastest | 1.8e-6 |
-| 10 | Summation of primes        | Avg | Fastest | 1.9e-2 |
-| 11 | Largest product in a grid  | Avg | Fastest | 8.6e-5 |
-| 12 | Highly divisible triangular number | Avg | Fastest | 3.4e-3 |
-| 13 | Large sum                  | Avg | Fastest | 1.5e-5 |
-| 14 | Longest Collatz sequence   | Avg | Fastest | 2.7e-2 |
-| 15 | Lattice paths              | Avg | Fastest | 2.3e-6 |
-| 16 | Power digit sum            | Avg | Fastest | 1.7e-5 |
-| 17 | Number letter counts       | Avg | Fastest | 6.9e-4 |
-| 18 | Maximum path sum I         | Avg | Fastest | 6.3e-6 |
-| 19 | Counting Sundays           | Avg | Fastest | 1.4e-5 |
-| 20 | Factorial digit sum        | Avg | Fastest | 1.4e-5 |
-| 21 | Amicable numbers           | Avg | Fastest | 4.5e-4 |
-| 22 | Names scores               | Avg | Fastest | 1.5e-3 |
-| 23 | Non-abundant sums          | Avg | Fastest | 6.9e-3 |
-| 24 | Lexicographic permutations | Avg | Fastest | 4.3e-6 |
-| 25 | 1000-digit Fibonacci number | Avg | Fastest | 8.6e-8 |
-| 26 | Reciprocal cycles          | Avg | Fastest | 1.5e-5 |
-| 27 | Quadratic primes           | Avg | Fastest | 1.2e-3 |
-| 28 | Number spiral diagonals    | Avg | Fastest | 7.4e-7 |
-| 29 | Distinct powers            | Avg | Fastest | 1.4e-3 |
-| 30 | Digit fifth powers         | Avg | Fastest | 1.9e-4 |
-| 31 | Coin sums                  | Avg | Fastest | 4.0e-4 |
-| 32 | Pandigital products        | Avg | Fastest | 9.3e-4 |
-| 33 | Digit cancelling fractions | Avg | Fastest | 3.9e-6 |
-| 34 | Digit factorials           | Avg | Fastest | 4.0e-4 |
-| 35 | Circular primes            | Avg | Fastest | 3.1e-3 |
-| 36 | Double-base palindromes    | Avg | Fastest | 4.6e-5 |
-| 37 | Truncatable primes         | Avg | Fastest | 2.8e-4 |
-| 38 | Pandigital multiples       | Avg | Fastest | 1.3e-4 |
-| 39 | Integer right triangles    | Avg | Fastest | 8.2e-6 |
-| 40 | Champernowne's constant    | Avg | Fastest | 7.9e-7 |
-| 41 | Pandigital prime           | Avg | Fastest | 7.4e-5 |
-| 42 | Coded triangle numbers     | Avg | Fastest | 1.6e-4 |
-| 43 | Sub-string divisibility    | Avg | Fastest | 2.4e-5 |
-| 44 | Pentagon numbers           | Avg | Fastest | 1.2e-2 |
-| 45 | Triangular, pentagonal, and hexagonal | Avg | Fastest | 4.5e-5 |
-| 46 | Goldbach's other conjecture | Avg | Fastest | 6.5e-5 |
-| 47 | Distinct primes factors    | Avg | Fastest | 7.4e-4 |
-| 48 | Self powers                | Avg | Fastest | 3.4e-3 |
-| 49 | Prime permutations         | Avg | Fastest | 1.3e-4 |
-| 50 | Consecutive prime sum      | Avg | Fastest | 4.0e-3 |
+|  | Title            | Best Old`*`  | Best New`*` | This | Savings | 
+| ------- |:---------------------:| -----:| -----:| -----:| ---- |
+|p1| Multiples of 3 and 5        |0.0E+00|0.0E+00|3.1E-07|-3.1E-07|
+|p2| Even Fibonacci numbers      |2.9E-05|0.0E+00|1.9E-07|-1.9E-07|
+|p3| Largest prime factor        |1.6E-02|1.8E-06|1.8E-05|-1.6E-05|
+|p4| Largest palindrome product  |1.3E-03|4.0E-03|1.8E-05|1.2E-03|
+|p5| Smallest multiple           |0.0E+00|0.0E+00|1.3E-07|-1.3E-07|
+|p6| Sum square difference       |0.0E+00|0.0E+00|1.3E-07|-1.3E-07|
+|p7| 10001st prime               |9.5E-04|1.4E-02|5.6E-04|3.9E-04|
+|p8| Largest product in a series |0.0E+00|9.0E-04|4.3E-05|-4.3E-05|
+|p9| Special Pythagorean triplet |9.0E-01|3.6E-05|1.8E-06|3.4E-05|
+|p10| Summation of primes        |2.7E-02|9.0E-01|1.9E-02|8.0E-03|
+|p11| Largest product in a grid  |9.0E-04|1.0E-03|1.3E-04|7.7E-04|
+|p12| Highly divisible triangular number |9.4E-02|9.8E-02|4.2E-03|9.0E-02|
+|p13| Large sum                  |1.2E-02|1.7E-04|1.5E-05|1.6E-04|
+|p14| Longest Collatz sequence   |8.1E-01|3.3E-01|3.1E-02|3.0E-01|
+|p15| Lattice paths              |2.9E-03|4.0E-04|2.3E-06|4.0E-04|
+|p16| Power digit sum            |9.0E-06|1.5E-03|2.5E-05|-1.6E-05|
+|p17| Number letter counts       |0.0E+00|0.0E+00|6.8E-04|-6.8E-04|
+|p18| Maximum path sum I         |4.0E-07|1.0E-04|5.0E-06|-4.6E-06|
+|p19| Counting Sundays           |7.3E-03|1.6E-04|1.3E-05|1.5E-04|
+|p20| Factorial digit sum        |1.3E-03|1.0E-02|1.4E-05|1.3E-03|
+|p21| Amicable numbers           |5.0E-04|6.0E-03|4.6E-04|4.0E-05|
+|p22| Names scores               |3.6E-02|3.0E-03|1.6E-03|1.4E-03|
+|p23| Non-abundant sums          |1.2E-01|1.4E-01|8.0E-03|1.1E-01|
+|p24| Lexicographic permutations |2.6E-05|2.4E-04|3.6E-06|2.2E-05|
+|p25| 1000-digit Fibonacci number |0.0E+00|0.0E+00|1.7E-07|-1.7E-07|
+|p26| Reciprocal cycles          |1.1E-02|9.0E-04|1.5E-05|8.9E-04|
+|p27| Quadratic primes           |1.0E+00|0.0E+00|2.0E-03|-2.0E-03|
+|p28| Number spiral diagonals    |1.0E-02|4.0E-05|7.8E-07|3.9E-05|
+|p29| Distinct powers            |7.5E-03|1.0E-02|1.5E-03|6.0E-03|
+|p30| Digit fifth powers         |2.3E-01|5.0E-03|1.9E-04|4.8E-03|
+|p31| Coin sums                  |4.0E-03|4.0E-04|4.0E-04|0.0E+00|
+|p32| Pandigital products        |9.0E-04|4.0E-04|1.0E-03|-6.0E-04|
+|p33| Digit cancelling fractions |2.0E-03|8.0E-05|4.2E-06|7.6E-05|
+|p34| Digit factorials           |9.5E-02|1.9E-02|4.0E-04|1.9E-02|
+|p35| Circular primes            |1.0E-02|8.0E-03|2.0E-03|6.0E-03|
+|p36| Double-base palindromes    |2.0E-03|3.2E-03|4.6E-05|2.0E-03|
+|p37| Truncatable primes         |2.0E-03|4.0E-04|2.9E-04|1.1E-04|
+|p38| Pandigital multiples       |0.0E+00|0.0E+00|1.4E-04|-1.4E-04|
+|p39| Integer right triangles    |9.0E-04|1.0E-04|7.9E-06|9.2E-05|
+|p40| Champernowne's constant    |4.0E-04|2.0E-05|1.1E-06|1.9E-05|
+|p41| Pandigital prime           |3.0E-05|1.0E-04|7.2E-05|-4.2E-05|
+|p42| Coded triangle numbers     |2.6E-03|4.9E-04|1.6E-04|3.3E-04|
+|p43| Sub-string divisibility    |4.0E-05|3.0E-03|2.1E-05|1.9E-05|
+|p44| Pentagon numbers           |1.5E-01|3.6E-02|1.3E-02|2.3E-02|
+|p45| Triangular, pentagonal, and hexagonal |9.0E-04|3.0E-04|4.9E-05|2.5E-04|
+|p46| Goldbach's other conjecture |8.0E-03|2.0E-03|7.3E-05|1.9E-03|
+|p47| Distinct primes factors    |6.0E-02|3.5E-02|7.8E-04|3.4E-02|
+|p48| Self powers                |7.0E-03|2.0E-03|3.4E-03|-1.4E-03|
+|p49| Prime permutations         |6.0E-03|2.0E-04|6.5E-05|1.3E-04|
+|p50| Consecutive prime sum      |3.2E-03|5.0E-04|1.7E-03|-1.2E-03|
+
 
 `*` While my own times were easy enough to measure, the numbers for average and fastest times should be taken with a huge grain of salt.  Here are some issues:
 1. It's difficult to get the numbers from the forum, so these are just the ones that I got as I scanned the first two and last pages of each thread manually.  So I didn't scan all 9 pages, and may have missed times within the pages I did scan.  
@@ -148,9 +149,7 @@ My first attempt at a fast solution to problem 14 on Collatz chains used a Hashm
 
 ### 2.  Hunt where there's game.
 
-If you're searching for a rare condition, the slowest thing you can do is check everything.  For example, if you're looking for numbers that are both hexagonal and pentagonal numbers, don't check every number to see if it's hexagonal and pentagonal.
-
-Instead, generate hexagonal numbers.  Maybe even co-generate pentagonal numbers.
+If you're searching for a rare condition, the slowest thing you can do is check everything.  For example, if you're looking for numbers that are both hexagonal and pentagonal, don't check every number to see if it's hexagonal.  Instead, generate hexagonal numbers.  Maybe even co-generate pentagonal numbers.
 
 If you're looking for palindromes that meet a particular condition, don't check every number to see if it's a palindrome.  Generate the palindromes.
 
@@ -170,15 +169,15 @@ I used this trick with problem 14.  Where the Hashmap solution was slower than t
 
 This is obvious, I think, to programmers with some systems work under their belt.  My experience before now has been primarily Mathematica, Matlab, Python, and Javascript.  So it's been nice to have tools that let me distinguish between the stack and the heap and use the stack when it's profitable.  It was surprising how much the stack can actually hold.  However,
 
-### 5.  While the stack is awesome, it has limits.
+### 5.  While the stack is fast, it has limits.
 
 1.  Important note learned from experience: if your rust code crashes with no error message and for no apparent reason, you may have been putting too much onto the stack.  It's impressive how much room there is there, but there are limits.
-2.  I achieved measurable speed ups by decreasing the size of arrays that I had on the stack.  For example, a u32 array with a length=100_000 will be measurably slower than a u16 array with the same length.  
+2.  I achieved measurable speed ups by decreasing the size of arrays that I had on the stack.  For example, a u32 array with a length of 100_000 will be measurably slower than a u16 array with the same length.  
 3.  I haven't quantified this, but I also get the sense that large arrays are associated with more variance in the time it takes a bit of code to run.
 
-### 6.  If you need bulk information, process in bulk.  In other words, sieves are awesome.
+### 6.  If you need bulk information, process in bulk.
 
-A prime sieve is a perfect example of this.  If you need all the primes under 2 million, you can find them much more quickly by finding all those primes at once using a sieve than by checking integers one at a time to see if they are prime.
+A prime sieve is a perfect example of bulk processing.  If you need all the primes under 2 million, you can find them much more quickly by finding all those primes at once using a sieve than by checking integers one at a time to see if they are prime.
 
 But the same sieve concept can be and is used in other ways for other problems here and leads to significant speed improvements for those other solutions as well.
 
@@ -186,15 +185,15 @@ But the same sieve concept can be and is used in other ways for other problems h
 
 The code here is simple.  It only uses a small subset of what Rust has to offer.  But that small subset was enough to let me solve interesting problems in interesting ways and achieve speeds that I'm proud of.  
 
-The point I'm trying to make is that while there is a ton to learn, you don't need to learn everything to do something interesting.  It's worthwhile finding a useful subset of a new tool and then expanding your knowledge as the need arises.
+The point I'm trying to make is that a beginner doesn't need to get discouraged.  While there is a ton to learn, you don't need to learn everything to do something interesting.  It's worthwhile finding a useful subset of a new tool and then expanding your knowledge as the need arises (or as you find excuses).
 
 ### 8.  Math is faster than string formatting.
 
 I gradually moved over to handling as much number manipulation as possible using math instead of using string formatting.  Use modulus rather than getting the last character of a stringified number, for example.
 
-### 9.  Math on built in types is faster than using BigInt or similar libraries.
+### 9.  Math on built-in types is faster than using BigInt or similar libraries.
 
-Rust has a BigInt library that's handy.  But if you want fast Euler Rust solutions and if it's feasible, then it's better to use math to avoid working with it.
+Rust has a BigInt/BigUint library called num.  It's handy.  But if you want fast Euler Rust solutions and if it's feasible, then it's probably faster to use math to avoid working with it.
 
 ## Contributors
 Only me :-(.
