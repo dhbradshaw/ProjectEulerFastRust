@@ -81,14 +81,17 @@ the right thing to do.  Should I just skip the number?)
 4.  Some problems were too easy to get good numbers for, meaning that they were
 often solved by hand.  Or at least, meaning that no one felt like it was worth
 posting times.  In these cases, I just listed the times as zero.
+5.  The new times keep changing.  Take the values here as historical artifacts
+for now.
 
-So with that as an introduction, here's a summary of the best of the Old times
+So with that as an introduction, here's a summary of the best of the old times
 and the best of the new times from the pages that I analyzed.  In the final column
-are the times associated with this repository.
+are the times associated with this repository.  All times are reported in seconds,
+and sums for each column are at the top.  
 
-| p | Title            | Best Old`*`  | Best New`*` | This |
+| p | Title            | Best Old  | Best New | This |
 | ------- |:---------------------:| -----:| -----:| -----:|
-|Sum| All | 3.9 | 1.6 | 9.3E-2 | 6.1E-01 |
+|Sum| All | 3.9 | 1.6 | 9.3E-2 |
 |p1| Multiples of 3 and 5        |0.0E+00|0.0E+00|3.1E-07|
 |p2| Even Fibonacci numbers      |2.9E-05|0.0E+00|1.9E-07|
 |p3| Largest prime factor        |1.6E-02|1.8E-06|1.8E-05|
@@ -133,19 +136,15 @@ are the times associated with this repository.
 |p42| Coded triangle numbers     |2.6E-03|4.9E-04|1.6E-04|
 |p43| Sub-string divisibility    |4.0E-05|3.0E-03|2.1E-05|
 |p44| Pentagon numbers           |1.5E-01|3.6E-02|1.3E-02|
-|p45| Triangular, pentagonal, and hexagonal |9.0E-04|3.0E-04|4.9E-05|2.5E-04|
-|p46| Goldbach's other conjecture |8.0E-03|2.0E-03|7.3E-05|1.9E-03|
-|p47| Distinct primes factors    |6.0E-02|3.5E-02|7.8E-04|3.4E-02|
-|p48| Self powers                |7.0E-03|2.0E-03|3.4E-03|-1.4E-03|
-|p49| Prime permutations         |6.0E-03|2.0E-04|6.5E-05|1.3E-04|
-|p50| Consecutive prime sum      |3.2E-03|5.0E-04|1.7E-03|-1.2E-03|
+|p45| Triangular, pentagonal, and hexagonal |9.0E-04|3.0E-04|4.9E-05|
+|p46| Goldbach's other conjecture |8.0E-03|2.0E-03|7.3E-05|
+|p47| Distinct primes factors    |6.0E-02|3.5E-02|7.8E-04|
+|p48| Self powers                |7.0E-03|2.0E-03|3.4E-03|
+|p49| Prime permutations         |6.0E-03|2.0E-04|6.5E-05|
+|p50| Consecutive prime sum      |3.2E-03|5.0E-04|1.7E-03|
 
-
-`*` While my own times were easy enough to measure, the numbers for average and fastest times should be taken with a huge grain of salt.  Here are some issues:
-1. It's difficult to get the numbers from the forum, so these are just the ones that I got as I scanned the first two and last pages of each thread manually.  So I didn't scan all 9 pages, and may have missed times within the pages I did scan.  
-2.  Old numbers were obtained on old computers, which may be a bit slower.  On the other hand, some problems were made more difficult over time.  
-3.  I didn't take time to check the validity of the solutions associated with the posted times.
-4. While the first few pages of the forum are static, the last ones constantly change.  So these numbers could well be out of date by now.
+For more detailed information and other statistics like average and max times,
+look at the spreadsheet.
 
 ## Priorities for this Repo
 Everyone wants fast, elegant, correct code.  Things only get interesting when you have to choose between the different priorities.
