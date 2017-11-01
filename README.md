@@ -14,7 +14,7 @@ reported. (See the spreadsheet titled "Euler 50 forum times" in this repo for
 breakouts by problem and language.)  
 
 For each of the 50 problems, you can find the slowest run time reported, and the fastest
-run time reported.  Summing those three separate groups gives
+run time reported.  You can also sum my times.  Summing those three separate groups gives
 
 ~ **9000** seconds for the sum of the slowest reported times,
 
