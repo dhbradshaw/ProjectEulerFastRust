@@ -47,54 +47,92 @@ I started going after the slowest algorithms to speed them up.  Since that was f
 
 ## Times
 
-So here are my times next to the average and fasted posted times for each of the different problems.  The times are on my laptop, a 17 inch $300 HP from 2016.
+The times in the "This" column are based on running ```cargo run --release```
 
-|  | Title            | Best Old`*`  | Best New`*` | This | Savings | 
-| ------- |:---------------------:| -----:| -----:| -----:| ---- |
-|p1| Multiples of 3 and 5        |0.0E+00|0.0E+00|3.1E-07|-3.1E-07|
-|p2| Even Fibonacci numbers      |2.9E-05|0.0E+00|1.9E-07|-1.9E-07|
-|p3| Largest prime factor        |1.6E-02|1.8E-06|1.8E-05|-1.6E-05|
-|p4| Largest palindrome product  |1.3E-03|4.0E-03|1.8E-05|1.2E-03|
-|p5| Smallest multiple           |0.0E+00|0.0E+00|1.3E-07|-1.3E-07|
-|p6| Sum square difference       |0.0E+00|0.0E+00|1.3E-07|-1.3E-07|
-|p7| 10001st prime               |9.5E-04|1.4E-02|5.6E-04|3.9E-04|
-|p8| Largest product in a series |0.0E+00|9.0E-04|4.3E-05|-4.3E-05|
-|p9| Special Pythagorean triplet |9.0E-01|3.6E-05|1.8E-06|3.4E-05|
-|p10| Summation of primes        |2.7E-02|9.0E-01|1.9E-02|8.0E-03|
-|p11| Largest product in a grid  |9.0E-04|1.0E-03|1.3E-04|7.7E-04|
-|p12| Highly divisible triangular number |9.4E-02|9.8E-02|4.2E-03|9.0E-02|
-|p13| Large sum                  |1.2E-02|1.7E-04|1.5E-05|1.6E-04|
-|p14| Longest Collatz sequence   |8.1E-01|3.3E-01|3.1E-02|3.0E-01|
-|p15| Lattice paths              |2.9E-03|4.0E-04|2.3E-06|4.0E-04|
-|p16| Power digit sum            |9.0E-06|1.5E-03|2.5E-05|-1.6E-05|
-|p17| Number letter counts       |0.0E+00|0.0E+00|6.8E-04|-6.8E-04|
-|p18| Maximum path sum I         |4.0E-07|1.0E-04|5.0E-06|-4.6E-06|
-|p19| Counting Sundays           |7.3E-03|1.6E-04|1.3E-05|1.5E-04|
-|p20| Factorial digit sum        |1.3E-03|1.0E-02|1.4E-05|1.3E-03|
-|p21| Amicable numbers           |5.0E-04|6.0E-03|4.6E-04|4.0E-05|
-|p22| Names scores               |3.6E-02|3.0E-03|1.6E-03|1.4E-03|
-|p23| Non-abundant sums          |1.2E-01|1.4E-01|8.0E-03|1.1E-01|
-|p24| Lexicographic permutations |2.6E-05|2.4E-04|3.6E-06|2.2E-05|
-|p25| 1000-digit Fibonacci number |0.0E+00|0.0E+00|1.7E-07|-1.7E-07|
-|p26| Reciprocal cycles          |1.1E-02|9.0E-04|1.5E-05|8.9E-04|
-|p27| Quadratic primes           |1.0E+00|0.0E+00|2.0E-03|-2.0E-03|
-|p28| Number spiral diagonals    |1.0E-02|4.0E-05|7.8E-07|3.9E-05|
-|p29| Distinct powers            |7.5E-03|1.0E-02|1.5E-03|6.0E-03|
-|p30| Digit fifth powers         |2.3E-01|5.0E-03|1.9E-04|4.8E-03|
-|p31| Coin sums                  |4.0E-03|4.0E-04|4.0E-04|0.0E+00|
-|p32| Pandigital products        |9.0E-04|4.0E-04|1.0E-03|-6.0E-04|
-|p33| Digit cancelling fractions |2.0E-03|8.0E-05|4.2E-06|7.6E-05|
-|p34| Digit factorials           |9.5E-02|1.9E-02|4.0E-04|1.9E-02|
-|p35| Circular primes            |1.0E-02|8.0E-03|2.0E-03|6.0E-03|
-|p36| Double-base palindromes    |2.0E-03|3.2E-03|4.6E-05|2.0E-03|
-|p37| Truncatable primes         |2.0E-03|4.0E-04|2.9E-04|1.1E-04|
-|p38| Pandigital multiples       |0.0E+00|0.0E+00|1.4E-04|-1.4E-04|
-|p39| Integer right triangles    |9.0E-04|1.0E-04|7.9E-06|9.2E-05|
-|p40| Champernowne's constant    |4.0E-04|2.0E-05|1.1E-06|1.9E-05|
-|p41| Pandigital prime           |3.0E-05|1.0E-04|7.2E-05|-4.2E-05|
-|p42| Coded triangle numbers     |2.6E-03|4.9E-04|1.6E-04|3.3E-04|
-|p43| Sub-string divisibility    |4.0E-05|3.0E-03|2.1E-05|1.9E-05|
-|p44| Pentagon numbers           |1.5E-01|3.6E-02|1.3E-02|2.3E-02|
+on my laptop.
+
+Posts in the Project Euler forums can be divided into two sections, old and new.
+The old posts seem to be fixed, and the new posts rotate through and disappear
+after a time.
+
+Looking for times for all 50 problems turned out to be a lot of work.  The times
+that I found are documented in the spreadsheet titled "Euler 50 forum times.ods"
+which is here in this repository.  That spreadsheet can be improved and added to.  
+It's interesting to take a look at, partly because you can look at solutions and
+posted times in many different languages from Assembly, Delphi, C/C++ and Rust on
+the fast side to Powershell on the slow side.  
+
+I ended up going through the first
+couple of pages to get old times and the last three pages to get new times for each
+problem.  
+
+So a few points about the times that I'm comparing my solutions to:
+
+1.  My search through the forums was systematic, but not exhaustive.  I sifted
+through some of the first and last pages for each problem.
+2.  The solutions posted here were not all optimized for speed.  Many are first
+efforts, and many are made by people who are just learning the language that they
+chose for their solution.
+3.  Some judgment was required in converting solutions to actual numbers.  What
+number do you enter if someone says that their solution is "faster than a second?"
+(I typically put 0.9 seconds.)  How about a "blink of an eye?" (I usually skipped
+these.)  How about "0.0 seconds?" (I wrote 0.04 for this, but I'm not sure that's
+the right thing to do.  Should I just skip the number?)  
+4.  Some problems were too easy to get good numbers for, meaning that they were
+often solved by hand.  Or at least, meaning that no one felt like it was worth
+posting times.  In these cases, I just listed the times as zero.
+
+So with that as an introduction, here's a summary of the best of the Old times
+and the best of the new times from the pages that I analyzed.  In the final column
+are the times associated with this repository.
+
+| p | Title            | Best Old`*`  | Best New`*` | This |
+| ------- |:---------------------:| -----:| -----:| -----:|
+|Sum| All | 3.9 | 1.6 | 9.3E-2 | 6.1E-01 |
+|p1| Multiples of 3 and 5        |0.0E+00|0.0E+00|3.1E-07|
+|p2| Even Fibonacci numbers      |2.9E-05|0.0E+00|1.9E-07|
+|p3| Largest prime factor        |1.6E-02|1.8E-06|1.8E-05|
+|p4| Largest palindrome product  |1.3E-03|4.0E-03|1.8E-05|
+|p5| Smallest multiple           |0.0E+00|0.0E+00|1.3E-07|
+|p6| Sum square difference       |0.0E+00|0.0E+00|1.3E-07|
+|p7| 10001st prime               |9.5E-04|1.4E-02|5.6E-04|
+|p8| Largest product in a series |0.0E+00|9.0E-04|4.3E-05|
+|p9| Special Pythagorean triplet |9.0E-01|3.6E-05|1.8E-06|
+|p10| Summation of primes        |2.7E-02|9.0E-01|1.9E-02|
+|p11| Largest product in a grid  |9.0E-04|1.0E-03|1.3E-04|
+|p12| Highly divisible triangular number |9.4E-02|9.8E-02|4.2E-03|
+|p13| Large sum                  |1.2E-02|1.7E-04|1.5E-05|
+|p14| Longest Collatz sequence   |8.1E-01|3.3E-01|3.1E-02|
+|p15| Lattice paths              |2.9E-03|4.0E-04|2.3E-06|
+|p16| Power digit sum            |9.0E-06|1.5E-03|2.5E-05|
+|p17| Number letter counts       |0.0E+00|0.0E+00|6.8E-04|
+|p18| Maximum path sum I         |4.0E-07|1.0E-04|5.0E-06|
+|p19| Counting Sundays           |7.3E-03|1.6E-04|1.3E-05|
+|p20| Factorial digit sum        |1.3E-03|1.0E-02|1.4E-05|
+|p21| Amicable numbers           |5.0E-04|6.0E-03|4.6E-04|
+|p22| Names scores               |3.6E-02|3.0E-03|1.6E-03|
+|p23| Non-abundant sums          |1.2E-01|1.4E-01|8.0E-03|
+|p24| Lexicographic permutations |2.6E-05|2.4E-04|3.6E-06|
+|p25| 1000-digit Fibonacci number |0.0E+00|0.0E+00|1.7E-07|
+|p26| Reciprocal cycles          |1.1E-02|9.0E-04|1.5E-05|
+|p27| Quadratic primes           |1.0E+00|0.0E+00|2.0E-03|
+|p28| Number spiral diagonals    |1.0E-02|4.0E-05|7.8E-07|
+|p29| Distinct powers            |7.5E-03|1.0E-02|1.5E-03|
+|p30| Digit fifth powers         |2.3E-01|5.0E-03|1.9E-04|
+|p31| Coin sums                  |4.0E-03|4.0E-04|4.0E-04|
+|p32| Pandigital products        |9.0E-04|4.0E-04|1.0E-03|
+|p33| Digit cancelling fractions |2.0E-03|8.0E-05|4.2E-06|
+|p34| Digit factorials           |9.5E-02|1.9E-02|4.0E-04|
+|p35| Circular primes            |1.0E-02|8.0E-03|2.0E-03|
+|p36| Double-base palindromes    |2.0E-03|3.2E-03|4.6E-05|
+|p37| Truncatable primes         |2.0E-03|4.0E-04|2.9E-04|
+|p38| Pandigital multiples       |0.0E+00|0.0E+00|1.4E-04|
+|p39| Integer right triangles    |9.0E-04|1.0E-04|7.9E-06|
+|p40| Champernowne's constant    |4.0E-04|2.0E-05|1.1E-06|
+|p41| Pandigital prime           |3.0E-05|1.0E-04|7.2E-05|
+|p42| Coded triangle numbers     |2.6E-03|4.9E-04|1.6E-04|
+|p43| Sub-string divisibility    |4.0E-05|3.0E-03|2.1E-05|
+|p44| Pentagon numbers           |1.5E-01|3.6E-02|1.3E-02|
 |p45| Triangular, pentagonal, and hexagonal |9.0E-04|3.0E-04|4.9E-05|2.5E-04|
 |p46| Goldbach's other conjecture |8.0E-03|2.0E-03|7.3E-05|1.9E-03|
 |p47| Distinct primes factors    |6.0E-02|3.5E-02|7.8E-04|3.4E-02|
