@@ -1,28 +1,33 @@
 # Fast Project Euler Solutions in Rust
-Fast and (sometimes) simple solutions to the first 50 Project Euler problems in Rust.
+Blazing fast and (sometimes) simple solutions to the first 50 Project Euler problems in Rust.
 
-Currently written by a rank Rust beginner, so don't come here for style tips or beautiful Rust, at least not yet.  Instead, maybe try https://github.com/gifnksm/ProjectEulerRust .
+## How fast are we talking?  
 
+Blazing fast.  That is, as a set, these solutions are the fastest I've seen and I've
+looked a lot.
 
+When users solve the Euler problems, many post their solutions in Assembly, J,
+Delphi, C, Java, Python, Ruby, and other languages in the forums attached to those
+problems.  I trolled through the first couple and last few pages of the forums
+for each problem (this took a lot of time) and tabulated the run times that were
+reported. (See the spreadsheet titled "Euler 50 forum times" in this repo for
+breakouts by problem and language.)  
 
-## Are these solutions really fast?  
+For each of the 50 problems, you can find the slowest run time reported, and the fastest
+run time reported.  Summing those three separate groups gives
 
-At least somewhat: I summarized times posted
-on the first couple and last few pages of the forums for each problem.  (See the
-spreadsheet titled "Euler 50 forum times" in this repo for details.)  
+~ **9000** seconds for the sum of the slowest reported times,
 
-For each of the 50 problems, you can find the slowest run time reported, the fastest
-run time reported, and the time reported here.
+~ **0.7** seconds for the sum of the fastest reported times, and
 
-Summing the slowest forum times gives ~ **9000** seconds.
+~ **0.09** seconds for the sum of the times that the solutions here take on my 2016 laptop.
 
-Summing the fastest forum times gives ~ **0.7** seconds.
+So blazing fast means about 7-8 times faster than the fastest solutions that I found reported for each problem.
 
-Summing the times found here gives ~ **0.09** seconds.
-
-
+Can they get faster?  Absolutely.  Want to help me figure out how?  If so, let's talk.
 
 ## Purpose
+
 In trying to learn to make my Rust code go more quickly, it was extremely helpful to know what was possible in the first place.  Having other people post fast times challenged me to improve my own code.  
 
 Similarly, seeing fast solutions taught me principles that I was then able to apply to speed up the problems associated with those solutions and then also other problems where similar tricks could apply.
@@ -194,6 +199,9 @@ Here are some aspects of beauty (note that this is an unordered list):
 - Readability
 - Usability
 - Idiomaticity
+
+Note: if you want problems that use Rust in a more sophisticated fashion but focus
+a little less on speed, try https://github.com/gifnksm/ProjectEulerRust .
 
 ## Lessons Learned
 Several people, upon learning what I was working on, have asked me what I've learned.  So I thought I would write a bit on that here.
