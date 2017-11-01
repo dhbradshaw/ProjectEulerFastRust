@@ -70,14 +70,15 @@ So a few points about the times that I'm comparing my solutions to:
 
 1.  My search through the forums was systematic, but not exhaustive.  I sifted
 through some of the first and last pages for each problem.
-2.  The solutions posted here were not all optimized for speed.  Many are first
+2.  The solutions posted on the forums were not all optimized for speed.  Many are first
 efforts, and many are made by people who are just learning the language that they
-chose for their solution.
+chose for their solution.  For that reason, it makes the most sense to compared
+my numbers with only the fastest solutions as is done below.
 3.  Some judgment was required in converting solutions to actual numbers.  What
 number do you enter if someone says that their solution is "faster than a second?"
 (I typically put 0.9 seconds.)  How about a "blink of an eye?" (I usually skipped
 these.)  How about "0.0 seconds?" (I wrote 0.04 for this, but I'm not sure that's
-the right thing to do.  Should I just skip the number?)  
+the right thing to do.  Should I just skip the number?)
 4.  Some problems were too easy to get good numbers for, meaning that they were
 often solved by hand.  Or at least, meaning that no one felt like it was worth
 posting times.  In these cases, I just listed the times as zero.
