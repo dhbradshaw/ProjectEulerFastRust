@@ -252,6 +252,31 @@ I gradually moved over to handling as much number manipulation as possible using
 
 Rust has a BigInt/BigUint library called num.  It's handy.  But if you want fast Euler Rust solutions and if it's feasible, then it's probably faster to use math to avoid working with it.
 
+## Should this really be published?
+
+I thought a lot about this question before publishing.  
+Here's what Project Euler has to say about it at https://projecteuler.net/about:
+
+> I learned so much solving problem XXX so is it okay to publish my solution elsewhere?
+
+> It appears that you have answered your own question. There is nothing quite like that "Aha!" moment when you finally beat a problem which you have been working on for some time. It is often through the best of intentions in wishing to share our insights so that others can enjoy that moment too. Sadly, however, that will not be the case for your readers. Real learning is an active process and seeing how it is done is a long way from experiencing that epiphany of discovery. Please do not deny others what you have so richly valued yourself."
+
+In my opinion, the situation has changed, at least for the 50 first problems, since
+that paragraph was written.  It has now been a decade or so since the original
+50 questions were published, and answers and solutions to all of them are now
+easily searchable.  
+
+Available solutions include an answer set linked by some of the Rust documentation,
+https://github.com/gifnksm/ProjectEulerRust .
+
+Because solutions and answers are already easily available, it seems impossible
+that by publishing these solutions I would be denying anyone the epiphany of
+discovery. Instead I hope to be offering them a way to gain new insights in
+addition to what is already out there.
+
+I'm open to being persuaded otherwise, however.  If you think I should lock these
+solutions back up, contact me.
+
 ## Contributors
 Only me :-(.
 
