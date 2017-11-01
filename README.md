@@ -3,6 +3,25 @@ Fast and (sometimes) simple solutions to the first 50 Project Euler problems in 
 
 Currently written by a rank Rust beginner, so don't come here for style tips or beautiful Rust, at least not yet.  Instead, maybe try https://github.com/gifnksm/ProjectEulerRust .
 
+
+
+## Are these solutions really fast?  
+
+At least somewhat: I summarized times posted
+on the first couple and last few pages of the forums for each problem.  (See the
+spreadsheet titled "Euler 50 forum times" in this repo for details.)  
+
+For each of the 50 problems, you can find the slowest run time reported, the fastest
+run time reported, and the time reported here.
+
+Summing the slowest forum times gives ~ **9000** seconds.
+
+Summing the fastest forum times gives ~ **0.7** seconds.
+
+Summing the times found here gives ~ **0.09** seconds.
+
+
+
 ## Purpose
 In trying to learn to make my Rust code go more quickly, it was extremely helpful to know what was possible in the first place.  Having other people post fast times challenged me to improve my own code.  
 
