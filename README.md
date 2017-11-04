@@ -3,36 +3,28 @@ Blazing fast and (sometimes) simple solutions to the first 50 Project Euler prob
 
 ## How fast are we talking?  
 
-Blazing fast.  That is, as a set, these solutions are the fastest I've seen and I've
-looked a lot.
+This code solves all 50 problems in 0.09 seconds on my 2016 laptop. 
+That's 7-8 times faster than the fastest solutions I've seen—and I've looked a lot.
 
-When users solve the Euler problems, many post their solutions in Assembly, J,
-Delphi, C, Java, Python, Ruby, and other languages in the forums attached to those
-problems.  I trolled through the first couple and last few pages of the forums
-for each problem (this took a lot of time) and tabulated the run times that were
-reported. (See the spreadsheet titled "Euler 50 forum times" in this repo for
-breakouts by problem and language.)  
+When users solve the Euler problems, many post solutions to related forums.  I trolled through the first and last few pages of the forums
+for each problem (this took a lot of time) and tabulated the reported run times. (See the spreadsheet titled "Euler 50 forum times" for
+details.)  
 
-For each of the 50 problems, you can find the slowest run time reported, and the fastest
-run time reported.  You can also sum my times.  Summing those three separate groups gives
+Summing the slowest and fastest times for all 50 problems on the forums and comparing them to my times gives:
 
-~ **9000** seconds for the sum of the slowest reported times,
+~ **9000** seconds for the slowest reported times,
 
-~ **0.7** seconds for the sum of the fastest reported times, and
+~ **0.7** seconds for the fastest reported times, and
 
-~ **0.09** seconds for the sum of the times that the solutions here take on my 2016 laptop.
+~ **0.09** seconds for the times that the solutions here take on my 2016 laptop.
 
-So blazing fast means about 7-8 times faster than the fastest solutions that I found reported for each problem.
-
-Can they get faster?  Absolutely.  Want to help me figure out how?  If so, let's talk.
+Can my solutions get any faster?  Absolutely.  Want to help me figure out how?  Let's talk.
 
 ## Purpose
 
-In trying to learn to make my Rust code go more quickly, it was extremely helpful to know what was possible in the first place.  Having other people post fast times challenged me to improve my own code.  
+In trying to learn to make my Rust code go more quickly, it was extremely helpful to know what was possible in the first place.  Having other people post fast times challenged me to improve my own code and seeing fast solutions taught me important principles I then applied.
 
-Similarly, seeing fast solutions taught me principles that I was then able to apply to speed up the problems associated with those solutions and then also other problems where similar tricks could apply.
-
-While seeing times and solutions helped me a lot, it would have helped me more efficiently if I could have seen fast code gathered in one place.  So here I've gathered a set of solutions in one language in one place and am making them available.
+But, it would have been more efficient if I could have seen fast code gathered together.  That's why I've made this available: a set of fast solutions—one language, one place.
 
 ## Usage:
 Clone the repo.  Then do
