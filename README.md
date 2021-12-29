@@ -22,7 +22,7 @@ Can my solutions get any faster?  Absolutely.  Want to help me figure out how?  
 
 ## Purpose
 
-In trying to learn to make my Rust code go more quickly, it was extremely helpful to know what was possible in the first place.  Having other people post fast times challenged me to improve my own code and seeing fast solutions taught me important principles I then applied.
+In trying to learn to make my Rust code faster and knowing what was possible in the first place was extremely helpful. Seeing other fast codes challenged me to improve my own code and taught me important principles I then applied.
 
 But, it would have been more efficient if I could have seen fast code gathered together.  That's why I've made this available: a set of fast solutions—one language, one place.
 
